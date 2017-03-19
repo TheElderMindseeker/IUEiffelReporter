@@ -9,13 +9,17 @@ class
 
 inherit
 	ANY
+		undefine
+			is_equal
 		redefine
 			out
 		end
 
 	COMPARABLE
+		undefine
+			out
 		redefine
-			is_less
+			is_equal
 		end
 
 create
@@ -38,18 +42,42 @@ feature {NONE} -- Initialization
 			day = dd
 		end
 
+	make_from_string (date_string: READABLE_STRING_32)
+			-- Make date from ISO date string
+		require
+			string_exists_and_not_empty: date_string /= Void and date_string.count > 0
+			all_components_present: date_string.split ('-').count >= 3
+			valid_date: True -- TODO: formulate strict contract here
+		local
+			components: LIST [READABLE_STRING_32]
+		do
+			components := date_string.split ('-')
+			year := components.i_th (1).to_integer_32
+			month := components.i_th (2).to_integer_32
+			day := components.i_th (3).to_integer_32
+		ensure
+			right_assignment: True -- TODO: Formulate strict contract here
+		end
+
 feature {DATE} -- Attributes
 
-	year: INTEGER
+	year: INTEGER_32
 			-- Year in the date
 
-	month: INTEGER
+	month: INTEGER_32
 			-- Month in the date
 
-	day: INTEGER
+	day: INTEGER_32
 			-- Day in the date
 
 feature -- Comparison
+
+	is_equal (other: like Current): BOOLEAN
+			-- Is `other' attached to an object considered
+			-- equal to current object?
+		do
+			Result := year = other.year and month = other.month and day = other.day
+		end
 
 	is_less alias "<" (other: like Current): BOOLEAN
 			-- Is current object less than `other'?
@@ -71,8 +99,6 @@ feature -- String representation
 			-- of current object
 		do
 			Result := year.out + "-" + month.out + "-" + day.out
-		ensure
-			result_exists_and_not_empty: Result /= Void and then Result.count > 0
 		end
 
 feature -- Constraints
