@@ -72,6 +72,16 @@ feature -- Access
 
 feature -- Management
 
+	clear_error
+			-- Resets `has_error' flag
+		require
+			has_error: has_error
+		do
+			has_error := False
+		ensure
+			has_no_error: not has_error
+		end
+
 	insert (table_name: STRING_8; arguments: ITERABLE [FIELD])
 			-- Do insertion into the specified table in the database
 		require
@@ -79,6 +89,7 @@ feature -- Management
 			table_name_not_empty: table_name.count > 0
 			arguments_not_empty: not arguments.new_cursor.after
 			database_initialized: is_initialized
+			no_error: not has_error
 		local
 			insert_statement: SQLITE_INSERT_STATEMENT
 			i_query: STRING_8
@@ -112,6 +123,32 @@ feature -- Management
 			if insert_statement.has_error then
 				has_error := True
 			end
+		end
+
+	has_report (report_id: INTEGER_32): BOOLEAN
+			-- Tells if there is a report with specified `report_id' in the database
+		require
+			database_initialized: is_initialized
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			s_query: STRING_8 -- TODO: Make s_query class global
+		do
+			s_query := "SELECT 1 FROM reports WHERE reports_id = " + report_id.out + ";"
+			create query_statement.make (s_query, database)
+			cursor := query_statement.execute_new
+			if not query_statement.has_error then
+				if cursor.after then
+					Result := False
+				else
+					Result := True
+				end
+			else
+				has_error := True
+				Result := False
+			end
+		ensure
+			has_error implies not Result
 		end
 
 end
