@@ -125,6 +125,14 @@ feature -- Management
 			end
 		end
 
+	single_select (table_name: STRING_8; report_id: INTEGER_32): ITERABLE [ANY]
+			-- Selects the data from the table with `table_name' referenced to report with `report_id'
+		require
+			report_exists: has_report (report_id)
+		do
+			--
+		end
+
 	has_report (report_id: INTEGER_32): BOOLEAN
 			-- Tells if there is a report with specified `report_id' in the database
 		require
