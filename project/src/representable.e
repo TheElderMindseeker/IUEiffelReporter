@@ -10,6 +10,11 @@ deferred class
 feature -- Access
 
 	repr: STRING_8
-			-- SQLite representation of the object
+			-- SQLite representation of the object.
+		deferred
+		ensure
+			result_exists: Result /= Void
+			result_not_empty: Result.count > 0
+		end
 
 end

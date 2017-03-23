@@ -39,7 +39,7 @@ feature {NONE} -- Implementation
 
 	initialize
 			-- Initiailze the database by creating necessary tables
-			-- This feature reads database script from db/create.sql file
+			-- This feature reads database script from `db/create.sql' file
 		require
 			ddl_file_exists: (create {RAW_FILE}.make_with_name ("db/create.sql")).exists
 		local
@@ -112,7 +112,7 @@ feature -- Management
 				i_query := i_query + cursor.item.value.repr
 				cursor.forth
 			until
-				cursor.forth
+				cursor.after
 			loop
 				i_query := i_query + ", " + cursor.item.value.repr
 				cursor.forth
@@ -125,26 +125,68 @@ feature -- Management
 			end
 		end
 
-	single_select (table_name: STRING_8; report_id: INTEGER_32): ITERABLE [ANY]
+	single_select (table_name: STRING_8; report_id: INTEGER_32): ITERABLE [FIELD]
 			-- Selects the data from the table with `table_name' referenced to report with `report_id'
 		require
+			table_name_exists: table_name /= Void
+			table_name_not_empty: table_name.count > 0
+			database_initialized: is_initialized
+			no_error: not has_error
 			report_exists: has_report (report_id)
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			q_row: SQLITE_RESULT_ROW
+			types: SQLITE_TYPE
+			s_query: STRING_8
+			column: NATURAL
 		do
-			--
+			s_query := "SELECT * FROM " + table_name + " WHERE report_id = " + report_id.out + ";"
+			create query_statement.make (s_query, database)
+			cursor := query_statement.execute_new
+			create {LINKED_LIST [FIELD]} Result.make
+			create types.default_create
+			if attached {LINKED_LIST [FIELD]} Result as list then
+				cursor.start
+				q_row := cursor.item
+				from
+					column := 1
+				until
+					column > q_row.count
+				loop
+				-- TODO Refactor this nightmare into one specialized feature
+					if q_row.type (column) = types.integer then
+						list.extend (create {FIELD}.make (q_row.column_name (column),
+								create {INTEGER_REPRESENTABLE}.make (q_row.integer_value (column))))
+					elseif q_row.type (column) = types.text then
+						list.extend (create {FIELD}.make (q_row.column_name (column),
+								create {STRING_REPRESENTABLE}.make (q_row.string_value (column))))
+					elseif q_row.type (column) = types.float then
+						list.extend (create {FIELD}.make (q_row.column_name (column),
+								create {FLOAT_REPRESENTABLE}.make (q_row.real_value (column))))
+					end
+					column := column + 1
+				end
+			end
+		ensure
+			result_exists: Result /= Void
+			result_not_empty: not Result.new_cursor.after
 		end
 
 	has_report (report_id: INTEGER_32): BOOLEAN
 			-- Tells if there is a report with specified `report_id' in the database
 		require
 			database_initialized: is_initialized
+			no_error: not has_error
 		local
 			query_statement: SQLITE_QUERY_STATEMENT
 			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
-			s_query: STRING_8 -- TODO: Make s_query class global
+			s_query: STRING_8 -- TODO: Make s_query class feature
 		do
 			s_query := "SELECT 1 FROM reports WHERE reports_id = " + report_id.out + ";"
 			create query_statement.make (s_query, database)
 			cursor := query_statement.execute_new
+			cursor.start
 			if not query_statement.has_error then
 				if cursor.after then
 					Result := False
