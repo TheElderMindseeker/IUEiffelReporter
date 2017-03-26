@@ -314,6 +314,100 @@ feature -- Management
 			result_not_empty_if_not_error: Result.new_cursor.after implies not has_error
 		end
 
+	single_update (table_name: STRING_8; report_id: INTEGER_32; arguments: ITERABLE [FIELD])
+			-- Do update of the specified table in the database
+		require
+			table_name_exists: table_name /= Void
+			table_name_not_empty: table_name.count > 0
+			arguments_not_empty: not arguments.new_cursor.after
+			database_initialized: is_initialized
+			no_error: not has_error
+			report_exists: has_report (report_id)
+		local
+			update_statement: SQLITE_MODIFY_STATEMENT
+			u_query: STRING_8
+			cursor: ITERATION_CURSOR [FIELD]
+		do
+			cursor := arguments.new_cursor
+			u_query := "UPDATE " + table_name + " SET "
+			from
+				u_query := u_query + cursor.item.name + "=" + cursor.item.value.repr
+				cursor.forth
+			until
+				cursor.after
+			loop
+				u_query := u_query + ", " + cursor.item.name + "=" + cursor.item.value.repr
+				cursor.forth
+			end
+			u_query := u_query + " WHERE report_id = " + report_id.out + ";"
+			create update_statement.make (u_query, database)
+			update_statement.execute
+			if update_statement.has_error then
+				has_error := True
+			end
+		end
+
+	multiple_delete (table_name: STRING_8; report_id: INTEGER_32)
+			-- Deletes all rows with `report_id' from the table
+		require
+			table_name_exists: table_name /= Void
+			table_name_not_empty: table_name.count > 0
+			arguments_not_empty: not arguments.new_cursor.after
+			database_initialized: is_initialized
+			no_error: not has_error
+			report_exists: has_report (report_id)
+		local
+			delete_statement: SQLITE_MODIFY_STATEMENT
+			d_query: STRING_8
+		do
+			d_query := "DELETE FROM " + table_name + " WHERE report_id = " + report_id.out
+			create delete_statement.make (d_query, database)
+			delete_statement.execute
+			if delete_statement.has_error then
+				has_error := True
+			end
+		end
+
+--	multiple_update (table_name: STRING_8; report_id: INTEGER_32; arguments: ITERABLE [ITERABLE [FIELD]])
+--			-- Update multiple rows of the specified table
+--		require
+--			table_name_exists: table_name /= Void
+--			table_name_not_empty: table_name.count > 0
+--			arguments_not_empty: not arguments.new_cursor.after and
+--					across arguments as argument all not argument.item.new_cursor.after end
+--			database_initialized: is_initialized
+--			no_error: not has_error
+--		local
+--			update_statement: SQLITE_MODIFY_STATEMENT
+--			u_query: STRING_8
+--			iterable_cursor: ITERATION_CURSOR [ITERABLE [FIELD]]
+--			cursor: ITERATION_CURSOR [FIELD]
+--		do
+--			from
+--				iterable_cursor := arguments.new_cursor
+--			until
+--				iterable_cursor.after or has_error
+--			loop
+--				cursor := iterable_cursor.item.new_cursor
+--				u_query := "UPDATE " + table_name + " SET "
+--				from
+--					u_query := u_query + cursor.item.name + "=" + cursor.item.value.repr
+--					cursor.forth
+--				until
+--					cursor.after
+--				loop
+--					u_query := u_query + ", " + cursor.item.name + "=" + cursor.item.value.repr
+--					cursor.forth
+--				end
+--				u_query := u_query + " WHERE report_id = " + report_id.out + ";"
+--				create update_statement.make (u_query, database)
+--				update_statement.execute
+--				if update_statement.has_error then
+--					has_error := True
+--				end
+--			end
+--		end
+
 	has_report (report_id: INTEGER_32): BOOLEAN
 			-- Tells if there is a report with specified `report_id' in the database
 		require
