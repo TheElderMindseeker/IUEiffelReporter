@@ -7,14 +7,14 @@ note
 
 class
 	IU_EIFFEL_REPORTER_EXECUTION
-	
+
 
 inherit
 
 
-  
+
 	WSF_ROUTED_EXECUTION
-  
+
 
 
 create
@@ -48,4 +48,27 @@ feature -- Router
 			router.handle ("", fhdl, router.methods_GET)
 		end
 
+--not_found_handler(uri:STRING ; req: WSF_REQUEST; res:WSF_RESPONSE)
+--		local
+--			message: WSF_NOT_FOUND_RESPONSE
+--		do
+--			create message.make (req)
+--			res.send (message)
+--		end
+
+--feature -- Router
+
+--	setup_router
+--      -- Create a router to dispatch incoming requests to the file system
+--    local
+--      handler: WSF_FILE_SYSTEM_HANDLER
+--    do
+--        -- Only make files in "www" directory available
+--      create handler.make_with_path (create {PATH}.make_from_string ("www"))
+--        -- Set the first page to index.html
+--      handler.set_directory_index (<<"index.html">>)
+--      handler.set_not_found_handler (agent not_found_handler)
+--      --handler.set_not_found_handler (<<"not_found.html">>)
+--      --router.handle ("", handler, router.methods_post)
+--    end
 end
