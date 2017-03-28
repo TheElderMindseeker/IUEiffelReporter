@@ -40,12 +40,12 @@ feature -- Router
 				--|   /* are dispatched to serve files/directories contained in "www" directory
 
 				--| Self documentation
-			router.handle ("/doc", create {WSF_ROUTER_SELF_DOCUMENTATION_HANDLER}.make (router), router.methods_GET)
 
 				--| Files publisher
-			create fhdl.make_hidden ("www")
+			create fhdl.make_with_path (create {PATH}.make_from_string ("www"))
 			fhdl.set_directory_index (<<"index.html">>)
-			router.handle ("", fhdl, router.methods_GET)
+			router.handle ("/*", fhdl, router.methods_post)
+			router.handle ("/", fhdl, router.methods_get)
 		end
 
 --not_found_handler(uri:STRING ; req: WSF_REQUEST; res:WSF_RESPONSE)
