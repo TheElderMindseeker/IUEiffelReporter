@@ -432,6 +432,8 @@ feature -- Management
 						cursor.forth
 					end
 				end
+			else
+				has_error := True
 			end
 		ensure
 			has_error implies Result.new_cursor.after
