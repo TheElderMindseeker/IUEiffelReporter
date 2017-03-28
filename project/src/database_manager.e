@@ -352,7 +352,6 @@ feature -- Management
 		require
 			table_name_exists: table_name /= Void
 			table_name_not_empty: table_name.count > 0
-			arguments_not_empty: not arguments.new_cursor.after
 			database_initialized: is_initialized
 			no_error: not has_error
 			report_exists: has_report (report_id)
@@ -408,6 +407,36 @@ feature -- Management
 --			end
 --		end
 
+	reports_by_date (start_date, end_date: DATE): ITERABLE [INTEGER_32]
+			-- Finds all reports that are between `start_date' and `end_date'
+		require
+			dates_exist: start_date /= Void and end_date /= Void
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			s_query: STRING_8
+		do
+			create {LINKED_LIST [INTEGER_32]} Result.make
+			if attached {LINKED_LIST [INTEGER_32]} Result as list then
+				s_query := " SELECT report_id FROM reports WHERE julianday(" +
+						start_date.repr + ") <= start_date AND end_date <= julianday(" + end_date.repr + ");"
+				create query_statement.make (s_query, database)
+				cursor := query_statement.execute_new
+				if not query_statement.has_error then
+					from
+						cursor.start
+					until
+						cursor.after
+					loop
+						list.extend (cursor.item.integer_value (0))
+						cursor.forth
+					end
+				end
+			end
+		ensure
+			has_error implies Result.new_cursor.after
+		end
+
 	has_report (report_id: INTEGER_32): BOOLEAN
 			-- Tells if there is a report with specified `report_id' in the database
 		require
@@ -416,7 +445,7 @@ feature -- Management
 		local
 			query_statement: SQLITE_QUERY_STATEMENT
 			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
-			s_query: STRING_8 -- TODO: Make s_query class feature
+			s_query: STRING_8
 		do
 			s_query := "SELECT 1 FROM reports WHERE reports_id = " + report_id.out + ";"
 			create query_statement.make (s_query, database)

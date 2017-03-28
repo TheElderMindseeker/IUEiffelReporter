@@ -22,6 +22,12 @@ inherit
 			is_equal
 		end
 
+	REPRESENTABLE
+		undefine
+			is_equal,
+			out
+		end
+
 create
 	make,
 	make_from_string
@@ -99,6 +105,12 @@ feature -- String representation
 			-- of current object
 		do
 			Result := year.out + "-" + month.out + "-" + day.out
+		end
+
+	repr: STRING_8
+			-- SQLite representation of the object.
+		do
+			Result := "'" + out + "'"
 		end
 
 feature -- Constraints
