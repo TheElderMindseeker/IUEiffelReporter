@@ -44,7 +44,7 @@ feature -- Router
 				--| Files publisher
 			create fhdl.make_with_path (create {PATH}.make_from_string ("www"))
 			fhdl.set_directory_index (<<"index.html">>)
-			router.handle ("/*", fhdl, router.methods_post)
+			router.handle ("/form", create{FORM_HANDLER}.make, router.methods_get)
 			router.handle ("/", fhdl, router.methods_get)
 		end
 
