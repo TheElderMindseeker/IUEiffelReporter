@@ -30,8 +30,6 @@ feature {NONE} -- Initialization
 			Precursor
 			set_service_option ("port", 3849)
 			set_service_option ("verbose", True)
-
-			create db.make ("temp.db")
 		end
 
 end

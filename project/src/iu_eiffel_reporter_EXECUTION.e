@@ -34,8 +34,6 @@ feature -- Router
 			-- Setup `router'
 		local
 			fhdl: WSF_FILE_SYSTEM_HANDLER
-			str:STRING
-			form_parser: FORM_PARSER
 		do
 			create fhdl.make_with_path (create {PATH}.make_from_string ("www"))
 			fhdl.set_directory_index (<<"index.html">>)
