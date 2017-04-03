@@ -56,10 +56,83 @@ feature -- Access
 			end
 		end
 
+	list_laboratories: ITERABLE [STRING_8]
+			-- List all the laboratory units known to the database
+		do
+			Result := database_manager.list_laboratories
+		ensure
+			result_exists: Result /= Void
+		end
+
 	courses_taught (start_date, end_date: DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
 			-- Courses taught by a Laboratory between initial and final date.
+		local
+			courses: LINKED_LIST [ITERABLE [FIELD]]
+			report_id_cursor: ITERATION_CURSOR [INTEGER_32]
+			courses_cursor: ITERATION_CURSOR [ITERABLE [FIELD]]
+			attr_cursor: ITERATION_CURSOR [FIELD]
+			add: BOOLEAN
 		do
-			--
+			-- TODO: Refactor this nightmare to database manager to let SQLite do the most of the job
+			create courses.make
+			from
+				report_id_cursor := database_manager.reports_by_date (start_date, end_date).new_cursor
+			until
+				report_id_cursor.after
+			loop
+				from
+					courses_cursor := database_manager.multiple_select ("courses", report_id_cursor.item).new_cursor
+				until
+					courses_cursor.after
+				loop
+					add := False
+					from
+						attr_cursor := courses_cursor.item.new_cursor
+					until
+						attr_cursor.after or add
+					loop
+						if attr_cursor.item.name.is_equal ("unit_name") and then
+								attached {STRING_REPRESENTABLE} attr_cursor.item.value as str_repr then
+							if str_repr.is_equal (laboratory) then
+								add := True
+							end
+						end
+						attr_cursor.forth
+					end
+					if add then
+						courses.extend (courses_cursor.item)
+					end
+					courses_cursor.forth
+				end
+				report_id_cursor.forth
+			end
+			Result := courses
+		ensure
+			result_exists: Result /= Void
+		end
+
+	number_of_supervised_students (start_date, end_date: DATE): ITERABLE [ITERABLE [FIELD]]
+			-- Query number of supervised students by each known laboratory
+		do
+			Result := database_manager.number_of_supervised_students (start_date, end_date)
+		ensure
+			result_exists: Result /= Void
+		end
+
+	number_of_research_collaborations (start_date, end_date: DATE): ITERABLE [ITERABLE [FIELD]]
+			-- Query number of research collaborations by each known laboratory
+		do
+			Result := database_manager.number_of_research_collaborations (start_date, end_date)
+		ensure
+			result_exists: Result /= Void
+		end
+
+	number_of_projects_awarded_grants (start_date, end_date: DATE): ITERABLE [ITERABLE [FIELD]]
+			-- Query number of projects awarded grants of each known laboratory
+		do
+			Result := database_manager.number_of_projects_awarded_grants (start_date, end_date)
+		ensure
+			result_exists: Result /= Void
 		end
 
 invariant

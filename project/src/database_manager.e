@@ -467,4 +467,216 @@ feature -- Management
 			has_error implies not Result
 		end
 
+feature -- Utility
+
+	julianday (date: DATE): REAL
+			-- Return julian day representation of the `date'
+		require
+			database_initialized: is_initialized
+			no_error: not has_error
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			s_query: STRING_8
+		do
+			s_query := "SELECT julianday(" + date.repr + ");"
+			create query_statement.make (s_query, database)
+			cursor := query_statement.execute_new
+			if not query_statement.has_error then
+				cursor.start
+				Result := cursor.item.real_value (1)
+			else
+				has_error := True
+			end
+		end
+
+feature {QUERY_MANAGER} -- Specific queries
+
+	list_laboratories: ITERABLE [STRING_8]
+			-- List all the laboratory units known to the database
+		require
+			database_initialized: is_initialized
+			no_error: not has_error
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			s_query: STRING_8
+		do
+			create {LINKED_LIST [STRING_8]} Result.make
+			if attached {LINKED_LIST [STRING_8]} Result as list then
+				s_query := "SELECT DISCTINCT unit_name FROM reports;"
+				create query_statement.make (s_query, database)
+				cursor := query_statement.execute_new
+				if not query_statement.has_error then
+					from
+						cursor.start
+					until
+						cursor.after
+					loop
+						list.extend (cursor.item.string_value (1))
+						cursor.forth
+					end
+				else
+					has_error := True
+				end
+			end
+		ensure
+			result_exists: Result /= Void
+		end
+
+	-- TODO: A lot of repeating code. DRY it
+
+	number_of_supervised_students (start_date, end_date: DATE): ITERABLE [ITERABLE [FIELD]]
+			-- Query number of supervised students by each known laboratory
+		require
+			database_initialized: is_initialized
+			no_error: not has_error
+			both_dates_exist_or_neither: (start_date = Void and end_date = Void) or
+					(start_date /= Void and end_date /= Void)
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			q_row: SQLITE_RESULT_ROW
+			s_query: STRING_8
+			table_row: LINKED_LIST [FIELD]
+			column: NATURAL
+		do
+			s_query := "SELECT rep.unit_name, SUM(1) supervised FROM reports rep INNER JOIN supervised_students sup" +
+					" ON rep.report_id = sup.report_id"
+			if start_date /= Void then
+				s_query := s_query + " WHERE rep.start_date <= julianday(" + start_date.repr + ") AND " +
+						"julianday(" + end_date.repr + ") <= rep.end_date"
+			end
+			s_query := s_query + " GROUP BY rep.report_id;"
+			create query_statement.make (s_query, database)
+			cursor := query_statement.execute_new
+			create {LINKED_LIST [LINKED_LIST [FIELD]]} Result.make
+			if not query_statement.has_error and attached {LINKED_LIST [LINKED_LIST [FIELD]]} Result as table then
+				from
+					cursor.start
+				until
+					cursor.after
+				loop
+					table.extend (create {LINKED_LIST [FIELD]}.make)
+					table_row := table.last
+					q_row := cursor.item
+					from
+						column := 1
+					until
+						column > q_row.count
+					loop
+						add_field (table_row, q_row, column)
+						column := column + 1
+					end
+					cursor.forth
+				end
+			else
+				has_error := True
+			end
+		ensure
+			result_exists: Result /= Void
+		end
+
+	number_of_research_collaborations (start_date, end_date: DATE): ITERABLE [ITERABLE [FIELD]]
+			-- Query number of research collaborations by each known laboratory
+		require
+			database_initialized: is_initialized
+			no_error: not has_error
+			both_dates_exist_or_neither: (start_date = Void and end_date = Void) or
+					(start_date /= Void and end_date /= Void)
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			q_row: SQLITE_RESULT_ROW
+			s_query: STRING_8
+			table_row: LINKED_LIST [FIELD]
+			column: NATURAL
+		do
+			s_query := "SELECT rep.unit_name, SUM(1) collaborations FROM reports rep INNER JOIN research_collaborations col" +
+					" ON rep.report_id = res.report_id"
+			if start_date /= Void then
+				s_query := s_query + " WHERE rep.start_date <= julianday(" + start_date.repr + ") AND " +
+						"julianday(" + end_date.repr + ") <= rep.end_date"
+			end
+			s_query := s_query + " GROUP BY rep.report_id;"
+			create query_statement.make (s_query, database)
+			cursor := query_statement.execute_new
+			create {LINKED_LIST [LINKED_LIST [FIELD]]} Result.make
+			if not query_statement.has_error and attached {LINKED_LIST [LINKED_LIST [FIELD]]} Result as table then
+				from
+					cursor.start
+				until
+					cursor.after
+				loop
+					table.extend (create {LINKED_LIST [FIELD]}.make)
+					table_row := table.last
+					q_row := cursor.item
+					from
+						column := 1
+					until
+						column > q_row.count
+					loop
+						add_field (table_row, q_row, column)
+						column := column + 1
+					end
+					cursor.forth
+				end
+			else
+				has_error := True
+			end
+		ensure
+			result_exists: Result /= Void
+		end
+
+	number_of_projects_awarded_grants (start_date, end_date: DATE): ITERABLE [ITERABLE [FIELD]]
+			-- Query number of projects awarded grants of each known laboratory
+		require
+			database_initialized: is_initialized
+			no_error: not has_error
+			both_dates_exist_or_neither: (start_date = Void and end_date = Void) or
+					(start_date /= Void and end_date /= Void)
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			q_row: SQLITE_RESULT_ROW
+			s_query: STRING_8
+			table_row: LINKED_LIST [FIELD]
+			column: NATURAL
+		do
+			s_query := "SELECT rep.unit_name, SUM(1) collaborations FROM reports rep INNER JOIN grants gr" +
+					" ON rep.report_id = gr.report_id"
+			if start_date /= Void then
+				s_query := s_query + " WHERE rep.start_date <= julianday(" + start_date.repr + ") AND " +
+						"julianday(" + end_date.repr + ") <= rep.end_date"
+			end
+			s_query := s_query + " GROUP BY rep.report_id;"
+			create query_statement.make (s_query, database)
+			cursor := query_statement.execute_new
+			create {LINKED_LIST [LINKED_LIST [FIELD]]} Result.make
+			if not query_statement.has_error and attached {LINKED_LIST [LINKED_LIST [FIELD]]} Result as table then
+				from
+					cursor.start
+				until
+					cursor.after
+				loop
+					table.extend (create {LINKED_LIST [FIELD]}.make)
+					table_row := table.last
+					q_row := cursor.item
+					from
+						column := 1
+					until
+						column > q_row.count
+					loop
+						add_field (table_row, q_row, column)
+						column := column + 1
+					end
+					cursor.forth
+				end
+			else
+				has_error := True
+			end
+		ensure
+			result_exists: Result /= Void
+		end
+
 end
