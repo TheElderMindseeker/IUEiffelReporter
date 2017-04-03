@@ -123,6 +123,30 @@ feature {NONE} -- Implementation
 			table_exists: r_table /= Void
 		end
 
+	insert_report_row (arguments: ITERABLE [FIELD])
+			-- Inserts new report row into the database
+		require
+			database_initialized: is_initialized
+			no_error: not has_error
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			q_row: SQLITE_RESULT_ROW
+			s_query: STRING_8
+		do
+			single_insert ("reports", arguments)
+			s_query := "SELECT last_insert_rowid();"
+			create query_statement.make (s_query, database)
+			cursor := query_statement.execute_new
+			if not (query_statement.has_error or has_error) then
+				cursor.start
+				q_row := cursor.item
+				current_report_id := q_row.integer_value (1)
+			end
+		ensure
+			valid_current_report_id: not has_error implies current_report_id >= 0
+		end
+
 feature -- Access
 
 	is_initialized: BOOLEAN
@@ -146,28 +170,20 @@ feature -- Management
 			has_no_error: not has_error
 		end
 
-	create_report (arguments: ITERABLE [FIELD])
+	create_report (unit_name, head_name: STRING_8; rep_start, rep_end: DATE)
 			-- Creates new report and generates new `report_id'
 		require
-			database_initialized: is_initialized
-			no_error: not has_error
+			arguments_exist: unit_name /= Void and head_name /= Void and
+					rep_start /= Void and rep_end /= Void
 		local
-			query_statement: SQLITE_QUERY_STATEMENT
-			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
-			q_row: SQLITE_RESULT_ROW
-			s_query: STRING_8
+			arguments: LINKED_LIST [FIELD]
 		do
-			single_insert ("reports", arguments)
-			s_query := "SELECT last_insert_rowid();"
-			create query_statement.make (s_query, database)
-			cursor := query_statement.execute_new
-			if not (query_statement.has_error or has_error) then
-				cursor.start
-				q_row := cursor.item
-				current_report_id := q_row.integer_value (1)
-			end
-		ensure
-			valid_current_report_id: not has_error implies current_report_id >= 0
+			create arguments.make
+			arguments.extend (create {FIELD}.make ("unit_name", create {STRING_REPRESENTABLE}.make (unit_name)))
+			arguments.extend (create {FIELD}.make ("head_name", create {STRING_REPRESENTABLE}.make (head_name)))
+			arguments.extend (create {FIELD}.make ("rep_start", rep_start))
+			arguments.extend (create {FIELD}.make ("rep_end", rep_end))
+			insert_report_row (arguments)
 		end
 
 	single_insert (table_name: STRING_8; arguments: ITERABLE [FIELD])
