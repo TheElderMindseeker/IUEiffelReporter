@@ -1,0 +1,98 @@
+@font-face {
+    font-family: 'bpreplayregular';
+    src: url('../resources/fonts/bpreplay-webfont.woff2') format('woff2'),
+         url('../resources/fonts/bpreplay-webfont.woff') format('woff'),
+         url('../resources/fonts/bpreplay-webfont.svg#bpreplayregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+html {
+	height: 100%;
+}
+body {
+    font-family: Verdana, Verdana, Geneva, sans-serif;
+    background-color: #66ccff;
+	height: 86%
+}
+a:link, a:active, a:visited {
+		color: #000;
+	}
+.wrapper {
+    width: 94%;
+    margin: 3% 3% 0 3%;
+    background:#ffffff; /* фон блока */
+    -moz-border-radius: 30px; /* закругление для старых Mozilla Firefox */
+    -webkit-border-radius: 30px; /* закругл. для старых Chrome и Safari */
+    -khtml-border-radius:30px; /* закругл. для браузера Konquerer системы Linux */
+    border-radius: 30px; /* закругление углов для всех, кто понимает */
+    padding: 20px; /* внутренние отступы */
+}
+.main-wrapper {
+	height: 100%;
+}
+.footer {
+    margin: 1% 0 0.5%;
+    text-align: center;
+}
+.logo-text {
+	font-size: 36pt;
+	text-align: center;
+	font-family: "Arial Rounded MT", "bpreplayregular", "Calibri", "Lato";
+	margin: 0 0 20px 0;
+}
+.team-logo {
+    font-family: "Forte";
+}
+.button-yellow {
+	background:#ffdf6b; /* фон блока */
+	border: 5px #ffcc66 solid; /* стили рамки */
+	-moz-border-radius: 10px; /* закругление для старых Mozilla Firefox */
+	-webkit-border-radius: 10px; /* закругл. для старых Chrome и Safari */
+	-khtml-border-radius: 10px; /* закругл. для браузера Konquerer системы Linux */
+	border-radius: 10px; /* закругление углов для всех, кто понимает */
+	padding: 5px; /* внутренние отступы */
+	text-align: center;
+	font-size: 24pt;
+	font-family: "Arial Rounded MT", "bpreplayregular", "Calibri", "Lato";
+}
+.button-green {
+	/* green button */
+}
+.button-red {
+	/* red button */
+}
+.input-text {
+	border: 5px #ffcc66 solid;
+	-moz-border-radius: 10px; /* закругление для старых Mozilla Firefox */
+	-webkit-border-radius: 10px; /* закругл. для старых Chrome и Safari */
+	-khtml-border-radius:10px; /* закругл. для браузера Konquerer системы Linux */
+	border-radius: 10px; /* закругление углов для всех, кто понимает */
+	padding: 5px; /* внутренние отступы */
+	height: 35pt;
+	width: 75%;
+	font-size: 14pt;
+}
+.input-in-table {
+	border: 0px;
+	font-size: 12pt;
+	text-align:center;
+	-webkit-box-shadow: none;
+	box-shadow:
+}
+.control-label {
+	position: absolute;
+	right: 10px;
+	font-weight: normal;
+	font-size: 14pt;
+}
+.form {
+	width: 85%;
+	margin:auto;
+}
+.table{
+	text-align: center;
+	margin-top: 30px;
+}
+.th {
+	text-align:center;
+}

@@ -1,34 +1,34 @@
-function addInput() {
-  /* default-id — скрытый элемент формы, из которого берется id для первого создаваемого элемента */
-  var id = document.getElementById("default-id").value;
-  id++;
-  /* в форму с именем testform добавляем новый элемент */
-  $("div[id=somearea]").append('<div id="div-' + id + '" style="display: none;"><input class="form-control" name="input-' + id + '" id="input-' + id + '" value="" onblur="removeIfEmpty(' + id + ')"><a href="javascript:{}" onclick="removeInput(\'' + id + '\')">Удалить</a></div>');
-  $("#div-" + id).show('slow');
-  /* увеличиваем счетчик элементов */
-  document.getElementById("default-id").value = id;
-  document.getElementsByName('input-' + id)[0].focus();
+function addInput(tableId) {
+	var id = document.getElementById('id-counter').value;
+	id++;
+	document.getElementById('id-counter').setAttribute('value', id);
+	var mainTable = document.getElementById(tableId);
+	var tbody = mainTable.children[1];
+	var newNode = mainTable.rows[mainTable.rows.length - 1].cloneNode(true);
+	var array = newNode.getElementsByTagName('input');
+	for (i=0; i<array.length; i++) {
+		array[i].setAttribute('id', tableId + '-' + id + '-' + i);
+		array[i].setAttribute('onBlur', 'removeRow("' + tableId + '-' + id + '");');
+	}
+	tbody.insertBefore(newNode, mainTable.rows[mainTable.rows.length - 2]);
+	$("#to-show-" + tableId).show('slow');
+	newNode.setAttribute('id', 'el-' + tableId + '-' + id);
+	array[0].focus();
+	/*mainTable.getElementsByName('courses-taught[][name]').focus();*/
 }
 
-function printStringFromServer(str) {
-  $("div[id=somearea]").append(str);
-}
-
-function getTextFromServer() {
-  $.post('/request', {}, printStringFromServer(), 'text' );
-}
-
-function removeInput(id) {
-  $("#div-" + id).remove();
-}
-
-function removeIfEmpty(id) {
-  if (document.getElementById("input-" + id).value == ''){
-    $("#div-" + id).hide(3000);
-    setTimeout(function () {
-      $("#div-" + id).remove();
-    }, 1000);;
-  }
+function removeRow(tableId) {
+	var elem = document.getElementById("el-" + tableId);
+	var array = elem.getElementsByTagName('input');
+	var statement = true;
+	for (i=0; i<array.length; i++) {
+		statement = statement && array[i].value == '';
+	}
+	if (statement) {
+		$("#el-" + tableId).hide(500, function(){
+			$(this).remove();
+		});
+	}
 }
 
 function sendForm(e){
