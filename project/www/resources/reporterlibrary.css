@@ -1,3 +1,4 @@
+
 @font-face {
     font-family: 'bpreplayregular';
     src: url('../resources/fonts/bpreplay-webfont.woff2') format('woff2'),
@@ -20,12 +21,12 @@ a:link, a:active, a:visited {
 .wrapper {
     width: 94%;
     margin: 3% 3% 0 3%;
-    background:#ffffff; /* фон блока */
-    -moz-border-radius: 30px; /* закругление для старых Mozilla Firefox */
-    -webkit-border-radius: 30px; /* закругл. для старых Chrome и Safari */
-    -khtml-border-radius:30px; /* закругл. для браузера Konquerer системы Linux */
-    border-radius: 30px; /* закругление углов для всех, кто понимает */
-    padding: 20px; /* внутренние отступы */
+    background:#ffffff; /* пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ */
+    -moz-border-radius: 30px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ Mozilla Firefox */
+    -webkit-border-radius: 30px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ Chrome пїЅ Safari */
+    -khtml-border-radius:30px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Konquerer пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Linux */
+    border-radius: 30px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
+    padding: 20px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
 }
 .main-wrapper {
 	height: 100%;
@@ -44,13 +45,13 @@ a:link, a:active, a:visited {
     font-family: "Forte";
 }
 .button-yellow {
-	background:#ffdf6b; /* фон блока */
-	border: 5px #ffcc66 solid; /* стили рамки */
-	-moz-border-radius: 10px; /* закругление для старых Mozilla Firefox */
-	-webkit-border-radius: 10px; /* закругл. для старых Chrome и Safari */
-	-khtml-border-radius: 10px; /* закругл. для браузера Konquerer системы Linux */
-	border-radius: 10px; /* закругление углов для всех, кто понимает */
-	padding: 5px; /* внутренние отступы */
+	background:#ffdf6b; /* пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ */
+	border: 5px #ffcc66 solid; /* пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ */
+	-moz-border-radius: 10px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ Mozilla Firefox */
+	-webkit-border-radius: 10px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ Chrome пїЅ Safari */
+	-khtml-border-radius: 10px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Konquerer пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Linux */
+	border-radius: 10px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
+	padding: 5px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
 	text-align: center;
 	font-size: 24pt;
 	font-family: "Arial Rounded MT", "bpreplayregular", "Calibri", "Lato";
@@ -63,11 +64,11 @@ a:link, a:active, a:visited {
 }
 .input-text {
 	border: 5px #ffcc66 solid;
-	-moz-border-radius: 10px; /* закругление для старых Mozilla Firefox */
-	-webkit-border-radius: 10px; /* закругл. для старых Chrome и Safari */
-	-khtml-border-radius:10px; /* закругл. для браузера Konquerer системы Linux */
-	border-radius: 10px; /* закругление углов для всех, кто понимает */
-	padding: 5px; /* внутренние отступы */
+	-moz-border-radius: 10px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ Mozilla Firefox */
+	-webkit-border-radius: 10px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ Chrome пїЅ Safari */
+	-khtml-border-radius:10px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Konquerer пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Linux */
+	border-radius: 10px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
+	padding: 5px; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
 	height: 35pt;
 	width: 75%;
 	font-size: 14pt;
