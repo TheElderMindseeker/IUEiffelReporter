@@ -14,7 +14,11 @@ inherit
 feature
 	execute (req: WSF_REQUEST; res: WSF_RESPONSE)
 			-- Execute handler for `req' and respond in `res'.
+		local
+			--path:PATH
 		do
-			-- TODOOOOOOOOOOOOOOOOOO
+			--create path.make_current
+--			create to_send.make (req)
+			res.put_string ("some string")
 		end
 end

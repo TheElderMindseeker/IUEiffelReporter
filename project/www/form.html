@@ -1,4 +1,4 @@
-<!DOCTYPE html5>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Some form</title>
@@ -56,11 +56,11 @@
 		function sendForm(e){
 			var formData = JSON.stringify($('#mainForm').serializeJSON());
 			$.ajax({
-				url:'http://localhost/',
+				url:'http://localhost:3849/form_send',
 				type:'POST',
 				data: formData,
 				success: function(res) {
-					alert(res);
+				
 				}
 			});
 		}

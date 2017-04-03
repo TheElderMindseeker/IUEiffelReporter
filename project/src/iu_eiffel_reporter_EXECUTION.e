@@ -34,18 +34,14 @@ feature -- Router
 			-- Setup `router'
 		local
 			fhdl: WSF_FILE_SYSTEM_HANDLER
+			str:STRING
+			form_parser: FORM_PARSER
 		do
-				--| As example:
-				--|   /doc is dispatched to self documentated page
-				--|   /* are dispatched to serve files/directories contained in "www" directory
-
-				--| Self documentation
-
-				--| Files publisher
 			create fhdl.make_with_path (create {PATH}.make_from_string ("www"))
 			fhdl.set_directory_index (<<"index.html">>)
-			router.handle ("/form", create{FORM_HANDLER}.make, router.methods_get)
-			router.handle ("/", fhdl, router.methods_get)
+			router.handle ("/form_send", create{FORM_HANDLER}.make, router.methods_post)
+			router.handle ("/", fhdl, router.methods_get_post)
+			--router.handle ("/request", create {ADMIN_PAGE_HANDLER}, router.methods_get)
 		end
 
 --not_found_handler(uri:STRING ; req: WSF_REQUEST; res:WSF_RESPONSE)
