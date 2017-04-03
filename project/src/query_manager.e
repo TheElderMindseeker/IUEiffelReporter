@@ -20,7 +20,7 @@ feature {NONE} -- Initialization
 			no_error: not database_manager.has_error
 		end
 
-feature {NONE} -- Implementation
+feature -- Access
 
 	database_manager: DATABASE_MANAGER
 			-- The bridge to the database.
@@ -30,7 +30,8 @@ feature -- Access
 	query_publications (start_date, end_date: DATE): ITERABLE [ITERABLE [FIELD]]
 			-- All publications of the university in a given year.
 		require
-			dates_exist: start_date /= Void and end_date /= Void
+			both_dates_exist_or_neither: (start_date = Void and end_date = Void) or
+					(start_date /= Void and end_date /= Void)
 		local
 			report_id_cursor: ITERATION_CURSOR [INTEGER_32]
 			publication_cursor: ITERATION_CURSOR [ITERABLE [FIELD]]
@@ -66,6 +67,9 @@ feature -- Access
 
 	courses_taught (start_date, end_date: DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
 			-- Courses taught by a Laboratory between initial and final date.
+		require
+			both_dates_exist_or_neither: (start_date = Void and end_date = Void) or
+					(start_date /= Void and end_date /= Void)
 		local
 			courses: LINKED_LIST [ITERABLE [FIELD]]
 			report_id_cursor: ITERATION_CURSOR [INTEGER_32]
@@ -113,6 +117,9 @@ feature -- Access
 
 	number_of_supervised_students (start_date, end_date: DATE): ITERABLE [ITERABLE [FIELD]]
 			-- Query number of supervised students by each known laboratory
+		require
+			both_dates_exist_or_neither: (start_date = Void and end_date = Void) or
+					(start_date /= Void and end_date /= Void)
 		do
 			Result := database_manager.number_of_supervised_students (start_date, end_date)
 		ensure
@@ -121,6 +128,9 @@ feature -- Access
 
 	number_of_research_collaborations (start_date, end_date: DATE): ITERABLE [ITERABLE [FIELD]]
 			-- Query number of research collaborations by each known laboratory
+		require
+			both_dates_exist_or_neither: (start_date = Void and end_date = Void) or
+					(start_date /= Void and end_date /= Void)
 		do
 			Result := database_manager.number_of_research_collaborations (start_date, end_date)
 		ensure
@@ -129,8 +139,22 @@ feature -- Access
 
 	number_of_projects_awarded_grants (start_date, end_date: DATE): ITERABLE [ITERABLE [FIELD]]
 			-- Query number of projects awarded grants of each known laboratory
+		require
+			both_dates_exist_or_neither: (start_date = Void and end_date = Void) or
+					(start_date /= Void and end_date /= Void)
 		do
 			Result := database_manager.number_of_projects_awarded_grants (start_date, end_date)
+		ensure
+			result_exists: Result /= Void
+		end
+
+	patents_filed_or_submitted (start_date, end_date: DATE): ITERABLE [ITERABLE [FIELD]]
+			-- Query patents filed or submitted during the period
+		require
+			both_dates_exist_or_neither: (start_date = Void and end_date = Void) or
+					(start_date /= Void and end_date /= Void)
+		do
+			Result := database_manager.patents_filed_or_submitted (start_date, end_date)
 		ensure
 			result_exists: Result /= Void
 		end

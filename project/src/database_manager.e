@@ -88,6 +88,41 @@ feature {NONE} -- Implementation
 			-- TODO: add reasonable contracts here
 		end
 
+	fill_table (r_table: detachable LINKED_LIST [LINKED_LIST [FIELD]]; cursor: SQLITE_STATEMENT_ITERATION_CURSOR)
+		require
+			r_table_exists: r_table /= Void
+			cursor_exists: cursor /= Void
+		local
+			q_row: SQLITE_RESULT_ROW
+			table_row: LINKED_LIST [FIELD]
+			column: NATURAL
+		do
+			if attached {LINKED_LIST [LINKED_LIST [FIELD]]} r_table as table then
+				from
+					cursor.start
+				until
+					cursor.after
+				loop
+					table.extend (create {LINKED_LIST [FIELD]}.make)
+					table_row := table.last
+					q_row := cursor.item
+					from
+						column := 1
+					until
+						column > q_row.count
+					loop
+						add_field (table_row, q_row, column)
+						column := column + 1
+					end
+					cursor.forth
+				end
+			else
+				has_error := True
+			end
+		ensure
+			table_exists: r_table /= Void
+		end
+
 feature -- Access
 
 	is_initialized: BOOLEAN
@@ -278,34 +313,14 @@ feature -- Management
 		local
 			query_statement: SQLITE_QUERY_STATEMENT
 			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
-			q_row: SQLITE_RESULT_ROW
 			s_query: STRING_8
-			table_row: LINKED_LIST [FIELD]
-			column: NATURAL
 		do
 			s_query := "SELECT * FROM " + table_name + " WHERE report_id = " + report_id.out + ";"
 			create query_statement.make (s_query, database)
 			cursor := query_statement.execute_new
 			create {LINKED_LIST [LINKED_LIST [FIELD]]} Result.make
 			if not query_statement.has_error and attached {LINKED_LIST [LINKED_LIST [FIELD]]} Result as table then
-				from
-					cursor.start
-				until
-					cursor.after
-				loop
-					table.extend (create {LINKED_LIST [FIELD]}.make)
-					table_row := table.last
-					q_row := cursor.item
-					from
-						column := 1
-					until
-						column > q_row.count
-					loop
-						add_field (table_row, q_row, column)
-						column := column + 1
-					end
-					cursor.forth
-				end
+				fill_table (table, cursor)
 			else
 				has_error := True
 			end
@@ -526,6 +541,41 @@ feature {QUERY_MANAGER} -- Specific queries
 
 	-- TODO: A lot of repeating code. DRY it
 
+	cumulative_info (start_date, end_date: DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
+			-- Query cumulative info of the given `laboratory' unit
+		require
+			database_initialized: is_initialized
+			no_error: not has_error
+			both_dates_exist_or_neither: (start_date = Void and end_date = Void) or
+					(start_date /= Void and end_date /= Void)
+			laboratory_exist: laboratory /= Void
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			s_query: STRING_8
+		do
+			s_query := "SELECT rep.unit_name, rep.head_name," +
+					" date(rep.rep_start) start_date, date(rep.rep_end) end_date" +
+					" rel.info" +
+					" FROM reports rep INNER JOIN relevant_info rel ON rep.report_id = rel.report_id" +
+					" WHERE rep.unit_name = " + laboratory.repr
+			if start_date /= Void then
+				s_query := s_query + " AND rep.start_date <= julianday(" + start_date.repr + ") AND " +
+						"julianday(" + end_date.repr + ") <= rep.end_date"
+			end
+			s_query := s_query + ";"
+			create query_statement.make (s_query, database)
+			cursor := query_statement.execute_new
+			create {LINKED_LIST [LINKED_LIST [FIELD]]} Result.make
+			if not query_statement.has_error and attached {LINKED_LIST [LINKED_LIST [FIELD]]} Result as table then
+				fill_table (table, cursor)
+			else
+				has_error := True
+			end
+		ensure
+			result_exists: Result /= Void
+		end
+
 	number_of_supervised_students (start_date, end_date: DATE): ITERABLE [ITERABLE [FIELD]]
 			-- Query number of supervised students by each known laboratory
 		require
@@ -536,10 +586,7 @@ feature {QUERY_MANAGER} -- Specific queries
 		local
 			query_statement: SQLITE_QUERY_STATEMENT
 			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
-			q_row: SQLITE_RESULT_ROW
 			s_query: STRING_8
-			table_row: LINKED_LIST [FIELD]
-			column: NATURAL
 		do
 			s_query := "SELECT rep.unit_name, SUM(1) supervised FROM reports rep INNER JOIN supervised_students sup" +
 					" ON rep.report_id = sup.report_id"
@@ -552,24 +599,7 @@ feature {QUERY_MANAGER} -- Specific queries
 			cursor := query_statement.execute_new
 			create {LINKED_LIST [LINKED_LIST [FIELD]]} Result.make
 			if not query_statement.has_error and attached {LINKED_LIST [LINKED_LIST [FIELD]]} Result as table then
-				from
-					cursor.start
-				until
-					cursor.after
-				loop
-					table.extend (create {LINKED_LIST [FIELD]}.make)
-					table_row := table.last
-					q_row := cursor.item
-					from
-						column := 1
-					until
-						column > q_row.count
-					loop
-						add_field (table_row, q_row, column)
-						column := column + 1
-					end
-					cursor.forth
-				end
+				fill_table (table, cursor)
 			else
 				has_error := True
 			end
@@ -587,10 +617,7 @@ feature {QUERY_MANAGER} -- Specific queries
 		local
 			query_statement: SQLITE_QUERY_STATEMENT
 			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
-			q_row: SQLITE_RESULT_ROW
 			s_query: STRING_8
-			table_row: LINKED_LIST [FIELD]
-			column: NATURAL
 		do
 			s_query := "SELECT rep.unit_name, SUM(1) collaborations FROM reports rep INNER JOIN research_collaborations col" +
 					" ON rep.report_id = res.report_id"
@@ -603,24 +630,7 @@ feature {QUERY_MANAGER} -- Specific queries
 			cursor := query_statement.execute_new
 			create {LINKED_LIST [LINKED_LIST [FIELD]]} Result.make
 			if not query_statement.has_error and attached {LINKED_LIST [LINKED_LIST [FIELD]]} Result as table then
-				from
-					cursor.start
-				until
-					cursor.after
-				loop
-					table.extend (create {LINKED_LIST [FIELD]}.make)
-					table_row := table.last
-					q_row := cursor.item
-					from
-						column := 1
-					until
-						column > q_row.count
-					loop
-						add_field (table_row, q_row, column)
-						column := column + 1
-					end
-					cursor.forth
-				end
+				fill_table (table, cursor)
 			else
 				has_error := True
 			end
@@ -654,24 +664,38 @@ feature {QUERY_MANAGER} -- Specific queries
 			cursor := query_statement.execute_new
 			create {LINKED_LIST [LINKED_LIST [FIELD]]} Result.make
 			if not query_statement.has_error and attached {LINKED_LIST [LINKED_LIST [FIELD]]} Result as table then
-				from
-					cursor.start
-				until
-					cursor.after
-				loop
-					table.extend (create {LINKED_LIST [FIELD]}.make)
-					table_row := table.last
-					q_row := cursor.item
-					from
-						column := 1
-					until
-						column > q_row.count
-					loop
-						add_field (table_row, q_row, column)
-						column := column + 1
-					end
-					cursor.forth
-				end
+				fill_table (table, cursor)
+			else
+				has_error := True
+			end
+		ensure
+			result_exists: Result /= Void
+		end
+
+	patents_filed_or_submitted (start_date, end_date: DATE): ITERABLE [ITERABLE [FIELD]]
+			-- Query number of patents filed or submitted
+		require
+			database_initialized: is_initialized
+			no_error: not has_error
+			both_dates_exist_or_neither: (start_date = Void and end_date = Void) or
+					(start_date /= Void and end_date /= Void)
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			s_query: STRING_8
+		do
+			s_query := "SELECT patent_id, report_id, patent_title, patent_office_country FROM patents_and_ip" +
+					" WHERE type = 'P'"
+			if start_date /= Void then
+				s_query := s_query + " AND rep.start_date <= julianday(" + start_date.repr + ") AND " +
+						"julianday(" + end_date.repr + ") <= rep.end_date"
+			end
+			s_query := s_query + ";"
+			create query_statement.make (s_query, database)
+			cursor := query_statement.execute_new
+			create {LINKED_LIST [LINKED_LIST [FIELD]]} Result.make
+			if not query_statement.has_error and attached {LINKED_LIST [LINKED_LIST [FIELD]]} Result as table then
+				fill_table (table, cursor)
 			else
 				has_error := True
 			end
