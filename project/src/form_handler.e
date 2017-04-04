@@ -45,17 +45,17 @@ feature
 					parser.parse_content
 					if parser.is_parsed and then parser.is_valid and then attached parser.parsed_json_value as jv then
 						if attached {JSON_OBJECT} jv as j_object then
-							--make it in a across
-							from
-								i:=0
-							until
-								i=list_of_variables.count
-							loop
-								if attached {JSON_STRING} j_object.item (list_of_variables.at (i)) as j_value then
-									print("key: " + list_of_variables.at (i) + " value: " + j_value.representation + "%N")
-								end
-								i:=i+1
-							end
+							print(j_object.representation)
+--							from
+--								i:=0
+--							until
+--								i=list_of_variables.count
+--							loop
+--								if attached {JSON_STRING} j_object.item (list_of_variables.at (i)) as j_value then
+--									print("key: " + list_of_variables.at (i) + " value: " + j_value.representation + "%N")
+--								end
+--								i:=i+1
+--							end
 						end
 					end
 				end

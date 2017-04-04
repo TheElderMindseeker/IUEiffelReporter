@@ -1,4 +1,4 @@
-<!DOCTYPE html5>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Some form</title>
@@ -39,8 +39,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				
-				<label for="date" class="col-sm-2 control-label">Date</label>
+				<label for="pass" class="col-sm-2 control-label">Date</label>
 				<div class="col-sm-10">
 					<input type="text" class="datepicker-here form-control" id="date" name="date" placeholder="Required" />
 				</div>
@@ -57,11 +56,11 @@
 		function sendForm(e){
 			var formData = JSON.stringify($('#mainForm').serializeJSON());
 			$.ajax({
-				url:'http://localhost/',
+				url:'http://localhost:3849/form_send',
 				type:'POST',
 				data: formData,
 				success: function(res) {
-					alert(res);
+				
 				}
 			});
 		}
