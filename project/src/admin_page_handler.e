@@ -10,15 +10,30 @@ class
 inherit
 	WSF_URI_HANDLER
 
+create
+	make
+
+feature
+
+	make
+	do
+		create page.make
+	end
+feature
+	page:WSF_HTML_PAGE_RESPONSE
 
 feature
 	execute (req: WSF_REQUEST; res: WSF_RESPONSE)
 			-- Execute handler for `req' and respond in `res'.
 		local
-			--path:PATH
+			temp:TEMPLATE_FORM
 		do
+			create temp
 			--create path.make_current
 --			create to_send.make (req)
-			res.put_string ("some string")
+			if attached temp.output as body then
+				page.set_body(body)
+			end
+			res.send (page)
 		end
 end

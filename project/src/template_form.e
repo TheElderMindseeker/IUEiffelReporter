@@ -30,13 +30,11 @@ feature {NONE} -- Initialization
 		local
 			p: PATH
 		do
-			create p.make_current
-			p:=p.appended ("/tpl")
+			create p.make_from_string ("www")
 			set_template_folder (p)
-			set_template_file_name ("html_table.tpl")
-			template.add_value (users,"users")
---			template_context.enable_verbose
---			template.analyze
+			set_template_file_name ("form.tpl")
+			template_context.enable_verbose
+			template.analyze
 			template.get_output
 			if attached template.output as l_output then
 				output := l_output

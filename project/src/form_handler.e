@@ -20,11 +20,20 @@ feature
 	end
 
 feature
+
+	list_of_variables:ARRAY[STRING]
+	do
+		create Result.make_empty
+		Result.force ("name", 0)
+		Result.force ("date", 1)
+	end
+
 	execute (req: WSF_REQUEST; res: WSF_RESPONSE)
 			-- Execute handler for `req' and respond in `res'.
 		local
 			parser:JSON_PARSER
 			str:STRING
+			i:INTEGER
 		do
 			page.set_status_code ({HTTP_STATUS_CODE}.bad_request)
 			if attached req.content_length as con_len then
@@ -37,10 +46,15 @@ feature
 					if parser.is_parsed and then parser.is_valid and then attached parser.parsed_json_value as jv then
 						if attached {JSON_OBJECT} jv as j_object then
 							--make it in a across
-							across list_of_variables as l loop
-								if attached {JSON_OBJECT} j_object.item (l.item) as j_value then
-									print("key: " + l.item + "value: " + j_value.representation + "%N")
+							from
+								i:=0
+							until
+								i=list_of_variables.count
+							loop
+								if attached {JSON_STRING} j_object.item (list_of_variables.at (i)) as j_value then
+									print("key: " + list_of_variables.at (i) + " value: " + j_value.representation + "%N")
 								end
+								i:=i+1
 							end
 						end
 					end
@@ -52,10 +66,4 @@ feature
 feature
 	page:WSF_HTML_PAGE_RESPONSE
 
-	list_of_variables:LINKED_LIST[STRING]
-	once
-		create Result.make
-		Result.force("name")
-		Result.force("date")
-	end
 end
