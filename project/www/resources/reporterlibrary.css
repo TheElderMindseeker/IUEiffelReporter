@@ -73,6 +73,12 @@ a:link, a:active, a:visited {
 	width: 75%;
 	font-size: 14pt;
 }
+/*
+input:invalid{
+    border: 5px #ff2400 solid;
+    padding-left: 5px;
+   }
+*/
 .input-in-table {
 	border: 0px;
 	font-size: 12pt;
@@ -86,6 +92,24 @@ a:link, a:active, a:visited {
 	font-weight: normal;
 	font-size: 14pt;
 }
+.help-label {
+	position: absolute;
+	left: 10px;
+	font-weight: normal;
+	font-size: 14pt;
+  margin-bottom: 0;
+  vertical-align: middle;
+  text-align: left;
+  margin-bottom: 0;
+  padding-top: 7px;
+}
+.view-label {
+	position: absolute;
+	left: 10px;
+	font-weight: normal;
+	font-size: 14pt;
+  text-align: left;
+}
 .form {
 	width: 85%;
 	margin:auto;
@@ -96,4 +120,8 @@ a:link, a:active, a:visited {
 }
 .th {
 	text-align:center;
+}
+.section-label {
+  font-size: 24pt;
+  text-decoration: underline;
 }
