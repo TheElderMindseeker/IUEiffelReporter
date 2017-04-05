@@ -37,9 +37,9 @@ feature -- Router
 		do
 			create fhdl.make_with_path (create {PATH}.make_from_string ("www"))
 			fhdl.set_directory_index (<<"index.html">>)
-			--router.handle ("/aaa", create{ADMIN_PAGE_HANDLER}.make, router.methods_post)
-			router.handle ("/form_send", create{FORM_HANDLER}.make, router.methods_post)
-			router.handle ("/", fhdl, router.methods_get_post)
+			--router.handle ("/admin_page", create{ADMIN_PAGE_HANDLER}.make, router.methods_get_post)
+			router.handle ("/form", create{FORM_HANDLER}.make, router.methods_get_post)
+			router.handle ("", fhdl, router.methods_get_post)
 			--router.handle ("/request", create {ADMIN_PAGE_HANDLER}, router.methods_get)
 		end
 

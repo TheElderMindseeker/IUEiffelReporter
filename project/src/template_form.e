@@ -31,8 +31,9 @@ feature {NONE} -- Initialization
 			p: PATH
 		do
 			create p.make_from_string ("www")
+			--p:=p.appended ("/templates")
 			set_template_folder (p)
-			set_template_file_name ("form.tpl")
+			set_template_file_name ("form_skeleton.tpl")
 			template_context.enable_verbose
 			template.analyze
 			template.get_output
@@ -66,19 +67,4 @@ feature -- Status
 
 	template: TEMPLATE_FILE
 
-feature --
-feature {NONE} -- Implementation
-
-	users : LIST[USER]
-		local
-			user : USER
-		do
-			create {ARRAYED_LIST[USER]}Result.make(5)
-			create user.make ("John","1234312")
-			Result.force(user)
-			create user.make ("Peter","123456")
-			Result.force(user)
-			create user.make ("Mike","2343221")
-			Result.force(user)
-		end
 end

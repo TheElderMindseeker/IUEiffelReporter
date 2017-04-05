@@ -28,9 +28,8 @@ feature
 		local
 			temp:TEMPLATE_FORM
 		do
+			page.set_status_code ({HTTP_STATUS_CODE}.ok)
 			create temp
-			--create path.make_current
---			create to_send.make (req)
 			if attached temp.output as body then
 				page.set_body(body)
 			end
