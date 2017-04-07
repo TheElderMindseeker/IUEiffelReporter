@@ -528,7 +528,7 @@ feature -- Utility
 			elseif attached {STRING_8} object as str then
 				create Result.make (name, create {STRING_REPRESENTABLE}.make (str))
 			elseif attached {DATE} object as date then
-				create Result.make (name, date)
+				create Result.make (name, create {FLOAT_REPRESENTABLE}.make (julianday (date)))
 			end
 		ensure
 			result_exists: Result /= Void
