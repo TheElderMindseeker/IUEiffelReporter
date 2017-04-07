@@ -1,4 +1,4 @@
-<!DOCTYPE html5>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>IU Reporter</title>
@@ -31,10 +31,10 @@
 					<tbody>
 						{foreach from="$reports" item="report"}
 						<tr>
-							<td>{$report.name/}</td>
-							<td>{$report.head/}</td>
-							<td>{$report.start_date/}</td>
-							<td>{$report.end_date/}</td>
+							<td>{$report.unit_name/}</td>
+							<td>{$report.head_name/}</td>
+							<td>{$report.rep_start/}</td>
+							<td>{$report.rep_end/}</td>
 							<td><a href="/details/{$report.id/}" class="btn btn-success" role="button">More details...</a></td>
 							<td><a href="/edit/{$report.id/}" class="btn btn-primary" role="button">Edit</a></td>
 							<td><a href="/delete/{$report.id/}" class="btn btn-danger" role="button">Delete</a></td>
