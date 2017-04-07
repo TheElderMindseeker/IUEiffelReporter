@@ -68,7 +68,7 @@ CREATE TABLE grants (
   granting_agency TEXT,
   start_date REAL,
   end_date REAL,
-  is_continuation BOOLEAN,
+  is_continuation TEXT,
   amount INTEGER,
   PRIMARY KEY (grant_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
