@@ -6,8 +6,9 @@
 		<link rel="stylesheet" type="text/css" href="../resources/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="../resources/bootstrap-theme.css" >
 		<script type="text/javascript" src="../resources/bootstrap.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script type="text/javascript" src="../resources/jquery-3.2.0.min.js"></script>
 		<link href="../resources/reporterlibrary.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="../resources/jquery.tablesorter.js"></script>
 	</head>
 	<body>
 		<div class="wrapper container">
@@ -15,7 +16,7 @@
 				<label class="logo-text">Administrative Panel</label>
 			</div>
 			<div class="form">
-				<table class="table" id="examinations">
+				<table class="table tablesorter" id="list-of-reports">
 					<thead>
 						<tr>
 							<th style="text-align: center;">Name of Unit</th>
@@ -34,9 +35,9 @@
 							<td>{$report.head/}</td>
 							<td>{$report.start_date/}</td>
 							<td>{$report.end_date/}</td>
-							<td>More details...</td>
-							<td>Edit</td>
-							<td>Delete</td>
+							<td><a href="/details/{$report.id/}" class="btn btn-success" role="button">More details...</a></td>
+							<td><a href="/edit/{$report.id/}" class="btn btn-primary" role="button">Edit</a></td>
+							<td><a href="/delete/{$report.id/}" class="btn btn-danger" role="button">Delete</a></td>
 						</tr>
 						{/foreach}
 					</tbody>
@@ -46,5 +47,12 @@
 		<div class="footer">
     Developed by <label class="team-logo">DANDy</label> team
   </div>
+	<script>
+		$(document).ready(function()
+			{
+				$("#list-of-reports").tablesorter();
+			}
+		);
+	</script>
 	</body>
 </html>

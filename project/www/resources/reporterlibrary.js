@@ -7,7 +7,6 @@ function addInput(tableId) {
 	var newNode = mainTable.rows[mainTable.rows.length - 1].cloneNode(true);
 	var array = newNode.getElementsByTagName('input');
 	for (i=0; i<array.length; i++) {
-		array[i].setAttribute('id', tableId + '-' + id + '-' + i);
 		array[i].setAttribute('onBlur', 'removeRow("' + tableId + '-' + id + '");');
 	}
 	tbody.insertBefore(newNode, mainTable.rows[mainTable.rows.length - 2]);
@@ -41,7 +40,6 @@ function sendForm(e){
 	    type:'POST',
 	    data: formData,
 	    success: function(res) {
-	      alert(res);
 	    }
 	  });
 	}
