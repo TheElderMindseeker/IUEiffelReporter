@@ -1,4 +1,4 @@
-<!DOCTYPE html5>
+student_reports<!DOCTYPE html>
 <html>
 	<head>
 		<title>IU Reporter</title>
@@ -76,10 +76,10 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td><input type="text" class="form-control input-in-table" name="courses-taught[][name]" placeholder="Required"/></td>
-							<td><input type="text" class="form-control input-in-table" name="courses-taught[][semester]" placeholder="Required"/></td>
-							<td><input type="text" class="form-control input-in-table" name="courses-taught[][level]" placeholder="Required"/></td>
-							<td><input type="text" class="form-control input-in-table" name="courses-taught[][numofst]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="courses[][course_name]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="courses[][semester]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="courses[][edu_level]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="courses[][num_students]" placeholder="Required"/></td>
 						</tr>
 						<tr>
 							<td><input type="text" class="form-control input-in-table" onClick="setTimeout(addInput('courses'), 500);" placeholder="Click to add new field" /></td>
@@ -88,10 +88,10 @@
 							<td><input type="text" class="form-control input-in-table" onClick="setTimeout(addInput('courses'), 500);" placeholder="" /></td>
 						</tr>
 						<tr id="to-show-courses" style="display: none;">
-							<td><input type="text" class="form-control input-in-table" name="courses-taught[][name]" placeholder="Required" /></td>
-							<td><input type="text" class="form-control input-in-table" name="courses-taught[][semester]" placeholder="Required" /></td>
-							<td><input type="text" class="form-control input-in-table" name="courses-taught[][level]" placeholder="Required" /></td>
-							<td><input type="text" class="form-control input-in-table" name="courses-taught[][numofst]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table" name="courses[][course_name]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table" name="courses[][semester]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table" name="courses[][edu_level]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table" name="courses[][num_students]" placeholder="Required" /></td>
 						</tr>
 					</tbody>
 				</table>
@@ -115,8 +115,8 @@
 						<tr>
 							<td><input type="text" class="form-control input-in-table" name="examinations[][name]" placeholder="Required"/></td>
 							<td><input type="text" class="form-control input-in-table" name="examinations[][semester]" placeholder="Required"/></td>
-							<td><input type="text" class="form-control input-in-table" name="examinations[][kindexam]" placeholder="Required"/></td>
-							<td><input type="text" class="form-control input-in-table" name="examinations[][numofst]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="examinations[][exam_kind]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="examinations[][num_students]" placeholder="Required"/></td>
 						</tr>
 						<tr>
 							<td><input type="text" class="form-control input-in-table" onClick="setTimeout(addInput('examinations'), 500);" placeholder="Click to add new field" /></td>
@@ -127,8 +127,8 @@
 						<tr id="to-show-examinations" style="display: none;">
 							<td><input type="text" class="form-control input-in-table" name="examinations[][name]" placeholder="Required" /></td>
 							<td><input type="text" class="form-control input-in-table" name="examinations[][semester]" placeholder="Required" /></td>
-							<td><input type="text" class="form-control input-in-table" name="examinations[][kindexam]" placeholder="Required" /></td>
-							<td><input type="text" class="form-control input-in-table" name="examinations[][numofst]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table" name="examinations[][exam_kind]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table" name="examinations[][num_students]" placeholder="Required" /></td>
 						</tr>
 					</tbody>
 				</table>
@@ -139,7 +139,7 @@
 				</div>
 			</div>
 			<div class="form-group row">
-				<table class="table" id="students-supervised">
+				<table class="table" id="supervised_students">
 					<thead>
 						<tr>
 							<th style="text-align: center;">Name of Student</th>
@@ -148,27 +148,27 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td><input type="text" class="form-control input-in-table" name="students-supervised[][name]" placeholder="Required"/></td>
-							<td><input type="text" class="form-control input-in-table" name="students-supervised[][worknature]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="supervised_students[][student_name]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="supervised_students[][nature_of_work]" placeholder="Required"/></td>
 						</tr>
 						<tr>
-							<td><input type="text" class="form-control input-in-table" onClick="setTimeout(addInput('students-supervised'), 500);" placeholder="Click to add new field" /></td>
-							<td><input type="text" class="form-control input-in-table" onClick="setTimeout(addInput('students-supervised'), 500);" placeholder="" /></td>
+							<td><input type="text" class="form-control input-in-table" onClick="setTimeout(addInput('supervised_students'), 500);" placeholder="Click to add new field" /></td>
+							<td><input type="text" class="form-control input-in-table" onClick="setTimeout(addInput('supervised_students'), 500);" placeholder="" /></td>
 						</tr>
-						<tr id="to-show-students-supervised" style="display: none;">
-							<td><input type="text" class="form-control input-in-table" name="students-supervised[][name]" placeholder="Required" /></td>
-							<td><input type="text" class="form-control input-in-table" name="students-supervised[][worknature]" placeholder="Required" /></td>
+						<tr id="to-show-supervised_students" style="display: none;">
+							<td><input type="text" class="form-control input-in-table" name="supervised_students[][name]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table" name="supervised_students[][worknature]" placeholder="Required" /></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<div class="form-group row">
 				<div class="col-sm-6 col-md-6">
-					<label for="complete-st-reps" class="control-label">Completed student reports</label>
+					<label for="student_reports" class="control-label">Completed student reports</label>
 				</div>
 			</div>
 			<div class="form-group row">
-				<table class="table" id="comp-stur-rep">
+				<table class="table" id="student_reports">
 					<thead>
 						<tr>
 							<th style="text-align: center;">Name of Student</th>
@@ -178,26 +178,26 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td><input type="text" class="form-control input-in-table" name="comp-stur-rep[][name]" placeholder="Required"/></td>
-							<td><input type="text" class="form-control input-in-table" name="comp-stur-rep[][title]" placeholder="Required"/></td>
-							<td><input type="text" class="form-control input-in-table" name="comp-stur-rep[][publish]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="student_reports[][student_name]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="student_reports[][title]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="student_reports[][publication_plans]" placeholder="Required"/></td>
 						</tr>
 						<tr>
-							<td><input type="text" class="form-control input-in-table" onClick="setTimeout(addInput('comp-stur-rep'), 500);" placeholder="Click to add new field" /></td>
-							<td><input type="text" class="form-control input-in-table" onClick="setTimeout(addInput('comp-stur-rep'), 500);" placeholder="" /></td>
-							<td><input type="text" class="form-control input-in-table" onClick="setTimeout(addInput('comp-stur-rep'), 500);" placeholder="" /></td>
+							<td><input type="text" class="form-control input-in-table" onClick="setTimeout(addInput('student_reports'), 500);" placeholder="Click to add new field" /></td>
+							<td><input type="text" class="form-control input-in-table" onClick="setTimeout(addInput('student_reports'), 500);" placeholder="" /></td>
+							<td><input type="text" class="form-control input-in-table" onClick="setTimeout(addInput('student_reports'), 500);" placeholder="" /></td>
 						</tr>
-						<tr id="to-show-comp-stur-rep" style="display: none;">
-							<td><input type="text" class="form-control input-in-table" name="comp-stur-rep[][name]" placeholder="Required" /></td>
-							<td><input type="text" class="form-control input-in-table" name="comp-stur-rep[][title]" placeholder="Required" /></td>
-							<td><input type="text" class="form-control input-in-table" name="comp-stur-rep[][publish]" placeholder="Required" /></td>
+						<tr id="to-show-student_reports" style="display: none;">
+							<td><input type="text" class="form-control input-in-table" name="student_reports[][student_name]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table" name="student_reports[][title]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table" name="student_reports[][publication_plans]" placeholder="Required" /></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<div class="form-group row">
 				<div class="col-sm-6 col-md-6">
-					<label for="complete-phd" class="control-label">Completed PhD theses</label>
+					<label for="comp-phd" class="control-label">Completed PhD theses</label>
 				</div>
 			</div>
 			<div class="form-group row">

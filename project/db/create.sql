@@ -68,7 +68,7 @@ CREATE TABLE grants (
   granting_agency TEXT,
   start_date REAL,
   end_date REAL,
-  is_continuation BOOLEAN,
+  is_continuation TEXT,
   amount INTEGER,
   PRIMARY KEY (grant_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
@@ -94,8 +94,7 @@ CREATE TABLE research_collaborations (
   installation_name TEXT,
   installation_department TEXT,
   principal_contact_name TEXT,
-  other_contact_names TEXT,
-  nature_of_collaboration TEXT,
+  contacts TEXT,
   PRIMARY KEY (research_collaboration_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
 );
@@ -103,7 +102,6 @@ CREATE TABLE research_collaborations (
 CREATE TABLE publications (
   publication_id INTEGER,
   report_id INTEGER,
-  publication_type TEXT,
   publication_name TEXT,
   PRIMARY KEY (publication_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)

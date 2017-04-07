@@ -7,7 +7,6 @@ function addInput(tableId) {
 	var newNode = mainTable.rows[mainTable.rows.length - 1].cloneNode(true);
 	var array = newNode.getElementsByTagName('input');
 	for (i=0; i<array.length; i++) {
-		array[i].setAttribute('id', tableId + '-' + id + '-' + i);
 		array[i].setAttribute('onBlur', 'removeRow("' + tableId + '-' + id + '");');
 	}
 	tbody.insertBefore(newNode, mainTable.rows[mainTable.rows.length - 2]);
@@ -37,7 +36,7 @@ function sendForm(e){
 	if (checkRequired(document.getElementById('mainForm'))) {
 		var formData = JSON.stringify($('#mainForm').serializeJSON());
 	  $.ajax({
-	    url:'http://localhost:3849/form',
+	    url:'http://localhost/',
 	    type:'POST',
 	    data: formData,
 	    success: function(res) {

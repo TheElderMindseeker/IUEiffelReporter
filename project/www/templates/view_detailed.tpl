@@ -1,4 +1,4 @@
-<!DOCTYPE html5>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>IU Reporter</title>
@@ -25,7 +25,7 @@
 					<label class="control-label">Name of unit</label>
 				</div>
 				<div class="col-sm-6 col-md-6">
-					<label class="view-label">{$name_of_unit/}</label>
+					<label class="view-label">{$unit_name/}</label>
 				</div>
 			</div>
 			<div class="form-group row" style="margin-bottom: 25px;">
@@ -33,7 +33,7 @@
 					<label class="control-label">Name of head of unit</label>
 				</div>
 				<div class="col-sm-6 col-md-6">
-					<label class="view-label">{$name_of_head_of_unit/}</label>
+					<label class="view-label">{$head_name/}</label>
 				</div>
 			</div>
 			<div class="form-group row" style="margin-bottom: 25px;">
@@ -41,7 +41,7 @@
 					<label class="control-label">Start of Reporting Period</label>
 				</div>
 				<div class="col-sm-6 col-md-6">
-					<label class="view-label">{$start_date/}</label>
+					<label class="view-label">{$rep_start/}</label>
 				</div>
 			</div>
 			<div class="form-group row" style="margin-bottom: 25px;">
@@ -49,7 +49,7 @@
 					<label class="control-label">End of Reporting Period</label>
 				</div>
 				<div class="col-sm-6 col-md-6">
-					<label class="view-label">{$end_date/}</label>
+					<label class="view-label">{$rep_end/}</label>
 				</div>
 			</div>
 			<div class="form-group row">
@@ -75,10 +75,10 @@
 					<tbody>
 						{foreach from="$courses" item="course"}
 						<tr>
-							<td>{$course.name/}</td>
+							<td>{$course.course_name/}</td>
 							<td>{$course.semester/}</td>
-							<td>{$course.level/}</td>
-							<td>{$course.numofst/}</td>
+							<td>{$course.edu_level/}</td>
+							<td>{$course.num_students/}</td>
 						</tr>
 						{/foreach}
 					</tbody>
@@ -102,10 +102,10 @@
 					<tbody>
 						{foreach from="$examinations" item="exam"}
 						<tr>
-							<td>{$exam.name/}</td>
+							<td>{$exam.course_name/}</td>
 							<td>{$exam.semester/}</td>
-							<td>{$exam.kindexam/}</td>
-							<td>{$exam.numofst/}</td>
+							<td>{$exam.exam_kind/}</td>
+							<td>{$exam.num_students/}</td>
 						</tr>
 						{/foreach}
 					</tbody>
@@ -113,11 +113,11 @@
 			</div>
 			<div class="form-group row">
 				<div class="col-sm-6 col-md-6">
-					<label for="student-supervised" class="control-label">Students supervised</label>
+					<label for="supervised_students" class="control-label">Students supervised</label>
 				</div>
 			</div>
 			<div class="form-group row">
-				<table class="table" id="students-supervised">
+				<table class="table" id="supervised_students">
 					<thead>
 						<tr>
 							<th style="text-align: center;">Name of Student</th>
@@ -125,10 +125,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						{foreach from="$students-supervised" item="student"}
+						{foreach from="$supervised_students" item="student"}
 						<tr>
-							<td>{$student.name/}</td>
-							<td>{$student.worknature/}</td>
+							<td>{$student.student_name/}</td>
+							<td>{$student.nature_of_work/}</td>
 						</tr>
 						{/foreach}
 					</tbody>
@@ -136,11 +136,11 @@
 			</div>
 			<div class="form-group row">
 				<div class="col-sm-6 col-md-6">
-					<label for="complete-st-reps" class="control-label">Completed student reports</label>
+					<label for="student_reports" class="control-label">Completed student reports</label>
 				</div>
 			</div>
 			<div class="form-group row">
-				<table class="table" id="comp-stur-rep">
+				<table class="table" id="student_reports">
 					<thead>
 						<tr>
 							<th style="text-align: center;">Name of Student</th>
@@ -149,11 +149,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						{foreach from="$comp-stur-rep" item="report"}
+						{foreach from="$student_reports" item="report"}
 						<tr>
-							<td>{$report.name/}</td>
+							<td>{$report.student_name/}</td>
 							<td>{$report.title/}</td>
-							<td>{$report.publish/}</td>
+							<td>{$report.publication_plans/}</td>
 						</tr>
 						{/foreach}
 					</tbody>
@@ -161,11 +161,11 @@
 			</div>
 			<div class="form-group row">
 				<div class="col-sm-6 col-md-6">
-					<label for="complete-phd" class="control-label">Completed PhD theses</label>
+					<label for="completed_phd" class="control-label">Completed PhD theses</label>
 				</div>
 			</div>
 			<div class="form-group row">
-				<table class="table" id="comp-phd">
+				<table class="table" id="completed_phd">
 					<thead>
 						<tr>
 							<th style="text-align: center;">Student Name</th>
@@ -177,14 +177,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						{foreach from="$comp-phd" item="phd"}
+						{foreach from="$completed_phd" item="phd"}
 						<tr>
-							<td>{$phd.studentname/}</td>
+							<td>{$phd.student_name/}</td>
 							<td>{$phd.degree/}</td>
-							<td>{$phd.supervisorname/}</td>
-							<td>{$phd.commettee/}</td>
-							<td>{$phd.institution/}</td>
-							<td>{$phd.title/}</td>
+							<td>{$phd.supervisor_name/}</td>
+							<td>{$phd.other_committee_members/}</td>
+							<td>{$phd.degree_granting_installation/}</td>
+							<td>{$phd.dissertation_title/}</td>
 						</tr>
 						{/foreach}
 					</tbody>
@@ -206,7 +206,8 @@
 						<tr>
 							<th style="text-align: center;">Title of Project</th>
 							<th style="text-align: center;">Granting Agency</th>
-							<th style="text-align: center;">Period Covered by Grant</th>
+							<th style="text-align: center;">Start Date of the Period Covered by Grant</th>
+							<th style="text-align: center;">End Date</th>
 							<th style="text-align: center;">Whether Continuation of Other Grant</th>
 							<th style="text-align: center;">Amount</th>
 						</tr>
@@ -214,10 +215,11 @@
 					<tbody>
 						{foreach from="$grants" item="grant"}
 						<tr>
-							<td>{$grant.title/}</td>
-							<td>{$grant.agency/}</td>
-							<td>{$grant.period/}</td>
-							<td>{$grant.continuation/}</td>
+							<td>{$grant.project_title/}</td>
+							<td>{$grant.granting_agency/}</td>
+							<td>{$grant.start_date/}</td>
+							<td>{$grant.end_date/}</td>
+							<td>{$grant.is_continuation/}</td>
 							<td>{$grant.amount/}</td>
 						</tr>
 						{/foreach}
@@ -226,11 +228,11 @@
 			</div>
 			<div class="form-group row">
 				<div class="col-sm-6 col-md-6">
-					<label for="research-proj" class="control-label">Research projects</label>
+					<label for="research_projects" class="control-label">Research projects</label>
 				</div>
 			</div>
 			<div class="form-group row">
-				<table class="table" id="research-proj">
+				<table class="table" id="rresearch_projects">
 					<thead>
 						<tr>
 							<th style="text-align: center;">Title of Project</th>
@@ -242,14 +244,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						{foreach from="$research-proj" item="project"}
+						{foreach from="$research_projects" item="project"}
 						<tr>
-							<td>{$project.title/}</td>
-							<td>{$project.iuperson/}</td>
-							<td>{$project.extperson/}</td>
-							<td>{$project.start/}</td>
-		  				<td>{$project.end/}</td>
-			  			<td>{$project.finance/}</td>
+							<td>{$project.project_title/}</td>
+							<td>{$project.iu_personnel_involved/}</td>
+							<td>{$project.external_personnel_involved/}</td>
+							<td>{$project.start_date/}</td>
+		  				<td>{$project.expected_end_date/}</td>
+			  			<td>{$project.financial_sources/}</td>
 						</tr>
 						{/foreach}
 					</tbody>
@@ -257,26 +259,28 @@
 			</div>
 			<div class="form-group row">
 				<div class="col-sm-6 col-md-6">
-					<label for="research-collabs" class="control-label">Research collaborations</label>
+					<label for="research_collaborations" class="control-label">Research collaborations</label>
 				</div>
 			</div>
 			<div class="form-group row">
-				<table class="table" id="research-collabs">
+				<table class="table" id="research_collaborations">
 					<thead>
 						<tr>
 							<th style="text-align: center;">Country of Institution</th>
 							<th style="text-align: center;">Name of Institution</th>
+							<th style="text-align: center;">Department</th>
 							<th style="text-align: center;">Names of Important Contacts</th>
 							<th style="text-align: center;">Nature of Collaboration</th>
 						</tr>
 					</thead>
 					<tbody>
-						{foreach from="$research-collabs" item="collab"}
+						{foreach from="$research_collaborations" item="collaboration"}
 						<tr>
-							<td>{$collab.country/}</td>
-							<td>{$collab.institution/}</td>
-							<td>{$collab.contacts/}</td>
-							<td>{$collab.nature/}</td>
+							<td>{$collaboration.installation_country/}</td>
+							<td>{$collaboration.installation_name/}</td>
+							<td>{$collaboration.installation_department/}</td>
+							<td>{$collaboration.contacts/}</td>
+							<td>{$collaboration.nature_of_collaboration/}</td>
 						</tr>
 						{/foreach}
 					</tbody>
@@ -284,35 +288,17 @@
 			</div>
 			<div class="form-group row">
 				<div class="col-sm-6 col-md-6">
-					<label for="conf-pubs" class="control-label">Conference publications</label>
+					<label for="publications" class="control-label">Conference and Journal Publications</label>
 				</div>
 			</div>
 			<div class="form-group row">
-				<table class="table" id="conf-pubs">
+				<table class="table" id="publications">
 					<thead>
 					</thead>
 					<tbody>
-						{foreach from="$conf-pubs" item="pub"}
+						{foreach from="$publications" item="publication"}
 						<tr>
-							<td>{$pub.text/}</td>
-						</tr>
-						{/foreach}
-					</tbody>
-				</table>
-			</div>
-			<div class="form-group row">
-				<div class="col-sm-6 col-md-6">
-					<label for="journal-pubs" class="control-label">Journal publications</label>
-				</div>
-			</div>
-			<div class="form-group row">
-				<table class="table" id="journal-pubs">
-					<thead>
-					</thead>
-					<tbody>
-						{foreach from="$journal-pubs" item="journal"}
-						<tr>
-							<td>{$journal.text/}</td>
+							<td>{$publication.publication_name/}</td>
 						</tr>
 						{/foreach}
 					</tbody>

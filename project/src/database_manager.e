@@ -21,7 +21,6 @@ feature {NONE} -- Initialization
 			is_initialized := False
 			has_error := False
 			current_report_id := -1
-			create types.default_create
 			if (create {RAW_FILE}.make_with_name (db_file_name)).exists then
 				create database.make_open_read_write (db_file_name)
 				is_initialized := True
@@ -29,6 +28,7 @@ feature {NONE} -- Initialization
 				create database.make_create_read_write (db_file_name)
 				initialize
 			end
+			gather_table_info
 		ensure
 			database_exists: database /= Void
 			database_initialized: is_initialized
@@ -39,8 +39,8 @@ feature {NONE} -- Implementation
 	database: SQLITE_DATABASE
 			-- SQLite database connector
 
-	types: SQLITE_TYPE
-			-- SQL database types
+	field_info: HASH_TABLE [TUPLE [tbl_name, arg_type: STRING_8], STRING_8]
+			-- Inner database fields info for fast search by `which_table' feature
 
 	initialize
 			-- Initiailze the database by creating necessary tables
@@ -74,18 +74,13 @@ feature {NONE} -- Implementation
 			row_exists: row /= Void
 			column_exists: 0 < column and column <= row.count
 		do
-			if row.type (column) = types.integer then
-				list.extend (create {FIELD}.make (row.column_name (column),
-						create {INTEGER_REPRESENTABLE}.make (row.integer_value (column))))
-			elseif row.type (column) = types.text then
-				list.extend (create {FIELD}.make (row.column_name (column),
-						create {STRING_REPRESENTABLE}.make (row.string_value (column))))
-			elseif row.type (column) = types.float then
-				list.extend (create {FIELD}.make (row.column_name (column),
-						create {FLOAT_REPRESENTABLE}.make (row.real_value (column))))
+			if attached row.value (column) as c_value then
+				if attached create_field (row.column_name (column), c_value) as field then
+					list.extend (field)
+				end
 			end
 		ensure
-			-- TODO: add reasonable contracts here
+			list_extended: list.count = old list.count + 1
 		end
 
 	fill_table (r_table: detachable LINKED_LIST [LINKED_LIST [FIELD]]; cursor: SQLITE_STATEMENT_ITERATION_CURSOR)
@@ -123,6 +118,90 @@ feature {NONE} -- Implementation
 			table_exists: r_table /= Void
 		end
 
+	insert_report_row (arguments: ITERABLE [FIELD])
+			-- Inserts new report row into the database
+		require
+			database_initialized: is_initialized
+			no_error: not has_error
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			q_row: SQLITE_RESULT_ROW
+			s_query: STRING_8
+		do
+			single_insert ("reports", arguments)
+			s_query := "SELECT last_insert_rowid();"
+			create query_statement.make (s_query, database)
+			cursor := query_statement.execute_new
+			if not (query_statement.has_error or has_error) then
+				cursor.start
+				q_row := cursor.item
+				current_report_id := q_row.integer_value (1)
+			end
+		ensure
+			valid_current_report_id: not has_error implies current_report_id >= 0
+		end
+
+	gather_table_info
+			-- Process tables from the database for fast field search
+		require
+			database_initialized: is_initialized
+			no_error: not has_error
+		local
+			key: STRING_8
+			query_statement: SQLITE_QUERY_STATEMENT
+			s_query: STRING_8
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			q_row: SQLITE_RESULT_ROW
+			tables: LINKED_LIST [STRING_8]
+		do
+			create field_info.make_equal (100)
+			field_info.compare_objects
+			create tables.make
+			s_query := "SELECT tbl_name FROM sqlite_master;"
+			create query_statement.make (s_query, database)
+			from
+				cursor := query_statement.execute_new
+			until
+				cursor.after
+			loop
+				q_row := cursor.item
+				tables.extend (q_row.string_value (1))
+				cursor.forth
+			end
+			from
+				tables.start
+			until
+				tables.after
+			loop
+				s_query := "PRAGMA table_info(" + tables.item + ");"
+				create query_statement.make (s_query, database)
+				if not query_statement.has_error then
+					from
+						cursor := query_statement.execute_new
+					until
+						cursor.after
+					loop
+						q_row := cursor.item
+						key := q_row.string_value (2)
+						if attached key and then not field_info.has (key) then
+							field_info.put (create {TUPLE [tbl_name, arg_type: STRING_8]}.default_create, key)
+							if attached field_info.at (key) as tuple then
+								tuple.put (key, 1)
+								if attached q_row.string_value (3) as arg_type then
+									tuple.put (arg_type, 2)
+								end
+							end
+						end
+						cursor.forth
+					end
+				end
+				tables.forth
+			end
+		ensure
+			field_info_exists: field_info /= Void
+		end
+
 feature -- Access
 
 	is_initialized: BOOLEAN
@@ -146,28 +225,20 @@ feature -- Management
 			has_no_error: not has_error
 		end
 
-	create_report (arguments: ITERABLE [FIELD])
+	create_report (unit_name, head_name: STRING_8; rep_start, rep_end: DATE)
 			-- Creates new report and generates new `report_id'
 		require
-			database_initialized: is_initialized
-			no_error: not has_error
+			arguments_exist: unit_name /= Void and head_name /= Void and
+					rep_start /= Void and rep_end /= Void
 		local
-			query_statement: SQLITE_QUERY_STATEMENT
-			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
-			q_row: SQLITE_RESULT_ROW
-			s_query: STRING_8
+			arguments: LINKED_LIST [FIELD]
 		do
-			single_insert ("reports", arguments)
-			s_query := "SELECT last_insert_rowid();"
-			create query_statement.make (s_query, database)
-			cursor := query_statement.execute_new
-			if not (query_statement.has_error or has_error) then
-				cursor.start
-				q_row := cursor.item
-				current_report_id := q_row.integer_value (1)
-			end
-		ensure
-			valid_current_report_id: not has_error implies current_report_id >= 0
+			create arguments.make
+			arguments.extend (create {FIELD}.make ("unit_name", create {STRING_REPRESENTABLE}.make (unit_name)))
+			arguments.extend (create {FIELD}.make ("head_name", create {STRING_REPRESENTABLE}.make (head_name)))
+			arguments.extend (create {FIELD}.make ("rep_start", rep_start))
+			arguments.extend (create {FIELD}.make ("rep_end", rep_end))
+			insert_report_row (arguments)
 		end
 
 	single_insert (table_name: STRING_8; arguments: ITERABLE [FIELD])
@@ -505,6 +576,49 @@ feature -- Utility
 			end
 		end
 
+	create_field (name: STRING_8; object: ANY): detachable FIELD
+			-- Create FIELD instance from given `name' and `object'
+		require
+			name_exists: name /= Void
+			name_not_empty: name.count > 0
+			object_exists: object /= Void
+			object_has_supported_type: attached {INTEGER} object or attached {REAL} object or
+					attached {STRING_8} object or attached {DATE} object
+		do
+			if attached {INTEGER} object as int then
+				create Result.make (name, create {INTEGER_REPRESENTABLE}.make (int))
+			elseif attached {REAL} object as float then
+				create Result.make (name, create {FLOAT_REPRESENTABLE}.make (float))
+			elseif attached {STRING_8} object as str then
+				create Result.make (name, create {STRING_REPRESENTABLE}.make (str))
+			elseif attached {DATE} object as date then
+				create Result.make (name, create {FLOAT_REPRESENTABLE}.make (julianday (date)))
+			end
+		ensure
+			result_exists: Result /= Void
+		end
+
+	has_field (name: STRING_8): BOOLEAN
+			-- Tell if there is field with provided name in the database
+		require
+			name_exists: name /= Void
+			name_not_empty: name.count > 0
+		do
+			Result := field_info.has (name)
+		end
+
+	which_table (name: STRING_8): detachable TUPLE [tbl_name, arg_type: STRING_8]
+			-- Tell in which table lies field given by `name'
+		require
+			name_exists: name /= Void
+			name_not_empty: name.count > 0
+			field_exists: has_field (name)
+		do
+			Result := field_info.at (name)
+		ensure
+			Result /= Void
+		end
+
 feature {QUERY_MANAGER} -- Specific queries
 
 	list_laboratories: ITERABLE [STRING_8]
@@ -538,8 +652,6 @@ feature {QUERY_MANAGER} -- Specific queries
 		ensure
 			result_exists: Result /= Void
 		end
-
-	-- TODO: A lot of repeating code. DRY it
 
 	cumulative_info (start_date, end_date: DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
 			-- Query cumulative info of the given `laboratory' unit
@@ -648,10 +760,7 @@ feature {QUERY_MANAGER} -- Specific queries
 		local
 			query_statement: SQLITE_QUERY_STATEMENT
 			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
-			q_row: SQLITE_RESULT_ROW
 			s_query: STRING_8
-			table_row: LINKED_LIST [FIELD]
-			column: NATURAL
 		do
 			s_query := "SELECT rep.unit_name, SUM(1) collaborations FROM reports rep INNER JOIN grants gr" +
 					" ON rep.report_id = gr.report_id"

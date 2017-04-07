@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {ADMIN_PAGE_HANDLER}."
+	description: "handels administrator's panel"
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
@@ -25,12 +25,13 @@ feature
 feature
 	execute (req: WSF_REQUEST; res: WSF_RESPONSE)
 			-- Execute handler for `req' and respond in `res'.
+			-- returns administator panel
 		local
 			temp:TEMPLATE_ADMIN_PAGE
 		do
 			page.set_status_code ({HTTP_STATUS_CODE}.ok)
 			create temp
-			if attached temp.output as body then
+			if attached temp.get_output as body then
 				page.set_body(body)
 			end
 			res.send (page)

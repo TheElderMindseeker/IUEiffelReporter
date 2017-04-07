@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {FORM_HANDLER}."
+	description: " handels form page"
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
@@ -17,6 +17,7 @@ create
 feature
 
 	make
+			--creates page
 		do
 			create page.make
 		end
@@ -25,6 +26,8 @@ feature
 
 	execute (req: WSF_REQUEST; res: WSF_RESPONSE)
 			-- Execute handler for `req' and respond in `res'.
+			-- returns form if GET request
+			-- handles json data if POST request
 		local
 			temp_form: TEMPLATE_FORM
 			form_parser:FORM_PARSER
@@ -44,7 +47,7 @@ feature
 						page.set_status_code ({HTTP_STATUS_CODE}.ok)
 						create str.make (con_len.to_integer_32)
 						req.read_input_data_into (str)
-						create form_parser
+						create form_parser.make
 						form_parser.parse_and_add_to_db(str)
 					end
 				end
@@ -54,5 +57,6 @@ feature
 feature {NONE}
 
 	page: WSF_HTML_PAGE_RESPONSE
+		--page to return
 
 end

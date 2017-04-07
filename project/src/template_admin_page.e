@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {HTML_TABLE_TEMPLATE}."
+	description: "creates admin page  from /www/templates/form.tpl and adds needed data from database"
 	author: ""
 	date: "$Date: 2013-08-02 01:17:37 -0800 (Fri, 02 Aug 2013) $"
 	revision: "$Revision: 92838 $"
@@ -25,8 +25,7 @@ create
 feature {NONE} -- Initialization
 
 	default_create
-
-			-- Initialize `Current'.
+			-- reades template for admin page, it will be availible in get_output
 		local
 			p: PATH
 		do
@@ -43,12 +42,14 @@ feature {NONE} -- Initialization
 			end
 		end
 
-feature -- Status
+feature -- output
 	get_output: detachable STRING
+		--returns template
 	do
 		Result:=output
 	end
 
+feature {NONE} --Status
 	output: detachable STRING
 
 	set_template_folder (v: PATH)
@@ -71,9 +72,9 @@ feature -- Status
 	reports : LIST[REPORT]
 		do
 			create {ARRAYED_LIST[REPORT]}Result.make(5)
-			Result.force(create {REPORT}.make ("n1", "head1", "a_start_date1", "a_end_date1"))
-			Result.force(create {REPORT}.make ("n2", "head2", "a_start_date2", "a_end_date2"))
-			Result.force(create {REPORT}.make ("n3", "head3", "a_start_date3", "a_end_date3"))
-			Result.force(create {REPORT}.make ("n4", "head4", "a_start_date4", "a_end_date4"))
+			Result.force(create {REPORT}.make ("n1", "head1", "a_start_date1", "a_end_date1", 0))
+			Result.force(create {REPORT}.make ("n2", "head2", "a_start_date2", "a_end_date2", 0))
+			Result.force(create {REPORT}.make ("n3", "head3", "a_start_date3", "a_end_date3", 0))
+			Result.force(create {REPORT}.make ("n4", "head4", "a_start_date4", "a_end_date4", 0))
 		end
 end

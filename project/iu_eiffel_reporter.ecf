@@ -16,16 +16,24 @@
 		</capability>
 		<library name="base" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
 		<library name="http" location="$ISE_LIBRARY\contrib\library\network\protocol\http\http-safe.ecf"/>
+		<library name="json" location="$ISE_LIBRARY\contrib\library\text\parser\json\library\json.ecf"/>
 		<library name="sqlite" location="$ISE_LIBRARY\unstable\library\persistency\database\sqlite3\sqlite-safe.ecf"/>
+		<library name="template_smarty" location="$ISE_LIBRARY\contrib\library\text\template\smarty\smarty.ecf"/>
 		<library name="wsf" location="$ISE_LIBRARY\contrib\library\web\framework\ewf\wsf\wsf-safe.ecf"/>
 	</target>
 	<target name="iu_eiffel_reporter_any" extends="common">
 		<root class="IU_EIFFEL_REPORTER" feature="make_and_launch"/>
+		<capability>
+			<catcall_detection support="none"/>
+			<concurrency support="thread"/>
+			<void_safety support="transitional"/>
+		</capability>
 		<library name="standalone" location="$ISE_LIBRARY\contrib\library\web\framework\ewf\wsf\connector\standalone-safe.ecf"/>
 		<cluster name="launcher" location=".\launcher\">
 			<cluster name="any_launcher" location="$|any\"/>
 		</cluster>
-		<cluster name="src" location=".\src\" recursive="true"/>
+		<cluster name="src" location=".\src\" recursive="true">
+		</cluster>
 	</target>
 	<target name="iu_eiffel_reporter_standalone" extends="common">
 		<root class="IU_EIFFEL_REPORTER" feature="make_and_launch"/>
@@ -36,8 +44,6 @@
 		</capability>
 		<variable name="httpd_ssl_disabled" value="true"/>
 		<library name="default_standalone" location="$ISE_LIBRARY\contrib\library\web\framework\ewf\wsf\default\standalone-safe.ecf"/>
-		<library name="json" location="$ISE_LIBRARY\contrib\library\text\parser\json\library\json.ecf"/>
-		<library name="template_smarty" location="$ISE_LIBRARY\contrib\library\text\template\smarty\smarty.ecf"/>
 		<cluster name="launcher" location=".\launcher\">
 			<cluster name="default_launcher" location="$|default\"/>
 		</cluster>
@@ -45,14 +51,13 @@
 			<file_rule>
 				<exclude>^templates$</exclude>
 			</file_rule>
-			<file_rule>
-				<exclude>^templates$</exclude>
-			</file_rule>
-			<file_rule>
-				<exclude>^templates$</exclude>
-			</file_rule>
 		</cluster>
 	</target>
 	<target name="iu_eiffel_reporter" extends="iu_eiffel_reporter_any">
+		<capability>
+			<catcall_detection support="none"/>
+			<concurrency support="thread"/>
+			<void_safety support="transitional"/>
+		</capability>
 	</target>
 </system>
