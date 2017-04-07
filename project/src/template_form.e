@@ -31,10 +31,10 @@ feature {NONE} -- Initialization
 			p: PATH
 		do
 			create p.make_from_string ("www")
-			--p:=p.appended ("/templates")
+			p:=p.appended ("/templates")
 			set_template_folder (p)
-			set_template_file_name ("form_skeleton.tpl")
-			template_context.enable_verbose
+			set_template_file_name ("form.tpl")
+			--template_context.enable_verbose
 			template.analyze
 			template.get_output
 			if attached template.output as l_output then

@@ -26,7 +26,7 @@ feature
 	execute (req: WSF_REQUEST; res: WSF_RESPONSE)
 			-- Execute handler for `req' and respond in `res'.
 		local
-			temp:TEMPLATE_FORM
+			temp:TEMPLATE_ADMIN_PAGE
 		do
 			page.set_status_code ({HTTP_STATUS_CODE}.ok)
 			create temp

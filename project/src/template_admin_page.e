@@ -5,7 +5,7 @@ note
 	revision: "$Revision: 92838 $"
 
 class
-	HTML_TABLE_TEMPLATE
+	TEMPLATE_ADMIN_PAGE
 
 inherit
 
@@ -30,23 +30,26 @@ feature {NONE} -- Initialization
 		local
 			p: PATH
 		do
-			create p.make_from_string ("tpl")
+			create p.make_from_string ("www")
+			p:=p.appended ("/templates")
 			set_template_folder (p)
-			set_template_file_name ("form.tpl")
-		--	template.add_value (users,"users")
-	--		template_context.enable_verbose
+			set_template_file_name ("admin.tpl")
+			template.add_value (<<"bob","jim","joe","jerry","fred","niyaz","pain">>, "names")
+			--template_context.enable_verbose
 			template.analyze
 			template.get_output
 			if attached template.output as l_output then
 				output := l_output
-			else
-				output:="nothing to set"
 			end
 		end
 
 feature -- Status
+	get_output: detachable STRING
+	do
+		Result:=output
+	end
 
-	output: READABLE_STRING_8
+	output: detachable STRING
 
 	set_template_folder (v: PATH)
 		do
@@ -65,19 +68,4 @@ feature -- Status
 
 	template: TEMPLATE_FILE
 
-feature --
-feature {NONE} -- Implementation
-
-	users : LIST[USER]
-		local
-			user : USER
-		do
-			create {ARRAYED_LIST[USER]}Result.make(5)
-			create user.make ("John","1234312")
-			Result.force(user)
-			create user.make ("Peter","123456")
-			Result.force(user)
-			create user.make ("Mike","2343221")
-			Result.force(user)
-		end
 end

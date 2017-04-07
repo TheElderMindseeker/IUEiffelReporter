@@ -11,49 +11,40 @@ create make
 
 feature
 
-	make(json_content:STRING)
-			-- Initialize `Current'.
+	make(str:STRING)
 		local
 			parser: JSON_PARSER
-			printer: JSON_PRETTY_STRING_VISITOR
-			s: STRING_32
 		do
-				-- Create parser for content `json_content'
-			create parser.make_with_string (json_content)
-				-- Parse the content
+			create parser.make_with_string (str)
 			parser.parse_content
-			if parser.is_valid and then attached parser.parsed_json_value as jv then
-					-- Json content is valid, and well parsed.
-					-- and the parsed json value is `jv'
-
-					-- Let's access the glossary/title value
---				if attached {JSON_OBJECT} jv as j_ob then
---					across {LINKED_LIST[STRING]} list_of_names as name loop
---						if attached {JSON_OBJECT} j_object.item (name) as ob then
---						end
---					end
---				end
-				if attached {JSON_OBJECT} jv as j_object and then attached {JSON_OBJECT} j_object.item ("name") as j_name then
-					print ("name is %"" + j_name.representation + "%".%N")
-				else
-					print ("name was not found!%N")
+			if parser.is_parsed and then parser.is_valid and then attached parser.parsed_json_value as jv then
+				if attached {JSON_OBJECT} jv as j_object then
+					across
+						j_object.current_keys as j_key
+					loop
+						if attached {JSON_STRING} j_object.item (j_key.item) as j_string and then not j_string.representation.same_string ("%"%"") then
+							print ("key of string: " + j_key.item.representation + " string: " + j_string.representation + "%N")
+						end
+						if attached {JSON_ARRAY} j_object.item (j_key.item) as j_array then
+							print ("name of array: " + j_key.item.representation + " values in array:%N")
+							if j_array.count > 0 then
+								across
+									j_array.array_representation as ar_item
+								loop
+									if attached {JSON_OBJECT} ar_item.item as ar_object then
+										across
+											ar_object.current_keys as ar_key
+										loop
+											if attached {JSON_STRING} ar_object.item (ar_key.item) as ar_string and then not ar_string.representation.same_string ("%"%"") then
+												print ("key of string in array: " + ar_key.item.representation + " string: " + ar_string.representation + "%N")
+											end
+										end
+									end
+								end
+							end
+						end
+					end
 				end
-
-					-- Pretty print the parsed JSON
-				create s.make_empty
-				create printer.make (s)
-				jv.accept (printer)
-				print ("The JSON formatted using a pretty printer:%N")
-				print (s)
 			end
 		end
-
-feature
-
-	list_of_names:LINKED_LIST[STRING]
-	once
-		create Result.make
-		Result.force("name")
-		Result.force ("date")
-	end
 end
