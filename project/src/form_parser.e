@@ -7,13 +7,15 @@ note
 class
 	FORM_PARSER
 
-
 feature
 
 	parse_and_add_to_db (str: STRING)
+		-- parses given string and adds it to database
 		local
 			parser: JSON_PARSER
+			query_manager:QUERY_MANAGER
 		do
+			create query_manager.make
 			create parser.make_with_string (str)
 			parser.parse_content
 			if parser.is_parsed and then parser.is_valid and then attached parser.parsed_json_value as jv then
@@ -21,8 +23,8 @@ feature
 					across
 						j_object.current_keys as j_key
 					loop
-						if attached {JSON_STRING} j_object.item (j_key.item) as j_string and then not j_string.representation.same_string ("%"%"") then
-							print ("key of string: " + j_key.item.representation + " string: " + j_string.representation + "%N")
+						if attached {JSON_STRING} j_object.item (j_key.item) as j_string then
+							print ("key of string: " + j_key.item.representation + " string: " + without_quotes(j_string.representation) + "%N")
 						end
 						if attached {JSON_ARRAY} j_object.item (j_key.item) as j_array then
 							print ("name of array: " + j_key.item.representation + " values in array:%N")
@@ -34,7 +36,7 @@ feature
 										across
 											ar_object.current_keys as ar_key
 										loop
-											if attached {JSON_STRING} ar_object.item (ar_key.item) as ar_string and then not ar_string.representation.same_string ("%"%"") then
+											if attached {JSON_STRING} ar_object.item (ar_key.item) as ar_string then
 												print ("key of string in array: " + ar_key.item.representation + " string: " + ar_string.representation + "%N")
 											end
 										end
@@ -46,5 +48,14 @@ feature
 				end
 			end
 		end
-
+feature{NONE}
+	without_quotes(str:STRING):STRING
+	--returns given string withiout quotes
+	do
+		if str.at (1)='"' and then str.at (str.count)='"' then
+			create Result.make_from_string(str.substring (2, str.count-1))
+		else
+			create Result.make_empty
+		end
+	end
 end
