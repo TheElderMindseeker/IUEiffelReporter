@@ -2,3 +2,5 @@
 EIFGENs/
 Documentation/
 **/temp.db
+*.swp
+*.ecf
