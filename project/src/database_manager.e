@@ -21,7 +21,6 @@ feature {NONE} -- Initialization
 			is_initialized := False
 			has_error := False
 			current_report_id := -1
-			create types.default_create
 			if (create {RAW_FILE}.make_with_name (db_file_name)).exists then
 				create database.make_open_read_write (db_file_name)
 				is_initialized := True
@@ -38,9 +37,6 @@ feature {NONE} -- Implementation
 
 	database: SQLITE_DATABASE
 			-- SQLite database connector
-
-	types: SQLITE_TYPE
-			-- SQL database types
 
 	initialize
 			-- Initiailze the database by creating necessary tables
@@ -74,18 +70,13 @@ feature {NONE} -- Implementation
 			row_exists: row /= Void
 			column_exists: 0 < column and column <= row.count
 		do
-			if row.type (column) = types.integer then
-				list.extend (create {FIELD}.make (row.column_name (column),
-						create {INTEGER_REPRESENTABLE}.make (row.integer_value (column))))
-			elseif row.type (column) = types.text then
-				list.extend (create {FIELD}.make (row.column_name (column),
-						create {STRING_REPRESENTABLE}.make (row.string_value (column))))
-			elseif row.type (column) = types.float then
-				list.extend (create {FIELD}.make (row.column_name (column),
-						create {FLOAT_REPRESENTABLE}.make (row.real_value (column))))
+			if attached row.value (column) as c_value then
+				if attached create_field (row.column_name (column), c_value) as field then
+					list.extend (field)
+				end
 			end
 		ensure
-			-- TODO: add reasonable contracts here
+			list_extended: list.count = old list.count + 1
 		end
 
 	fill_table (r_table: detachable LINKED_LIST [LINKED_LIST [FIELD]]; cursor: SQLITE_STATEMENT_ITERATION_CURSOR)
@@ -521,6 +512,28 @@ feature -- Utility
 			end
 		end
 
+	create_field (name: STRING_8; object: ANY): detachable FIELD
+			-- Create FIELD instance from given `name' and `object'
+		require
+			name_exists: name /= Void
+			name_not_empty: name.count > 0
+			object_exists: object /= Void
+			object_has_supported_type: attached {INTEGER} object or attached {REAL} object or
+					attached {STRING_8} object or attached {DATE} object
+		do
+			if attached {INTEGER} object as int then
+				create Result.make (name, create {INTEGER_REPRESENTABLE}.make (int))
+			elseif attached {REAL} object as float then
+				create Result.make (name, create {FLOAT_REPRESENTABLE}.make (float))
+			elseif attached {STRING_8} object as str then
+				create Result.make (name, create {STRING_REPRESENTABLE}.make (str))
+			elseif attached {DATE} object as date then
+				create Result.make (name, date)
+			end
+		ensure
+			result_exists: Result /= Void
+		end
+
 feature {QUERY_MANAGER} -- Specific queries
 
 	list_laboratories: ITERABLE [STRING_8]
@@ -554,8 +567,6 @@ feature {QUERY_MANAGER} -- Specific queries
 		ensure
 			result_exists: Result /= Void
 		end
-
-	-- TODO: A lot of repeating code. DRY it
 
 	cumulative_info (start_date, end_date: DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
 			-- Query cumulative info of the given `laboratory' unit

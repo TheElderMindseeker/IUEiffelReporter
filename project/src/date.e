@@ -8,18 +8,11 @@ class
 	DATE
 
 inherit
-	ANY
-		undefine
-			is_equal
-		redefine
-			out
-		end
 
 	COMPARABLE
-		undefine
-			out
 		redefine
-			is_equal
+			is_equal,
+			out
 		end
 
 	REPRESENTABLE
