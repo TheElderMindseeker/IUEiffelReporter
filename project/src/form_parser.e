@@ -7,11 +7,10 @@ note
 class
 	FORM_PARSER
 
-create make
 
 feature
 
-	make(str:STRING)
+	parse_and_add_to_db (str: STRING)
 		local
 			parser: JSON_PARSER
 		do
@@ -47,4 +46,5 @@ feature
 				end
 			end
 		end
+
 end

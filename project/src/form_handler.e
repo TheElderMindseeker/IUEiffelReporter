@@ -44,7 +44,8 @@ feature
 						page.set_status_code ({HTTP_STATUS_CODE}.ok)
 						create str.make (con_len.to_integer_32)
 						req.read_input_data_into (str)
-						create form_parser.make(str)
+						create form_parser
+						form_parser.parse_and_add_to_db(str)
 					end
 				end
 			end
