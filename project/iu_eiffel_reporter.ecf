@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-16-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-16-0 http://www.eiffel.com/developers/xml/configuration-1-16-0.xsd" name="iu_eiffel_reporter" uuid="8B9ACB88-85FB-4841-B3A3-DC113D91F7B1" library_target="iu_eiffel_reporter">
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-15-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-15-0 http://www.eiffel.com/developers/xml/configuration-1-15-0.xsd" name="iu_eiffel_reporter" uuid="8B9ACB88-85FB-4841-B3A3-DC113D91F7B1" library_target="iu_eiffel_reporter">
 	<target name="common" abstract="true">
 		<file_rule>
 			<exclude>/.svn$</exclude>
@@ -9,14 +9,11 @@
 		<option warning="true" full_class_checking="false" is_attached_by_default="true" is_obsolete_routine_type="true" syntax="transitional">
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
-		<capability>
-			<catcall_detection support="none"/>
-			<concurrency support="thread"/>
-			<void_safety support="transitional" use="transitional"/>
-		</capability>
 		<library name="base" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
 		<library name="http" location="$ISE_LIBRARY\contrib\library\network\protocol\http\http-safe.ecf"/>
+		<library name="json" location="$ISE_LIBRARY\contrib\library\text\parser\json\library\json-safe.ecf"/>
 		<library name="sqlite" location="$ISE_LIBRARY\unstable\library\persistency\database\sqlite3\sqlite-safe.ecf"/>
+		<library name="template_smarty" location="$ISE_LIBRARY\contrib\library\text\template\smarty\smarty-safe.ecf"/>
 		<library name="wsf" location="$ISE_LIBRARY\contrib\library\web\framework\ewf\wsf\wsf-safe.ecf"/>
 	</target>
 	<target name="iu_eiffel_reporter_any" extends="common">
@@ -29,15 +26,8 @@
 	</target>
 	<target name="iu_eiffel_reporter_standalone" extends="common">
 		<root class="IU_EIFFEL_REPORTER" feature="make_and_launch"/>
-		<capability>
-			<catcall_detection support="none"/>
-			<concurrency support="thread" use="thread"/>
-			<void_safety support="transitional"/>
-		</capability>
 		<variable name="httpd_ssl_disabled" value="true"/>
 		<library name="default_standalone" location="$ISE_LIBRARY\contrib\library\web\framework\ewf\wsf\default\standalone-safe.ecf"/>
-		<library name="json" location="$ISE_LIBRARY\contrib\library\text\parser\json\library\json.ecf"/>
-		<library name="template_smarty" location="$ISE_LIBRARY\contrib\library\text\template\smarty\smarty.ecf"/>
 		<cluster name="launcher" location=".\launcher\">
 			<cluster name="default_launcher" location="$|default\"/>
 		</cluster>

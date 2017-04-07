@@ -28,6 +28,7 @@ feature {NONE} -- Initialization
 				create database.make_create_read_write (db_file_name)
 				initialize
 			end
+			gather_table_info
 		ensure
 			database_exists: database /= Void
 			database_initialized: is_initialized
@@ -37,6 +38,9 @@ feature {NONE} -- Implementation
 
 	database: SQLITE_DATABASE
 			-- SQLite database connector
+
+	field_info: HASH_TABLE [TUPLE [tbl_name, arg_type: STRING_8], STRING_8]
+			-- Inner database fields info for fast search by `which_table' feature
 
 	initialize
 			-- Initiailze the database by creating necessary tables
@@ -136,6 +140,66 @@ feature {NONE} -- Implementation
 			end
 		ensure
 			valid_current_report_id: not has_error implies current_report_id >= 0
+		end
+
+	gather_table_info
+			-- Process tables from the database for fast field search
+		require
+			database_initialized: is_initialized
+			no_error: not has_error
+		local
+			key: STRING_8
+			query_statement: SQLITE_QUERY_STATEMENT
+			s_query: STRING_8
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			q_row: SQLITE_RESULT_ROW
+			tables: LINKED_LIST [STRING_8]
+		do
+			create field_info.make_equal (100)
+			field_info.compare_objects
+			create tables.make
+			s_query := "SELECT tbl_name FROM sqlite_master;"
+			create query_statement.make (s_query, database)
+			from
+				cursor := query_statement.execute_new
+			until
+				cursor.after
+			loop
+				q_row := cursor.item
+				tables.extend (q_row.string_value (1))
+				cursor.forth
+			end
+			from
+				tables.start
+			until
+				tables.after
+			loop
+				s_query := "PRAGMA table_info(" + tables.item + ");"
+				create query_statement.make (s_query, database)
+				if not query_statement.has_error then
+					from
+						cursor := query_statement.execute_new
+					until
+						cursor.after
+					loop
+						q_row := cursor.item
+						key := q_row.string_value (2)
+						if attached key and then not field_info.has (key) then
+							field_info.put (create {TUPLE [tbl_name, arg_type: STRING_8]}.default_create, key)
+							if attached field_info.at (key) as tuple then
+								tuple.put (key, 1)
+								if attached q_row.string_value (3) as arg_type then
+									tuple.put (arg_type, 2)
+								end
+							end
+						end
+						cursor.forth
+					end
+				end
+				tables.forth
+			end
+		ensure
+			field_info_exists: field_info /= Void
 		end
 
 feature -- Access
@@ -534,6 +598,27 @@ feature -- Utility
 			result_exists: Result /= Void
 		end
 
+	has_field (name: STRING_8): BOOLEAN
+			-- Tell if there is field with provided name in the database
+		require
+			name_exists: name /= Void
+			name_not_empty: name.count > 0
+		do
+			Result := field_info.has (name)
+		end
+
+	which_table (name: STRING_8): detachable TUPLE [tbl_name, arg_type: STRING_8]
+			-- Tell in which table lies field given by `name'
+		require
+			name_exists: name /= Void
+			name_not_empty: name.count > 0
+			field_exists: has_field (name)
+		do
+			Result := field_info.at (name)
+		ensure
+			Result /= Void
+		end
+
 feature {QUERY_MANAGER} -- Specific queries
 
 	list_laboratories: ITERABLE [STRING_8]
@@ -675,10 +760,7 @@ feature {QUERY_MANAGER} -- Specific queries
 		local
 			query_statement: SQLITE_QUERY_STATEMENT
 			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
-			q_row: SQLITE_RESULT_ROW
 			s_query: STRING_8
-			table_row: LINKED_LIST [FIELD]
-			column: NATURAL
 		do
 			s_query := "SELECT rep.unit_name, SUM(1) collaborations FROM reports rep INNER JOIN grants gr" +
 					" ON rep.report_id = gr.report_id"
