@@ -192,11 +192,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						{foreach from="$student_reports" item="s_report"}
-						<tr id="el-student_reports-{$s_report.id/}">
-							<td><input type="text" class="form-control input-in-table" onblur='removeRow("student_reports-{$s_report.id/}");' name="student_reports[][student_name]" placeholder="Required" value="{$s_report.student_name/}" required/></td>
-							<td><input type="text" class="form-control input-in-table" onblur='removeRow("student_reports-{$s_report.id/}");' name="student_reports[][title]" placeholder="Required" value="{$s_report.title/}" required/></td>
-							<td><input type="text" class="form-control input-in-table" onblur='removeRow("student_reports-{$s_report.id/}");' name="student_reports[][publication_plans]" value="{$s_report.publication_plans/}"/></td>
+						{foreach from="$student_reports" item="report"}
+						<tr id="el-student_reports-{$report.id/}">
+							<td><input type="text" class="form-control input-in-table" onblur='removeRow("student_reports-{$report.id/}");' name="student_reports[][student_name]" placeholder="Required" value="{$report.student_name/}" required/></td>
+							<td><input type="text" class="form-control input-in-table" onblur='removeRow("student_reports-{$report.id/}");' name="student_reports[][title]" placeholder="Required" value="{$report.title/}" required/></td>
+							<td><input type="text" class="form-control input-in-table" onblur='removeRow("student_reports-{$report.id/}");' name="student_reports[][publication_plans]" value="{$report.publication_plans/}"/></td>
 						</tr>
 						{/foreach}
 						<tr name="adder">
@@ -298,7 +298,6 @@
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('grants'), 500);" placeholder="" /></td>
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('grants'), 500);" placeholder="" /></td>
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('grants'), 500);" placeholder="" /></td>
-							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('grants'), 500);" placeholder="" /></td>
 						</tr>
 						<tr id="to-show-grants" name="new-line-for-adder" style="display: none;">
 							<td><input type="text" class="form-control input-in-table" name="grants[][project_title]" placeholder="Required" required /></td>
@@ -386,7 +385,6 @@
 						{/foreach}
 						<tr name="adder">
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('research_collaborations'), 500);" placeholder="Click to add new field" /></td>
-							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('research_collaborations'), 500);" placeholder="" /></td>
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('research_collaborations'), 500);" placeholder="" /></td>
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('research_collaborations'), 500);" placeholder="" /></td>
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('research_collaborations'), 500);" placeholder="" /></td>

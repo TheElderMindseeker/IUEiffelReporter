@@ -24,8 +24,6 @@ feature {NONE} -- Initialization
 
 	initialize
 			-- Initialize current service.
-		local
-			db: DATABASE_MANAGER
 		do
 			Precursor
 			set_service_option ("port", 80)

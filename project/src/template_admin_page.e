@@ -9,6 +9,11 @@ class
 
 inherit
 
+	TEMPLATE_PAGE
+		undefine
+			default_create
+		end
+
 	SHARED_TEMPLATE_CONTEXT
 		undefine
 			default_create
@@ -30,11 +35,11 @@ feature {NONE} -- Initialization
 			p: PATH
 		do
 			create p.make_from_string ("www")
-			p:=p.appended ("/templates")
+			p := p.appended ("/templates")
 			set_template_folder (p)
 			set_template_file_name ("admin.tpl")
-			--template.add_value (reports, "reports")
-			--template_context.enable_verbose
+				--template.add_value (reports, "reports")
+				--template_context.enable_verbose
 			template.analyze
 			template.get_output
 			if attached template.output as l_output then
@@ -42,15 +47,7 @@ feature {NONE} -- Initialization
 			end
 		end
 
-feature -- output
-	get_output: detachable STRING
-		--returns template
-	do
-		Result:=output
-	end
-
 feature {NONE} --Status
-	output: detachable STRING
 
 	set_template_folder (v: PATH)
 		do
@@ -69,12 +66,13 @@ feature {NONE} --Status
 
 	template: TEMPLATE_FILE
 
---	reports : LIST[REPORT]
---		do
---			create {ARRAYED_LIST[REPORT]}Result.make(5)
---			Result.force(create {REPORT}.make ("n1", "head1", "a_start_date1", "a_end_date1", 0))
---			Result.force(create {REPORT}.make ("n2", "head2", "a_start_date2", "a_end_date2", 0))
---			Result.force(create {REPORT}.make ("n3", "head3", "a_start_date3", "a_end_date3", 0))
---			Result.force(create {REPORT}.make ("n4", "head4", "a_start_date4", "a_end_date4", 0))
---		end
+		--	reports : LIST[REPORT]
+		--		do
+		--			create {ARRAYED_LIST[REPORT]}Result.make(5)
+		--			Result.force(create {REPORT}.make ("n1", "head1", "a_start_date1", "a_end_date1", 0))
+		--			Result.force(create {REPORT}.make ("n2", "head2", "a_start_date2", "a_end_date2", 0))
+		--			Result.force(create {REPORT}.make ("n3", "head3", "a_start_date3", "a_end_date3", 0))
+		--			Result.force(create {REPORT}.make ("n4", "head4", "a_start_date4", "a_end_date4", 0))
+		--		end
+
 end

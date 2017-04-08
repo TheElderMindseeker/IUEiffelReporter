@@ -1,11 +1,11 @@
 note
-	description: "handels administrator's panel"
+	description: "Summary description for {ADMIN_EDIT_PAGE_HANDLER}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	ADMIN_PAGE_HANDLER
+	ADMIN_EDIT_PAGE_HANDLER
 
 inherit
 
@@ -18,7 +18,12 @@ feature
 
 	make
 		do
+			create page.make
 		end
+
+feature
+
+	page: WSF_HTML_PAGE_RESPONSE
 
 feature
 
@@ -28,10 +33,12 @@ feature
 		local
 			temp: TEMPLATE_ADMIN_PAGE
 		do
+			page.set_status_code ({HTTP_STATUS_CODE}.ok)
 			create temp
 			if attached temp.output as body then
-				res.put_string (body)
+				page.set_body (body)
 			end
+			res.send (page)
 		end
 
 end

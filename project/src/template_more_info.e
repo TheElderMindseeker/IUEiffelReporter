@@ -1,11 +1,11 @@
 note
-	description: "Summary description for {HTML_TABLE_TEMPLATE}."
+	description: "Summary description for {TEMPLATE_MORE_INFO}."
 	author: ""
-	date: "$Date: 2013-08-02 01:17:37 -0800 (Fri, 02 Aug 2013) $"
-	revision: "$Revision: 92838 $"
+	date: "$Date$"
+	revision: "$Revision$"
 
 class
-	TEMPLATE_FORM
+	TEMPLATE_MORE_INFO
 
 inherit
 
@@ -48,7 +48,6 @@ feature {NONE} -- Initialization
 			template.add_value (research_projects, "research_projects")
 			template.add_value (research_collaborations, "research_collaborations")
 			template.add_value (publications, "publications")
-				--template_context.enable_verbose
 			template.analyze
 			template.get_output
 			if attached template.output as l_output then
@@ -56,7 +55,7 @@ feature {NONE} -- Initialization
 			end
 		end
 
-feature
+feature {NONE}
 
 	set_template_folder (v: PATH)
 		do

@@ -17,9 +17,7 @@ create
 feature
 
 	make
-			--creates page
 		do
-			create page.make
 		end
 
 feature
@@ -30,33 +28,24 @@ feature
 			-- handles json data if POST request
 		local
 			temp_form: TEMPLATE_FORM
-			form_parser:FORM_PARSER
+			form_parser: FORM_PARSER
 			str: STRING
 		do
-			page.set_status_code ({HTTP_STATUS_CODE}.bad_request)
-			if req.request_method.same_string ("GET") then
-				page.set_status_code ({HTTP_STATUS_CODE}.ok)
+			if req.is_get_request_method then
 				create temp_form
 				if attached temp_form.output as body then
-					page.set_body (body)
+					res.put_string (body)
 				end
-				res.send (page)
-			elseif req.request_method.same_string ("POST") then
+			elseif req.is_post_request_method then
 				if attached req.content_length as con_len then
 					if con_len.to_integer_32 > 0 then
-						page.set_status_code ({HTTP_STATUS_CODE}.ok)
 						create str.make (con_len.to_integer_32)
 						req.read_input_data_into (str)
 						create form_parser.make
-						form_parser.parse_and_add_to_db(str)
+						form_parser.parse_and_add_to_db (str)
 					end
 				end
 			end
 		end
-
-feature {NONE}
-
-	page: WSF_HTML_PAGE_RESPONSE
-		--page to return
 
 end
