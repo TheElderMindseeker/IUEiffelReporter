@@ -23,7 +23,8 @@ inherit
 
 create
 	make,
-	make_from_string
+	make_from_string,
+	make_from_iso_string
 
 feature {NONE} -- Initialization
 
@@ -42,7 +43,7 @@ feature {NONE} -- Initialization
 		end
 
 	make_from_string (date_string: READABLE_STRING_32)
-			-- Make date from ISO date string
+			-- Make date from standard string representation
 		require
 			string_exists_and_not_empty: date_string /= Void and date_string.count > 0
 			all_components_present: date_string.split ('.').count >= 3
@@ -51,9 +52,26 @@ feature {NONE} -- Initialization
 			components: LIST [READABLE_STRING_32]
 		do
 			components := date_string.split ('.')
-			year := components.i_th (3).to_integer_32
-			month := components.i_th (2).to_integer_32
 			day := components.i_th (1).to_integer_32
+			month := components.i_th (2).to_integer_32
+			year := components.i_th (3).to_integer_32
+		ensure
+			right_assignment: True -- TODO: Formulate strict contract here
+		end
+
+	make_from_iso_string (iso_string: READABLE_STRING_32)
+			-- Make date from ISO date string
+		require
+			string_exists_and_not_empty: iso_string /= Void and iso_string.count > 0
+			all_components_present: iso_string.split ('-').count >= 3
+			valid_date: True -- TODO: formulate strict contract here
+		local
+			components: LIST [READABLE_STRING_32]
+		do
+			components := iso_string.split ('-')
+			year := components.i_th (1).to_integer_32
+			month := components.i_th (2).to_integer_32
+			day := components.i_th (3).to_integer_32
 		ensure
 			right_assignment: True -- TODO: Formulate strict contract here
 		end

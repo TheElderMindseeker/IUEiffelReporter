@@ -576,6 +576,24 @@ feature -- Utility
 			end
 		end
 
+	date_from_julianday (julian: FLOAT_REPRESENTABLE): detachable DATE
+			-- Convert julianday to usual date representation
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			s_query: STRING_8
+		do
+			s_query := "SELECT date(" + julian.repr + ");"
+			create query_statement.make (s_query, database)
+			cursor := query_statement.execute_new
+			if not query_statement.has_error then
+				cursor.start
+				create Result.make_from_iso_string (cursor.item.string_value (1))
+			else
+				has_error := True
+			end
+		end
+
 	create_field (name: STRING_8; object: ANY): detachable FIELD
 			-- Create FIELD instance from given `name' and `object'
 		require
