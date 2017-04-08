@@ -114,8 +114,15 @@ feature -- String representation
 	out: STRING
 			-- New string containing terse printable representation
 			-- of current object
+		local
+			null_filler: STRING_8
 		do
-			Result := year.out + "-" + month.out + "-" + day.out
+			create null_filler.make_filled ('0', 4 - year.out.count)
+			Result := null_filler + year.out + "-"
+			create null_filler.make_filled ('0', 2 - month.out.count)
+			Result := Result + null_filler + month.out + "-"
+			create null_filler.make_filled ('0', 2 - day.out.count)
+			Result := Result + null_filler + day.out
 		end
 
 	repr: STRING_8

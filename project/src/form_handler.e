@@ -51,7 +51,7 @@ feature
 								parsed_data.current_keys as table_name
 							loop
 								if attached {LINKED_LIST [FIELD]} parsed_data.at (table_name.item) as record then
-									database_manager.single_insert (table_name.item, record)
+									database_manager.create_report (record)
 								elseif attached {LINKED_LIST [LINKED_LIST [FIELD]]} parsed_data.at (table_name.item) as record_list then
 									database_manager.multiple_insert (table_name.item, record_list)
 								end

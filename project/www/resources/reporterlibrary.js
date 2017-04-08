@@ -36,7 +36,7 @@ function sendForm(e){
 	if (checkRequired(document.getElementById('mainForm'))) {
 		var formData = JSON.stringify($('#mainForm').serializeJSON());
 	  $.ajax({
-	    url:'http://localhost/form',
+	    url:'/form',
 	    type:'POST',
 	    data: formData,
 	    success: function(res) {
