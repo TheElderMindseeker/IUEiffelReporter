@@ -16,6 +16,7 @@ CREATE TABLE courses (
 	num_students INTEGER,
 	PRIMARY KEY (course_id),
 	FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE examinations (
@@ -25,8 +26,10 @@ CREATE TABLE examinations (
 	exam_kind TEXT,
 	num_students INTEGER,
 	PRIMARY KEY (exam_id),
-	FOREIGN KEY (course_id) REFERENCES courses(course_id),
+	FOREIGN KEY (course_id) REFERENCES courses(course_id)
+    ON DELETE CASCADE,
 	FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE supervised_students (
@@ -36,6 +39,7 @@ CREATE TABLE supervised_students (
 	nature_of_work TEXT,
 	PRIMARY KEY (student_id),
 	FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE student_reports (
@@ -46,6 +50,7 @@ CREATE TABLE student_reports (
 	publication_plans TEXT,
 	PRIMARY KEY (stud_rep_id),
 	FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE completed_phd (
@@ -59,6 +64,7 @@ CREATE TABLE completed_phd (
   dissertation_title TEXT,
   PRIMARY KEY (thesis_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE grants (
@@ -72,6 +78,7 @@ CREATE TABLE grants (
   amount INTEGER,
   PRIMARY KEY (grant_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE research_projects (
@@ -85,6 +92,7 @@ CREATE TABLE research_projects (
   financial_sources TEXT,
   PRIMARY KEY (research_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE research_collaborations (
@@ -97,6 +105,7 @@ CREATE TABLE research_collaborations (
   contacts TEXT,
   PRIMARY KEY (research_collaboration_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE publications (
@@ -105,6 +114,7 @@ CREATE TABLE publications (
   publication_name TEXT,
   PRIMARY KEY (publication_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE patents_and_ip (
@@ -115,6 +125,7 @@ CREATE TABLE patents_and_ip (
   patent_office_country TEXT,
   PRIMARY KEY (patent_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE best_paper_awards (
@@ -127,6 +138,7 @@ CREATE TABLE best_paper_awards (
   awarding_date REAL,
   PRIMARY KEY (award_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE prizes (
@@ -138,6 +150,7 @@ CREATE TABLE prizes (
   prizing_date REAL,
   PRIMARY KEY (prize_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE industry_collaborations (
@@ -147,6 +160,7 @@ CREATE TABLE industry_collaborations (
   nature_of_collaboration TEXT,
   PRIMARY KEY (industry_collaboration_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE relevant_info (
@@ -155,4 +169,5 @@ CREATE TABLE relevant_info (
   info TEXT,
   PRIMARY KEY (relevant_info_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
 );
