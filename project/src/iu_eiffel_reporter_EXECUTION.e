@@ -34,6 +34,7 @@ feature -- Router
 			router.handle ("/admin", create {ADMIN_PAGE_HANDLER}.make, router.methods_get_post)
 			router.handle ("/form", create {FORM_HANDLER}.make (query_manager.database_manager), router.methods_get_post)
 			router.handle ("", fhdl, router.methods_get_post)
+			--router.handle ("/", create {INDEX_HANDLER}.make, router.methods_get_post)
 		end
 
 end

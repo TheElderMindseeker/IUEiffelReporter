@@ -29,6 +29,7 @@ feature -- Initialization
 			template.add_value (reports, "reports")
 				--template_context.enable_verbose
 			template.analyze
+			template.get_output
 			if attached template.output as l_output then
 				output := l_output
 			end

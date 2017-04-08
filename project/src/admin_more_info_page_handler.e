@@ -36,8 +36,7 @@ feature
 			page.set_status_code ({HTTP_STATUS_CODE}.ok)
 			if req.is_get_request_method then
 				if attached req.path_parameter ("id") as id then
-					create template.default_create
-					template.generate_page_with_id(id.string_representation.to_integer)
+					create template.make(id.string_representation.to_integer)
 					if attached template.output as body then
 						res.put_string(body)
 					end
