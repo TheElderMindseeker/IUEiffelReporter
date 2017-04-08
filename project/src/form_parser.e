@@ -93,6 +93,12 @@ feature {NONE} -- Implementation
 			if attached parse_result as hash_table then
 				if attached database_manager.which_table (key.item) as db_table_result then
 					if attached {STRING_8} db_table_result.at (1) as table_name and then attached {STRING_8} db_table_result.at (2) as arg_type then
+						if key.item.same_string ("rep_start") and value.item.same_string ("") then
+							value.item.set ("10.10.2017", 1, 10)
+						end
+						if key.item.same_string ("rep_end") and value.item.same_string ("") then
+							value.item.set ("31.12.2017", 1, 10)
+						end
 						add_field_to_hash_table (key.item, value.item, table_name, arg_type, hash_table)
 					end
 				end
@@ -129,7 +135,7 @@ feature {NONE} -- Implementation
 				end
 			end
 		end
-		
+
 	add_field_to_hash_table (name, value, table_name, arg_type: STRING_8; hash_table: HASH_TABLE [LINKED_LIST [ANY], STRING_8])
 			-- Add provided `name'-`value' pair to the `hash_table' as a field
 		do
