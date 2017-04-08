@@ -65,6 +65,20 @@ feature -- Access
 			result_exists: Result /= Void
 		end
 
+	cumulative_info (start_date, end_date: DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
+			-- Query cumulative info of the given `laboratory' unit
+		require
+			database_initialized: database_manager.is_initialized
+			no_error: not database_manager.has_error
+			both_dates_exist_or_neither: (start_date = Void and end_date = Void) or
+					(start_date /= Void and end_date /= Void)
+			laboratory_exist: laboratory /= Void
+		do
+			Result := database_manager.cumulative_info (start_date, end_date, laboratory)
+		ensure
+			result_exists: Result /= Void
+		end
+
 	courses_taught (start_date, end_date: DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
 			-- Courses taught by a Laboratory between initial and final date.
 		require
