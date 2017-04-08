@@ -157,7 +157,7 @@ feature {NONE} -- Implementation
 			elseif arg_type.same_string ("INTEGER") then
 				field := database_manager.create_field (name, value.to_integer)
 			elseif arg_type.same_string ("REAL") then
-				field := database_manager.create_field (name, value.to_real)
+				field := database_manager.create_field (name, create{DATE}.make_from_string (value))
 			end
 			if attached field as att_field then
 				linked_list.extend (field)
