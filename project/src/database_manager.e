@@ -63,6 +63,7 @@ feature {NONE} -- Implementation
 			else
 				has_error := True
 			end
+			database.busy_timeout := 10000
 		ensure
 			has_error /= is_initialized -- TODO: Add necessary contracts here
 		end
@@ -545,6 +546,38 @@ feature -- Management
 		end
 
 feature -- Utility
+
+	list_tables: ITERABLE [STRING_8]
+			-- The list of all tables in the database
+		require
+			database_initialized: is_initialized
+			no_error: not has_error
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			s_query: STRING_8
+		do
+			create {LINKED_LIST [STRING_8]} Result.make
+			s_query := "SELECT tbl_name FROM sqlite_master"
+			create query_statement.make (s_query, database)
+			cursor := query_statement.execute_new
+			if attached {LINKED_LIST [STRING_8]} Result as linked_list then
+				if not query_statement.has_error then
+					from
+						cursor.start
+					until
+						cursor.after
+					loop
+						linked_list.extend (cursor.item.string_value (1))
+						cursor.forth
+					end
+				else
+					has_error := True
+				end
+			end
+		ensure
+			result_exists: Result /= Void
+		end
 
 	julianday (date: DATE): REAL
 			-- Return julian day representation of the `date'

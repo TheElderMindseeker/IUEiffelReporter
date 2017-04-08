@@ -16,10 +16,9 @@ create
 
 feature
 
-	make (manager: DATABASE_MANAGER)
+	make
 		do
 			create page.make
-			database_manager := manager
 		end
 
 feature
@@ -32,7 +31,11 @@ feature
 			temp_form: TEMPLATE_FORM
 			form_parser: FORM_PARSER
 			input_data: STRING
+			query_manager: QUERY_MANAGER
+			database_manager: DATABASE_MANAGER
 		do
+			create query_manager.make
+			database_manager := query_manager.database_manager
 			if req.is_get_request_method then
 				create temp_form
 				if attached temp_form.output as body then
@@ -65,8 +68,5 @@ feature
 feature {NONE} -- Implementation
 
 	page: WSF_HTML_PAGE_RESPONSE
-
-	database_manager: DATABASE_MANAGER
-			-- Database manager for parsing the user form
 
 end
