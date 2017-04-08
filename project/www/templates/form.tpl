@@ -10,8 +10,11 @@
 		<!-- For calendar -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<link href="../resources/datepicker.min.css" rel="stylesheet" type="text/css">
-		<script src="../resources/datepicker.min.js"></script>
-		<script src="../resources/i18n/datepicker.en.js"></script>
+		<script type="text/javascript" src="../resources/datepicker.min.js"></script>
+		<script type="text/javascript" src="../resources/i18n/datepicker.en.js"></script>
+		<script type="text/javascript">
+
+		</script>
 
 		<!-- For serialization -->
 		<script type="text/javascript" src="../resources/jquery.serializejson.js"></script>
@@ -19,7 +22,7 @@
 		<script type="text/javascript" src="../resources/reporterlibrary.js"></script>
 		<link href="../resources/reporterlibrary.css" rel="stylesheet" type="text/css">
 	</head>
-	<body>
+	<body onload="reinitializeDatepickers(dateParams, document);">
 		<div class="wrapper container">
 		<div class="logo-text">
 			<label class="logo-text">Report Creation</label>
@@ -52,7 +55,7 @@
 					<label for="rep_start" class="control-label">Start of reporting period</label>
 				</div>
 				<div class="col-sm-6 col-md-6">
-					<input type="text" class="form-control input-text datepicker-here" onkeypress="return false;" oncontextmenu="return false;" id="rep_start" name="rep_start" value="{$rep_start/}"/>
+					<input type="text" class="form-control input-text datepicker-here" id="rep_start" name="rep_start" value="{$rep_start/}"/>
 				</div>
 			</div>
 			<div class="form-group row">
@@ -60,7 +63,7 @@
 					<label for="rep_end" class="control-label">End of reporting period</label>
 				</div>
 				<div class="col-sm-6 col-md-6">
-					<input type="text" class="form-control input-text datepicker-here" onkeypress="return false;" oncontextmenu="return false;" id="rep_end" name="rep_end" value="{$rep_end/}" />
+					<input type="text" class="form-control input-text datepicker-here" id="rep_end" name="rep_end" value="{$rep_end/}" />
 				</div>
 			</div>
 			<div class="form-group row">
@@ -102,10 +105,10 @@
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('courses'), 500);" placeholder="" /></td>
 						</tr>
 						<tr id="to-show-courses" name="new-line-for-adder" style="display: none;">
-							<td><input type="text" class="form-control input-in-table" name="courses[][course_name]" placeholder="Required" required/></td>
-							<td><input type="text" class="form-control input-in-table" name="courses[][semester]" placeholder="Required" required/></td>
-							<td><input type="text" class="form-control input-in-table" name="courses[][edu_level]" placeholder="Required" required/></td>
-							<td><input type="text" class="form-control input-in-table" name="courses[][num_students]" placeholder="Required" required/></td>
+							<td><input type="text" class="form-control input-in-table" name="courses[][course_name]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="courses[][semester]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="courses[][edu_level]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="courses[][num_students]" placeholder="Required"/></td>
 						</tr>
 					</tbody>
 				</table>
@@ -144,10 +147,10 @@
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('examinations'), 500);" placeholder="" /></td>
 						</tr>
 						<tr id="to-show-examinations" name="new-line-for-adder" style="display: none;">
-							<td><input type="text" class="form-control input-in-table" name="examinations[][course_name]" placeholder="Required"  required/></td>
-							<td><input type="text" class="form-control input-in-table" name="examinations[][semester]" placeholder="Required"  required/></td>
-							<td><input type="text" class="form-control input-in-table" name="examinations[][exam_kind]" placeholder="Required"  required/></td>
-							<td><input type="text" class="form-control input-in-table" name="examinations[][num_students]" placeholder="Required"  required/></td>
+							<td><input type="text" class="form-control input-in-table" name="examinations[][course_name]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="examinations[][semester]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="examinations[][exam_kind]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="examinations[][num_students]" placeholder="Required"/></td>
 						</tr>
 					</tbody>
 				</table>
@@ -180,8 +183,8 @@
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('supervised_students'), 500);" placeholder="" /></td>
 						</tr>
 						<tr id="to-show-supervised_students" name="new-line-for-adder" style="display: none;">
-							<td><input type="text" class="form-control input-in-table" name="supervised_students[][student_name]" placeholder="Required"  required/></td>
-							<td><input type="text" class="form-control input-in-table" name="supervised_students[][nature_of_work]" placeholder="Required"  required/></td>
+							<td><input type="text" class="form-control input-in-table" name="supervised_students[][student_name]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="supervised_students[][nature_of_work]" placeholder="Required"/></td>
 						</tr>
 					</tbody>
 				</table>
@@ -217,8 +220,8 @@
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('student_reports'), 500);" placeholder="" /></td>
 						</tr>
 						<tr id="to-show-student_reports" name="new-line-for-adder" style="display: none;">
-							<td><input type="text" class="form-control input-in-table" name="student_reports[][student_name]" placeholder="Required"  required/></td>
-							<td><input type="text" class="form-control input-in-table" name="student_reports[][title]" placeholder="Required"  required/></td>
+							<td><input type="text" class="form-control input-in-table" name="student_reports[][student_name]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="student_reports[][title]" placeholder="Required" /></td>
 							<td><input type="text" class="form-control input-in-table" name="student_reports[][publication_plans]" /></td>
 						</tr>
 					</tbody>
@@ -301,8 +304,8 @@
 						<tr id="el-grants-{$grant.id/}" class="required-row">
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("grants-{$grant.id/}");' name="grants[][project_title]" placeholder="Required" value="{$grant.project_title/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("grants-{$grant.id/}");' name="grants[][granting_agency]" placeholder="Required" value="{$grant.granting_agency/}" required/></td>
-							<td><input type="text" class="form-control input-in-table" onblur='removeRow("grants-{$grant.id/}");' name="grants[][start_date]" placeholder="Required" value="{$grant.start_date/}" required/></td>
-							<td><input type="text" class="form-control input-in-table" onblur='removeRow("grants-{$grant.id/}");' name="grants[][end_date]" placeholder="Required" value="{$grant.end_date/}" required/></td>
+							<td><input type="text" class="form-control input-in-table datepicker-here" onblur='removeRow("grants-{$grant.id/}");' name="grants[][start_date]" placeholder="Required" value="{$grant.start_date/}" required/></td>
+							<td><input type="text" class="form-control input-in-table datepicker-here" onblur='removeRow("grants-{$grant.id/}");' name="grants[][end_date]" placeholder="Required" value="{$grant.end_date/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("grants-{$grant.id/}");' name="grants[][is_continuation]" placeholder="Required" value="{$grant.is_continuation/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("grants-{$grant.id/}");' name="grants[][amount]" placeholder="Required" value="{$grant.amount/}" required/></td>
 						</tr>
@@ -313,14 +316,15 @@
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('grants'), 500);" placeholder="" /></td>
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('grants'), 500);" placeholder="" /></td>
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('grants'), 500);" placeholder="" /></td>
+							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('grants'), 500);" placeholder="" /></td>
 						</tr>
 						<tr id="to-show-grants" name="new-line-for-adder" style="display: none;">
-							<td><input type="text" class="form-control input-in-table" name="grants[][project_title]" placeholder="Required" required /></td>
-							<td><input type="text" class="form-control input-in-table" name="grants[][granting_agency]" placeholder="Required" required /></td>
-							<td><input type="text" class="form-control input-in-table" name="grants[][start_date]" placeholder="Required" required /></td>
-							<td><input type="text" class="form-control input-in-table" name="grants[][end_date]" placeholder="Required" required /></td>
-							<td><input type="text" class="form-control input-in-table" name="grants[][is_continuation]" placeholder="Required" required /></td>
-							<td><input type="text" class="form-control input-in-table" name="grants[][amount]" placeholder="Required" required /></td>
+							<td><input type="text" class="form-control input-in-table" name="grants[][project_title]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table" name="grants[][agency]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table datepicker-here" name="grants[][start_date]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table datepicker-here" name="grants[][end_date]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table" name="grants[][is_continuation]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table" name="grants[][amount]" placeholder="Required" /></td>
 						</tr>
 					</tbody>
 				</table>
@@ -351,8 +355,8 @@
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("research_projects-{$project.id/}");' name="research_projects[][project_title]" placeholder="Required" value="{$project.project_title/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("research_projects-{$project.id/}");' name="research_projects[][iu_personnel_involved]" placeholder="Required" value="{$project.iu_personnel_involved/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("research_projects-{$project.id/}");' name="research_projects[][external_personnel_involved]" value="{$project.external_personnel_involved/}"/></td>
-							<td><input type="text" class="form-control input-in-table datepicker-here" onblur='removeRow("research_projects-{$project.id/}");' onkeypress="return false;" oncontextmenu="return false;" name="research_projects[][start_date]" placeholder="Required" value="{$project.start_date/}" required/></td>
-							<td><input type="text" class="form-control input-in-table datepicker-here" onblur='removeRow("research_projects-{$project.id/}");' onkeypress="return false;" oncontextmenu="return false;" name="research_projects[][expected_end_date]" placeholder="Required" value="{$project.expected_end_date/}" required/></td>
+							<td><input type="text" class="form-control input-in-table datepicker-here" onblur='removeRow("research_projects-{$project.id/}");' name="research_projects[][start_date]" placeholder="Required" value="{$project.start_date/}" required/></td>
+							<td><input type="text" class="form-control input-in-table datepicker-here" onblur='removeRow("research_projects-{$project.id/}");' name="research_projects[][expected_end_date]" placeholder="Required" value="{$project.expected_end_date/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("research_projects-{$project.id/}");' name="research_projects[][financial_sources]" placeholder="Required" value="{$project.financial_sources/}" required/></td>
 						</tr>
 						{/foreach}
@@ -365,12 +369,12 @@
 							<td><input type="text" class="form-control input-in-table" onFocus="setTimeout(addInput('research_projects'), 500);" placeholder="" /></td>
 						</tr>
 						<tr id="to-show-research_projects" name="new-line-for-adder" style="display: none;">
-							<td><input type="text" class="form-control input-in-table" name="research_projects[][project_title]" placeholder="Required"  required/></td>
-							<td><input type="text" class="form-control input-in-table" name="research_projects[][iu_personnel_involved]" placeholder="Required"  required/></td>
+							<td><input type="text" class="form-control input-in-table" name="research_projects[][project_title]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="research_projects[][iu_personnel_involved]" placeholder="Required"/></td>
 							<td><input type="text" class="form-control input-in-table" name="research_projects[][external_personnel_involved]" /></td>
-							<td><input type="text" class="form-control input-in-table" name="research_projects[][start_date]" placeholder="Required" onkeypress="return false;" oncontextmenu="return false;" onFocus="$(this).datepicker();" required/></td>
-							<td><input type="text" class="form-control input-in-table" name="research_projects[][expected_end_date]" placeholder="Required" onkeypress="return false;" oncontextmenu="return false;" onFocus="$(this).datepicker();" required/></td>
-							<td><input type="text" class="form-control input-in-table" name="research_projects[][financial_sources]" placeholder="Required"  required/></td>
+							<td><input type="text" class="form-control input-in-table datepicker-here" name="research_projects[][start_date]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table datepicker-here" name="research_projects[][expected_end_date]" placeholder="Required"/></td>
+							<td><input type="text" class="form-control input-in-table" name="research_projects[][financial_sources]" placeholder="Required"/></td>
 						</tr>
 					</tbody>
 				</table>
@@ -427,7 +431,6 @@
 			</div>
 			<div class="form-group row">
 				<table class="table" id="publications">
-					<input id="row-counter" type="hidden" value="0" />
 					<thead>
 					</thead>
 					<tbody>
@@ -458,7 +461,7 @@
     Developed by <label class="team-logo">DANDy</label> team
   </div>
   <script>
-  var submitButton = document.mainForm.submit;
+  	var submitButton = document.mainForm.submit;
 		submitButton.addEventListener("click", sendForm);
 	</script>
 	</body>
