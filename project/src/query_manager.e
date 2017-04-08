@@ -65,7 +65,7 @@ feature -- Access
 			result_exists: Result /= Void
 		end
 
-	cumulative_info (start_date, end_date: DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
+	cumulative_info (start_date, end_date: detachable DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
 			-- Query cumulative info of the given `laboratory' unit
 		require
 			database_initialized: database_manager.is_initialized

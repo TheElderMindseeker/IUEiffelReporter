@@ -653,6 +653,13 @@ feature {QUERY_MANAGER} -- Specific queries
 			if attached {LINKED_LIST [STRING_8]} Result as list then
 				s_query := "SELECT DISCTINCT unit_name FROM reports;"
 				create query_statement.make (s_query, database)
+				if not query_statement.is_compiled then
+					if query_statement.has_error then
+						if attached query_statement.last_exception as ex then
+							print (ex.code.out + " " + ex.extended_code.out)
+						end
+					end
+				end
 				cursor := query_statement.execute_new
 				if not query_statement.has_error then
 					from
@@ -671,7 +678,7 @@ feature {QUERY_MANAGER} -- Specific queries
 			result_exists: Result /= Void
 		end
 
-	cumulative_info (start_date, end_date: DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
+	cumulative_info (start_date, end_date: detachable DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
 			-- Query cumulative info of the given `laboratory' unit
 		require
 			database_initialized: is_initialized
@@ -689,9 +696,9 @@ feature {QUERY_MANAGER} -- Specific queries
 					" rel.info" +
 					" FROM reports rep INNER JOIN relevant_info rel ON rep.report_id = rel.report_id" +
 					" WHERE rep.unit_name = " + laboratory.repr
-			if start_date /= Void then
-				s_query := s_query + " AND rep.start_date <= julianday(" + start_date.repr + ") AND " +
-						"julianday(" + end_date.repr + ") <= rep.end_date"
+			if attached start_date as sd and attached end_date as ed then
+				s_query := s_query + " AND rep.start_date <= julianday(" + sd.repr + ") AND " +
+						"julianday(" + ed.repr + ") <= rep.end_date"
 			end
 			s_query := s_query + ";"
 			create query_statement.make (s_query, database)

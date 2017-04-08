@@ -30,7 +30,8 @@ feature {NONE} -- Initialization
 			p := p.appended ("/templates")
 			set_template_folder (p)
 			set_template_file_name ("admin.tpl")
-				--template.add_value (reports, "reports")
+			set_reports
+			template.add_value (reports, "reports")
 				--template_context.enable_verbose
 			template.analyze
 			if attached template.output as l_output then
@@ -61,16 +62,25 @@ feature {NONE} -- Access to database
 				list_labs as lab_name
 			loop
 				across
-					query_manager.cumulative_info (Void, Void, create{STRING_REPRESENTABLE).make(lab_name.item)) as lab_reports
+					query_manager.cumulative_info (Void, Void, create{STRING_REPRESENTABLE}.make(lab_name.item)) as lab_report
 				loop
 					across
-						lab_reports.item as lab_report
+						lab_report.item as field
 					loop
-						across
-							lab_report.item as field
-						loop
-							field.item
+						if field.item.name.same_string ("unit_name") then
+							u_name:=field.item.value.repr
+						elseif field.item.name.same_string ("head_name") then
+							h_name:=field.item.value.repr
+						elseif field.item.name.same_string ("rep_start") then
+							s_date:=field.item.value.repr
+						elseif field.item.name.same_string ("rep_end") then
+							e_date:=field.item.value.repr
+						elseif field.item.name.same_string ("id") then
+							c_id:=field.item.value.repr.to_integer
 						end
+					end
+					if attached u_name as un and attached h_name as hn and attached s_date as sd and attached e_date as ed and attached c_id as a_id then
+						reports.force (create {REPORT}.make (un, hn, sd, ed, a_id))
 					end
 				end
 			end

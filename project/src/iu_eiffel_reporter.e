@@ -24,10 +24,14 @@ feature {NONE} -- Initialization
 
 	initialize
 			-- Initialize current service.
+		local
+			bullshit: QUERY_MANAGER
 		do
 			Precursor
 			set_service_option ("port", 80)
 			set_service_option ("verbose", True)
+
+			create bullshit.make
 		end
 
 end

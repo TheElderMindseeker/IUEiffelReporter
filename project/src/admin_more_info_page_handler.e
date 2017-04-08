@@ -30,14 +30,19 @@ feature
 	execute (req: WSF_REQUEST; res: WSF_RESPONSE)
 			-- Execute handler for `req' and respond in `res'.
 			-- returns more information about some report
+		local
+			template:TEMPLATE_MORE_INFO
 		do
 			page.set_status_code ({HTTP_STATUS_CODE}.ok)
 			if req.is_get_request_method then
 				if attached req.path_parameter ("id") as id then
-					--delete form with id id.to_integer
+					create template.default_create
+					template.generate_page_with_id(id.string_representation.to_integer)
+					if attached template.output as body then
+						res.put_string(body)
+					end
 				end
 			end
-			res.send (page)
 		end
 
 end
