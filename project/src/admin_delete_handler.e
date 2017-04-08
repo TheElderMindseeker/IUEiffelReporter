@@ -38,7 +38,11 @@ feature
 			if req.is_get_request_method then
 				if attached req.path_parameter ("id") as wsf_value_id and then attached wsf_value_id.string_representation.to_integer as id then
 					if query_manager.database_manager.has_report (id) then
-						--TODO iterate across all table names and multiple_delete
+						across
+							query_manager.database_manager.list_tables as table_name
+						loop
+							query_manager.database_manager.multiple_delete (table_name.item, id)
+						end
 					end
 				end
 			end
