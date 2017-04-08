@@ -30,7 +30,7 @@ feature {NONE} -- Initialization
 			p := p.appended ("/templates")
 			set_template_folder (p)
 			set_template_file_name ("admin.tpl")
-			--template.add_value (reports, "reports")
+				--template.add_value (reports, "reports")
 				--template_context.enable_verbose
 			template.analyze
 			if attached template.output as l_output then
@@ -40,6 +40,41 @@ feature {NONE} -- Initialization
 			created_output: output /= Void
 		end
 
+feature {NONE} -- Access to database
+
+	reports: LINKED_LIST [REPORT]
+
+	set_reports
+		local
+			query_manager: QUERY_MANAGER
+			list_labs:ITERABLE[STRING]
+			u_name:STRING
+			h_name:STRING
+			s_date:STRING
+			e_date:STRING
+			c_id:INTEGER
+		do
+			create reports.make
+			create query_manager.make
+			list_labs:=query_manager.list_laboratories
+			across
+				list_labs as lab_name
+			loop
+				across
+					query_manager.cumulative_info (Void, Void, create{STRING_REPRESENTABLE).make(lab_name.item)) as lab_reports
+				loop
+					across
+						lab_reports.item as lab_report
+					loop
+						across
+							lab_report.item as field
+						loop
+							field.item
+						end
+					end
+				end
+			end
+		end
 
 feature {NONE} -- Implementation
 
