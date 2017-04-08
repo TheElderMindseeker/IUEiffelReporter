@@ -45,15 +45,15 @@ feature {NONE} -- Initialization
 			-- Make date from ISO date string
 		require
 			string_exists_and_not_empty: date_string /= Void and date_string.count > 0
-			all_components_present: date_string.split ('-').count >= 3
+			all_components_present: date_string.split ('.').count >= 3
 			valid_date: True -- TODO: formulate strict contract here
 		local
 			components: LIST [READABLE_STRING_32]
 		do
-			components := date_string.split ('-')
-			year := components.i_th (1).to_integer_32
+			components := date_string.split ('.')
+			year := components.i_th (3).to_integer_32
 			month := components.i_th (2).to_integer_32
-			day := components.i_th (3).to_integer_32
+			day := components.i_th (1).to_integer_32
 		ensure
 			right_assignment: True -- TODO: Formulate strict contract here
 		end

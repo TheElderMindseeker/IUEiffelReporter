@@ -9,7 +9,6 @@ class
 
 create
 	make
-
 feature
 
 	make
@@ -35,7 +34,7 @@ feature
 					loop
 						if attached {JSON_STRING} j_object.item (j_key.item) as j_string then
 							print ("key of string: " + j_key.item.representation + " string: " + without_quotes (j_string.representation) + "%N")
-							--add_string_to_ht (without_quotes (j_key.item.representation), without_quotes (j_string.representation))
+							add_string_to_ht (without_quotes (j_key.item.representation), without_quotes (j_string.representation))
 						end
 						if attached {JSON_ARRAY} j_object.item (j_key.item) as j_array then
 							print ("name of array: " + j_key.item.representation + " values in array:%N")
@@ -64,29 +63,30 @@ feature {NONE}
 
 	add_string_to_ht (key, value: STRING)
 		do
-			if attached {TUPLE [STRING, STRING]} query_manager.database_manager.which_table (key) as tuple
+			if attached query_manager.database_manager.which_table (key) as tuple
 			and then attached {STRING} tuple.at (1) as table_name then
 				if not tables.has (table_name) then
 					tables.force (create {LINKED_LIST [FIELD]}.make, table_name)
 				end
-				if attached {STRING} tuple.at (2) as type then
-					if type.same_string ("TEXT") then
-						if attached tables.at (table_name) as a_list then
-							a_list.force (create {FIELD}.make (key, create {STRING_REPRESENTABLE}.make (value)))
-						end
-					elseif type.same_string ("REAL") then
-						if attached tables.at (table_name) as a_list then
-							a_list.force (create {FIELD}.make (key, create {FLOAT_REPRESENTABLE}.make (value.to_real)))
-						end
-					elseif type.same_string ("INTEGER") then
-						if attached tables.at (table_name) as a_list then
-							a_list.force (create {FIELD}.make (without_quotes (key), create {INTEGER_REPRESENTABLE}.make (value.to_integer)))
-						end
-					end
+				if attached {STRING} tuple.at (2) as type and then attached string_to_field(key,value) as field and then attached tables.at (table_name) as l_list then
+					l_list.force (field)
 				end
 			end
 		end
 
+	string_to_field(key, value:STRING): detachable FIELD
+		-- get some key and value and returns it as a field
+	do
+		if attached query_manager.database_manager.which_table (key) as tuple and then attached {STRING} tuple.at (2) as a_type then
+			if a_type.same_string ("TEXT") then
+				create Result.make(key, create {STRING_REPRESENTABLE}.make (value))
+			elseif a_type.same_string ("REAL") then
+				create Result.make(key, create {DATE}.make_from_string (value))
+			elseif a_type.same_string ("INTEGER") then
+				create Result.make(key, create {INTEGER_REPRESENTABLE}.make (value.to_integer))
+			end
+		end
+	end
 	without_quotes (str: STRING): STRING
 			--returns given string withiout quotes
 		require

@@ -28,7 +28,7 @@ feature {NONE} -- Initialization
 			db: DATABASE_MANAGER
 		do
 			Precursor
-			set_service_option ("port", 8080)
+			set_service_option ("port", 80)
 			set_service_option ("verbose", True)
 		end
 

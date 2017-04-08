@@ -34,16 +34,15 @@ feature {NONE} -- Initialization
 			p:=p.appended ("/templates")
 			set_template_folder (p)
 			set_template_file_name ("form.tpl")
-			template.add_value (courses, "courses")
-			template.add_value (examinations, "examinations")
-			template.add_value (supervised_students, "supervised_students")
-			template.add_value (student_reports, "student_reports")
-			template.add_value (completed_phd, "completed_phd")
-			template.add_value (grants, "grants")
-			template.add_value (research_projects, "research_projects")
-			template.add_value (research_collaborations, "research_collaborations")
-			template.add_value (publications, "publications")
-			--template_context.enable_verbose
+--			template.add_value (courses, "courses")
+--			template.add_value (examinations, "examinations")
+--			template.add_value (supervised_students, "supervised_students")
+--			template.add_value (student_reports, "student_reports")
+--			template.add_value (completed_phd, "completed_phd")
+--			template.add_value (grants, "grants")
+--			template.add_value (research_projects, "research_projects")
+--			template.add_value (research_collaborations, "research_collaborations")
+--			template.add_value (publications, "publications")
 			template.analyze
 			template.get_output
 			if attached template.output as l_output then
@@ -76,57 +75,57 @@ feature -- Status
 
 	template: TEMPLATE_FILE
 
-	courses : LIST[COURSE]
-		do
-			create {ARRAYED_LIST[COURSE]}Result.make(1)
-			Result.force(create {COURSE}.make ("", "", "", "", 0))
-		end
+--	courses : LIST[COURSE]
+--		do
+--			create {ARRAYED_LIST[COURSE]}Result.make(1)
+--			Result.force(create {COURSE}.make ("", "", "", "", 0))
+--		end
 
-	examinations : LIST[EXAM]
-		do
-			create {ARRAYED_LIST[EXAM]}Result.make(1)
-			Result.force(create {EXAM}.make ("", "", "", "", 0))
-		end
+--	examinations : LIST[EXAM]
+--		do
+--			create {ARRAYED_LIST[EXAM]}Result.make(1)
+--			Result.force(create {EXAM}.make ("", "", "", "", 0))
+--		end
 
-	supervised_students : LIST[STUDENT]
-		do
-			create {ARRAYED_LIST[STUDENT]}Result.make(1)
-			Result.force(create {STUDENT}.make ("", "", 0))
-		end
+--	supervised_students : LIST[STUDENT]
+--		do
+--			create {ARRAYED_LIST[STUDENT]}Result.make(1)
+--			Result.force(create {STUDENT}.make ("", "", 0))
+--		end
 
-	student_reports : LIST[S_REPORT]
-		do
-			create {ARRAYED_LIST[S_REPORT]}Result.make(1)
-			Result.force(create {S_REPORT}.make ("", "", "", 0))
-		end
+--	student_reports : LIST[S_REPORT]
+--		do
+--			create {ARRAYED_LIST[S_REPORT]}Result.make(1)
+--			Result.force(create {S_REPORT}.make ("", "", "", 0))
+--		end
 
-	completed_phd : LIST[PHD]
-		do
-			create {ARRAYED_LIST[PHD]}Result.make(1)
-			Result.force(create {PHD}.make ("", "", "", "", "", "", 0))
-		end
+--	completed_phd : LIST[PHD]
+--		do
+--			create {ARRAYED_LIST[PHD]}Result.make(1)
+--			Result.force(create {PHD}.make ("", "", "", "", "", "", 0))
+--		end
 
-	grants : LIST[GRANT]
-		do
-			create {ARRAYED_LIST[GRANT]}Result.make(1)
-			Result.force(create {GRANT}.make ("", "", "", "", "", "", 0))
-		end
+--	grants : LIST[GRANT]
+--		do
+--			create {ARRAYED_LIST[GRANT]}Result.make(1)
+--			Result.force(create {GRANT}.make ("", "", "", "", "", "", 0))
+--		end
 
-	research_projects : LIST[PROJECT]
-		do
-			create {ARRAYED_LIST[PROJECT]}Result.make(1)
-			Result.force(create {PROJECT}.make ("", "", "", "", "", "", 0))
-		end
+--	research_projects : LIST[PROJECT]
+--		do
+--			create {ARRAYED_LIST[PROJECT]}Result.make(1)
+--			Result.force(create {PROJECT}.make ("", "", "", "", "", "", 0))
+--		end
 
-	research_collaborations : LIST[COLLABORATION]
-		do
-			create {ARRAYED_LIST[COLLABORATION]}Result.make(1)
-			Result.force(create {COLLABORATION}.make ("", "", "", "", "", 0))
-		end
+--	research_collaborations : LIST[COLLABORATION]
+--		do
+--			create {ARRAYED_LIST[COLLABORATION]}Result.make(1)
+--			Result.force(create {COLLABORATION}.make ("", "", "", "", "", 0))
+--		end
 
-	publications : LIST[PUBLICATION]
-		do
-			create {ARRAYED_LIST[PUBLICATION]}Result.make(1)
-			Result.force(create {PUBLICATION}.make ("", 0))
-		end
+--	publications : LIST[PUBLICATION]
+--		do
+--			create {ARRAYED_LIST[PUBLICATION]}Result.make(1)
+--			Result.force(create {PUBLICATION}.make ("", 0))
+--		end
 end

@@ -24,14 +24,9 @@ feature -- Router
 		do
 			create fhdl.make_with_path (create {PATH}.make_from_string ("www"))
 			fhdl.set_directory_index (<<"index.html">>)
-<<<<<<< HEAD
-			router.handle ("/admin", create {ADMIN_PAGE_HANDLER}.make, router.methods_get_post)
-			router.handle ("/form", create {FORM_HANDLER}.make, router.methods_get_post)
-=======
 			router.handle ("/admin", create{ADMIN_PAGE_HANDLER}.make, router.methods_get_post)
 			router.handle ("/form", create{FORM_HANDLER}.make, router.methods_get_post)
->>>>>>> parent of 8867b86... nothing to report
-			router.handle ("", fhdl, router.methods_get_post)
+			router.handle ("", fhdl, router.methods_get_post)  
 		end
 
 end

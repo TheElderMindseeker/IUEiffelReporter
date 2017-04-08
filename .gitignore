@@ -3,4 +3,7 @@ EIFGENs/
 Documentation/
 **/temp.db
 *.swp
+<<<<<<< HEAD
 *.ecf
+=======
+>>>>>>> 27780bce25d360cbf7b6bceb70a1fc9d0a165bc8
