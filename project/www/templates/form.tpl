@@ -72,9 +72,12 @@
 				<div class="col-sm-6 col-md-6">
 					<label for="courses" class="control-label">Courses taught</label>
 				</div>
+				<div class="col-sm-6 col-md-6">
+						<label for="publications" class="help-label"><label style="color:red;">*</label>Required</label>
+				</div>
 			</div>
 			<div class="form-group row">
-				<table class="table" id="courses">
+				<table class="table required-table" id="courses">
 					<thead>
 						<tr>
 							<th style="text-align: center;">Course Name</th>
@@ -85,7 +88,7 @@
 					</thead>
 					<tbody>
 						{foreach from="$courses" item="course"}
-						<tr id="el-courses-{$course.id/}">
+						<tr id="el-courses-{$course.id/}" class="required-row">
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("courses-{$course.id/}");' name="courses[][course_name]" placeholder="Required" value="{$course.course_name/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("courses-{$course.id/}");' name="courses[][semester]" placeholder="Required" value="{$course.semester/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("courses-{$course.id/}");' name="courses[][edu_level]" placeholder="Required" value="{$course.edu_level/}" required/></td>
@@ -111,9 +114,12 @@
 				<div class="col-sm-6 col-md-6">
 					<label for="examinations" class="control-label">Examinations</label>
 				</div>
+				<div class="col-sm-6 col-md-6">
+						<label for="publications" class="help-label"><label style="color:red;">*</label>Required</label>
+				</div>
 			</div>
 			<div class="form-group row">
-				<table class="table" id="examinations">
+				<table class="table required-table" id="examinations">
 					<thead>
 						<tr>
 							<th style="text-align: center;">Course Name</th>
@@ -124,7 +130,7 @@
 					</thead>
 					<tbody>
 						{foreach from="$examinations" item="exam"}
-						<tr  id="el-examinations-{$exam.id/}">
+						<tr id="el-examinations-{$exam.id/}" class="required-row">
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("examinations-{$exam.id/}");' name="examinations[][course_name]" placeholder="Required" value="{$exam.course_name/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("examinations-{$exam.id/}");' name="examinations[][semester]" placeholder="Required" value="{$exam.semester/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("examinations-{$exam.id/}");' name="examinations[][exam_kind]" placeholder="Required" value="{$exam.exam_kind/}" required/></td>
@@ -150,9 +156,12 @@
 				<div class="col-sm-6 col-md-6">
 					<label for="student-supervised" class="control-label">Students supervised</label>
 				</div>
+				<div class="col-sm-6 col-md-6">
+						<label for="publications" class="help-label"><label style="color:red;">*</label>Required</label>
+				</div>
 			</div>
 			<div class="form-group row">
-				<table class="table" id="supervised_students">
+				<table class="table required-table" id="supervised_students">
 					<thead>
 						<tr>
 							<th style="text-align: center;">Name of Student</th>
@@ -161,7 +170,7 @@
 					</thead>
 					<tbody>
 						{foreach from="$supervised_students" item="student"}
-						<tr id="el-supervised_students-{$student.id/}">
+						<tr id="el-supervised_students-{$student.id/}" class="required-row">
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("supervised_students-{$student.id/}");' name="supervised_students[][student_name]" placeholder="Required" value="{$student.student_name/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("supervised_students-{$student.id/}");' name="supervised_students[][nature_of_work]" placeholder="Required" value="{$student.nature_of_work/}" required/></td>
 						</tr>
@@ -181,9 +190,12 @@
 				<div class="col-sm-6 col-md-6">
 					<label for="student_reports" class="control-label">Completed student reports</label>
 				</div>
+				<div class="col-sm-6 col-md-6">
+						<label for="publications" class="help-label"><label style="color:red;">*</label>Required</label>
+				</div>
 			</div>
 			<div class="form-group row">
-				<table class="table" id="student_reports">
+				<table class="table required-table" id="student_reports">
 					<thead>
 						<tr>
 							<th style="text-align: center;">Name of Student</th>
@@ -193,7 +205,7 @@
 					</thead>
 					<tbody>
 						{foreach from="$student_reports" item="report"}
-						<tr id="el-student_reports-{$report.id/}">
+						<tr id="el-student_reports-{$report.id/}" class="required-row">
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("student_reports-{$report.id/}");' name="student_reports[][student_name]" placeholder="Required" value="{$report.student_name/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("student_reports-{$report.id/}");' name="student_reports[][title]" placeholder="Required" value="{$report.title/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("student_reports-{$report.id/}");' name="student_reports[][publication_plans]" value="{$report.publication_plans/}"/></td>
@@ -268,9 +280,12 @@
 				<div class="col-sm-6 col-md-6">
 					<label for="grants" class="control-label">Grants</label>
 				</div>
+				<div class="col-sm-6 col-md-6">
+						<label for="publications" class="help-label"><label style="color:red;">*</label>Required</label>
+				</div>
 			</div>
 			<div class="form-group row">
-				<table class="table" id="grants">
+				<table class="table required-table" id="grants">
 					<thead>
 						<tr>
 							<th style="text-align: center;">Title of Project</th>
@@ -283,7 +298,7 @@
 					</thead>
 					<tbody>
 						{foreach from="$grants" item="grant"}
-						<tr id="el-grants-{$grant.id/}">
+						<tr id="el-grants-{$grant.id/}" class="required-row">
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("grants-{$grant.id/}");' name="grants[][project_title]" placeholder="Required" value="{$grant.project_title/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("grants-{$grant.id/}");' name="grants[][granting_agency]" placeholder="Required" value="{$grant.granting_agency/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("grants-{$grant.id/}");' name="grants[][start_date]" placeholder="Required" value="{$grant.start_date/}" required/></td>
@@ -301,7 +316,7 @@
 						</tr>
 						<tr id="to-show-grants" name="new-line-for-adder" style="display: none;">
 							<td><input type="text" class="form-control input-in-table" name="grants[][project_title]" placeholder="Required" required /></td>
-							<td><input type="text" class="form-control input-in-table" name="grants[][agency]" placeholder="Required" required /></td>
+							<td><input type="text" class="form-control input-in-table" name="grants[][granting_agency]" placeholder="Required" required /></td>
 							<td><input type="text" class="form-control input-in-table" name="grants[][start_date]" placeholder="Required" required /></td>
 							<td><input type="text" class="form-control input-in-table" name="grants[][end_date]" placeholder="Required" required /></td>
 							<td><input type="text" class="form-control input-in-table" name="grants[][is_continuation]" placeholder="Required" required /></td>
@@ -314,9 +329,12 @@
 				<div class="col-sm-6 col-md-6">
 					<label for="research_projects" class="control-label">Research projects</label>
 				</div>
+				<div class="col-sm-6 col-md-6">
+						<label for="publications" class="help-label"><label style="color:red;">*</label>Required</label>
+				</div>
 			</div>
 			<div class="form-group row">
-				<table class="table" id="research_projects">
+				<table class="table required-table" id="research_projects">
 					<thead>
 						<tr>
 							<th style="text-align: center;">Title of Project</th>
@@ -329,7 +347,7 @@
 					</thead>
 					<tbody>
 						{foreach from="$research_projects" item="project"}
-						<tr id="el-research_projects-{$project.id/}">
+						<tr id="el-research_projects-{$project.id/}" class="required-row">
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("research_projects-{$project.id/}");' name="research_projects[][project_title]" placeholder="Required" value="{$project.project_title/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("research_projects-{$project.id/}");' name="research_projects[][iu_personnel_involved]" placeholder="Required" value="{$project.iu_personnel_involved/}" required/></td>
 							<td><input type="text" class="form-control input-in-table" onblur='removeRow("research_projects-{$project.id/}");' name="research_projects[][external_personnel_involved]" value="{$project.external_personnel_involved/}"/></td>
@@ -409,6 +427,7 @@
 			</div>
 			<div class="form-group row">
 				<table class="table" id="publications">
+					<input id="row-counter" type="hidden" value="0" />
 					<thead>
 					</thead>
 					<tbody>
