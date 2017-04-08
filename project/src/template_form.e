@@ -15,22 +15,13 @@ inherit
 		end
 
 	SHARED_TEMPLATE_CONTEXT
-		undefine
-			default_create
-		end
-
-	ANY
 		redefine
 			default_create
 		end
 
-create
-	default_create
-
 feature {NONE} -- Initialization
 
 	default_create
-
 			-- Initialize `Current'.
 		local
 			p: PATH
@@ -50,13 +41,13 @@ feature {NONE} -- Initialization
 			template.add_value (publications, "publications")
 				--template_context.enable_verbose
 			template.analyze
-			template.get_output
 			if attached template.output as l_output then
 				output := l_output
 			end
 		end
 
-feature
+
+feature {NONE} -- Implementation
 
 	set_template_folder (v: PATH)
 		do

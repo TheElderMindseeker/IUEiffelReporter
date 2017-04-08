@@ -1,6 +1,6 @@
 note
-	description: "class that parses json string from form page and adds data to the databse"
-	author: ""
+	description: "Class that is used for user form parsing from JSON string representation."
+	author: "Niyaz Guinatullin and Daniil Botnarenku"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -9,23 +9,54 @@ class
 
 create
 	make
-feature
 
-	make
-			--creates form parser
+feature {NONE} -- Initialization
+
+	make (j_str: STRING; manager: DATABASE_MANAGER)
+			-- Initialize `Current'.
+		require
+			json_exists: j_str /= Void
+			manager_exists: manager /= Void
 		do
-			create tables.make (15)
-			create query_manager.make
+			source_json := j_str
+			database_manager := manager
+		ensure
+			successful_json_assignment: source_json = j_str
+			successful_manager_assignment: database_manager = manager
 		end
 
-	parse_and_add_to_db (str: STRING)
-			-- parses given string and adds it to database
+feature -- Parsing
+
+	set_json_string (j_str: STRING)
+			-- Set source json string to the object.
 		require
-			not_Void: str /= Void
+			json_exists: j_str /= Void
+		do
+			source_json := j_str
+		ensure
+			successful_assignment: source_json = j_str
+		end
+
+	set_database_manager (manager: DATABASE_MANAGER)
+			-- Set database manager for grouping purposes.
+		require
+			manager_exists: manager /= Void
+		do
+			database_manager := manager
+		ensure
+			successful_assignment: database_manager = manager
+		end
+
+	parse
+			-- Parse given json string.
 		local
 			parser: JSON_PARSER
 		do
-			create parser.make_with_string (str)
+			create parse_result.make_equal (100)
+			if attached parse_result as hash_table then
+				hash_table.compare_objects
+			end
+			create parser.make_with_string (source_json)
 			parser.parse_content
 			if parser.is_parsed and then parser.is_valid and then attached parser.parsed_json_value as jv then
 				if attached {JSON_OBJECT} jv as j_object then
@@ -33,76 +64,97 @@ feature
 						j_object.current_keys as j_key
 					loop
 						if attached {JSON_STRING} j_object.item (j_key.item) as j_string then
-							print ("key of string: " + j_key.item.representation + " string: " + without_quotes (j_string.representation) + "%N")
-							add_string_to_ht (without_quotes (j_key.item.representation), without_quotes (j_string.representation))
+							parse_json_string (j_key.item, j_string)
 						end
 						if attached {JSON_ARRAY} j_object.item (j_key.item) as j_array then
-							print ("name of array: " + j_key.item.representation + " values in array:%N")
-							if j_array.count > 0 then
-								across
-									j_array.array_representation as ar_item
-								loop
-									if attached {JSON_OBJECT} ar_item.item as ar_object then
-										across
-											ar_object.current_keys as ar_key
-										loop
-											if attached {JSON_STRING} ar_object.item (ar_key.item) as ar_string then
-												print ("key of string in array: " + ar_key.item.representation + " string: " + ar_string.representation + "%N")
-											end
-										end
-									end
-								end
-							end
+							parse_json_array (j_key.item, j_array)
 						end
+					end
+				end
+			end
+		ensure
+			parse_result_exists: parse_result /= Void
+		end
+
+	parse_result: detachable HASH_TABLE [LINKED_LIST [ANY], STRING_8]
+			-- The records formed while parsing json, keys are table names in database.
+
+feature {NONE} -- Implementation
+
+	source_json: STRING
+			-- The json string to be parsed.
+
+	database_manager: DATABASE_MANAGER
+			-- Database manager for data grouping purposes.
+
+	parse_json_string (key, value: JSON_STRING)
+			-- Parse json string
+		do
+			if attached parse_result as hash_table then
+				if attached database_manager.which_table (key.item) as db_table_result then
+					if attached {STRING_8} db_table_result.at (1) as table_name and then attached {STRING_8} db_table_result.at (2) as arg_type then
+						add_field_to_hash_table (key.item, value.item, table_name, arg_type, hash_table)
 					end
 				end
 			end
 		end
 
-feature {NONE}
-
-	add_string_to_ht (key, value: STRING)
+	parse_json_array (name: JSON_STRING; array: JSON_ARRAY)
+			-- Parse json array
+		local
+			record: LINKED_LIST [FIELD]
 		do
-			if attached query_manager.database_manager.which_table (key) as tuple
-			and then attached {STRING} tuple.at (1) as table_name then
-				if not tables.has (table_name) then
-					tables.force (create {LINKED_LIST [FIELD]}.make, table_name)
-				end
-				if attached {STRING} tuple.at (2) as type and then attached string_to_field(key,value) as field and then attached tables.at (table_name) as l_list then
-					l_list.force (field)
+			across
+				array.array_representation as ar_item
+			loop
+				if attached {JSON_OBJECT} ar_item.item as ar_object then
+					create record.make
+					across
+						ar_object.current_keys as ar_key
+					loop
+						if attached database_manager.which_table (ar_key.item.item) as db_table_result then
+							if attached {JSON_STRING} ar_object.item (ar_key.item) as ar_string and then attached {STRING_8} db_table_result.at (2) as arg_type then
+								add_field_to_linked_list (ar_key.item.item, ar_string.item, arg_type, record)
+							end
+						end
+					end
+					if attached parse_result as hash_table then
+						if not hash_table.has (name.item) then
+							hash_table.put (create {LINKED_LIST [LINKED_LIST [FIELD]]}.make, name.item)
+						end
+						if attached {LINKED_LIST [LINKED_LIST [FIELD]]} hash_table.at (name.item) as linked_list then
+							linked_list.extend (record)
+						end
+					end
 				end
 			end
 		end
-
-	string_to_field(key, value:STRING): detachable FIELD
-		-- get some key and value and returns it as a field
-	do
-		if attached query_manager.database_manager.which_table (key) as tuple and then attached {STRING} tuple.at (2) as a_type then
-			if a_type.same_string ("TEXT") then
-				create Result.make(key, create {STRING_REPRESENTABLE}.make (value))
-			elseif a_type.same_string ("REAL") then
-				create Result.make(key, create {DATE}.make_from_string (value))
-			elseif a_type.same_string ("INTEGER") then
-				create Result.make(key, create {INTEGER_REPRESENTABLE}.make (value.to_integer))
-			end
-		end
-	end
-	without_quotes (str: STRING): STRING
-			--returns given string withiout quotes
-		require
-			not_Void: str /= Void
+		
+	add_field_to_hash_table (name, value, table_name, arg_type: STRING_8; hash_table: HASH_TABLE [LINKED_LIST [ANY], STRING_8])
+			-- Add provided `name'-`value' pair to the `hash_table' as a field
 		do
-			if str.at (1) = '"' and then str.at (str.count) = '"' then
-				create Result.make_from_string (str.substring (2, str.count - 1))
-			else
-				create Result.make_empty
+			if not hash_table.has (table_name) then
+				hash_table.put (create {LINKED_LIST [FIELD]}.make, table_name)
 			end
-		ensure
-			Result /= Void
+			if attached hash_table.at (table_name) as linked_list then
+				add_field_to_linked_list (name, value, arg_type, linked_list)
+			end
 		end
 
-	tables: HASH_TABLE [LINKED_LIST [FIELD], STRING]
-
-	query_manager: QUERY_MANAGER
-
+	add_field_to_linked_list (name, value, arg_type: STRING_8; linked_list: LINKED_LIST [ANY])
+			-- Add provided `name'-`value' pair to the `hash_table' as a field
+		local
+			field: detachable FIELD
+		do
+			if arg_type.same_string ("TEXT") then
+				field := database_manager.create_field (name, value)
+			elseif arg_type.same_string ("INTEGER") then
+				field := database_manager.create_field (name, value.to_integer)
+			elseif arg_type.same_string ("REAL") then
+				field := database_manager.create_field (name, value.to_real)
+			end
+			if attached field as att_field then
+				linked_list.extend (field)
+			end
+		end
 end

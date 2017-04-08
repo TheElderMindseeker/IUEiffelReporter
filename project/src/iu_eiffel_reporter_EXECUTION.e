@@ -15,20 +15,24 @@ inherit
 create
 	make
 
+feature {NONE} -- Initialization
+
 feature -- Router
 
 	setup_router
 			-- Setup `router'
 		local
 			fhdl: WSF_FILE_SYSTEM_HANDLER
+			query_manager: QUERY_MANAGER
 		do
 			create fhdl.make_with_path (create {PATH}.make_from_string ("www"))
+			create query_manager.make
 			fhdl.set_directory_index (<<"index.html">>)
-			router.handle ("/admin", create{ADMIN_PAGE_HANDLER}.make, router.methods_get_post)
 			router.handle ("/admin/delete", create{ADMIN_DELETE_HANDLER}.make, router.methods_get_post)
 			router.handle ("/admin/edit", create{ADMIN_EDIT_PAGE_HANDLER}.make, router.methods_get_post)
 			router.handle ("/admin/more_info", create{ADMIN_MORE_INFO_PAGE_HANDLER}.make, router.methods_get_post)
-			router.handle ("/form", create{FORM_HANDLER}.make, router.methods_get_post)
+			router.handle ("/admin", create {ADMIN_PAGE_HANDLER}.make, router.methods_get_post)
+			router.handle ("/form", create {FORM_HANDLER}.make (query_manager.database_manager), router.methods_get_post)
 			router.handle ("", fhdl, router.methods_get_post)
 		end
 

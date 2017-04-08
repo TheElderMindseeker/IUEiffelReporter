@@ -15,22 +15,14 @@ inherit
 		end
 
 	SHARED_TEMPLATE_CONTEXT
-		undefine
-			default_create
-		end
-
-	ANY
 		redefine
 			default_create
 		end
 
-create
-	default_create
-
 feature {NONE} -- Initialization
 
 	default_create
-			-- reades template for admin page, it will be availible in get_output
+			-- Reads template for admin page, it will be availible in get_output.
 		local
 			p: PATH
 		do
@@ -38,16 +30,18 @@ feature {NONE} -- Initialization
 			p := p.appended ("/templates")
 			set_template_folder (p)
 			set_template_file_name ("admin.tpl")
-				--template.add_value (reports, "reports")
+			--template.add_value (reports, "reports")
 				--template_context.enable_verbose
 			template.analyze
-			template.get_output
 			if attached template.output as l_output then
 				output := l_output
 			end
+		ensure then
+			created_output: output /= Void
 		end
 
-feature {NONE} --Status
+
+feature {NONE} -- Implementation
 
 	set_template_folder (v: PATH)
 		do
