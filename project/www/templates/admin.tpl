@@ -9,6 +9,13 @@
 		<script type="text/javascript" src="../resources/jquery-3.2.0.min.js"></script>
 		<link href="../resources/reporterlibrary.css" rel="stylesheet" type="text/css">
 		<script type="text/javascript" src="../resources/jquery.tablesorter.js"></script>
+		<script>
+			$(document).ready(function()
+				{
+					$("#list-of-reports").tablesorter();
+				}
+			);
+		</script>
 	</head>
 	<body>
 		<div class="wrapper container">
@@ -35,11 +42,20 @@
 							<td>{$report.head_name/}</td>
 							<td>{$report.rep_start/}</td>
 							<td>{$report.rep_end/}</td>
-							<td><a href="/details/{$report.id/}" class="btn btn-success" role="button">More details...</a></td>
-							<td><a href="/edit/{$report.id/}" class="btn btn-primary" role="button">Edit</a></td>
-							<td><a href="/delete/{$report.id/}" class="btn btn-danger" role="button">Delete</a></td>
+							<td><a href="/details?id={$report.id/}" class="btn btn-success" role="button">More details...</a></td>
+							<td><a href="/edit?id={$report.id/}" class="btn btn-primary" role="button">Edit</a></td>
+							<td><a href="/delete?id={$report.id/}" class="btn btn-danger" role="button">Delete</a></td>
 						</tr>
 						{/foreach}
+						<tr>
+							<td>1{$report.unit_name/}</td>
+							<td>2{$report.head_name/}</td>
+							<td>3{$report.rep_start/}</td>
+							<td>4{$report.rep_end/}</td>
+							<td><a href="/details?id={$report.id/}" class="btn btn-success" role="button">More details...</a></td>
+							<td><a href="/edit?id={$report.id/}" class="btn btn-primary" role="button">Edit</a></td>
+							<td><a href="/delete?id={$report.id/}" class="btn btn-danger" role="button">Delete</a></td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -47,12 +63,5 @@
 		<div class="footer">
     Developed by <label class="team-logo">DANDy</label> team
   </div>
-	<script>
-		$(document).ready(function()
-			{
-				$("#list-of-reports").tablesorter();
-			}
-		);
-	</script>
 	</body>
 </html>

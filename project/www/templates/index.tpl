@@ -15,9 +15,13 @@
 
 		<!-- For serialization -->
 		<script type="text/javascript" src="../resources/jquery.serializejson.js"></script>
-
 		<script type="text/javascript" src="../resources/reporterlibrary.js"></script>
 		<link href="../resources/reporterlibrary.css" rel="stylesheet" type="text/css">
+		<style>
+			a:link, a:active, a:visited {
+					color: #000;
+				}
+		</style>
   </head>
   <body>
     <div class="wrapper main-wrapper container">
