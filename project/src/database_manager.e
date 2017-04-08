@@ -282,6 +282,7 @@ feature -- Management
 			if insert_statement.has_error then
 				has_error := True
 			end
+			database.commit
 		end
 
 	multiple_insert (table_name: STRING_8; arguments: ITERABLE [ITERABLE [FIELD]])
@@ -333,6 +334,7 @@ feature -- Management
 					has_error := True
 				end
 			end
+			database.commit
 		end
 
 	single_select (table_name: STRING_8; report_id: INTEGER_32): ITERABLE [FIELD]
@@ -431,6 +433,7 @@ feature -- Management
 			if update_statement.has_error then
 				has_error := True
 			end
+			database.commit
 		end
 
 	multiple_delete (table_name: STRING_8; report_id: INTEGER_32)
@@ -451,6 +454,7 @@ feature -- Management
 			if delete_statement.has_error then
 				has_error := True
 			end
+			database.commit
 		end
 
 --	multiple_update (table_name: STRING_8; report_id: INTEGER_32; arguments: ITERABLE [ITERABLE [FIELD]])
