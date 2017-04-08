@@ -9,17 +9,12 @@ class
 
 inherit
 
-	TEMPLATE_PAGE
-		undefine
-			default_create
-		end
-
 	SHARED_TEMPLATE_CONTEXT
 		redefine
 			default_create
 		end
 
-feature {NONE} -- Initialization
+feature -- Initialization
 
 	default_create
 			-- Reads template for admin page, it will be availible in get_output.
@@ -41,6 +36,8 @@ feature {NONE} -- Initialization
 			created_output: output /= Void
 		end
 
+	output: detachable STRING
+
 feature {NONE} -- Access to database
 
 	reports: LINKED_LIST [REPORT]
@@ -48,35 +45,35 @@ feature {NONE} -- Access to database
 	set_reports
 		local
 			query_manager: QUERY_MANAGER
-			list_labs:ITERABLE[STRING]
-			u_name:STRING
-			h_name:STRING
-			s_date:STRING
-			e_date:STRING
-			c_id:INTEGER
+			list_labs: ITERABLE [STRING]
+			u_name: STRING
+			h_name: STRING
+			s_date: STRING
+			e_date: STRING
+			c_id: INTEGER
 		do
 			create reports.make
 			create query_manager.make
-			list_labs:=query_manager.list_laboratories
+			list_labs := query_manager.list_laboratories
 			across
 				list_labs as lab_name
 			loop
 				across
-					query_manager.cumulative_info (Void, Void, create{STRING_REPRESENTABLE}.make(lab_name.item)) as lab_report
+					query_manager.cumulative_info (Void, Void, create {STRING_REPRESENTABLE}.make (lab_name.item)) as lab_report
 				loop
 					across
 						lab_report.item as field
 					loop
 						if field.item.name.same_string ("unit_name") then
-							u_name:=field.item.value.repr
+							u_name := field.item.value.repr
 						elseif field.item.name.same_string ("head_name") then
-							h_name:=field.item.value.repr
+							h_name := field.item.value.repr
 						elseif field.item.name.same_string ("rep_start") then
-							s_date:=field.item.value.repr
+							s_date := field.item.value.repr
 						elseif field.item.name.same_string ("rep_end") then
-							e_date:=field.item.value.repr
+							e_date := field.item.value.repr
 						elseif field.item.name.same_string ("id") then
-							c_id:=field.item.value.repr.to_integer
+							c_id := field.item.value.repr.to_integer
 						end
 					end
 					if attached u_name as un and attached h_name as hn and attached s_date as sd and attached e_date as ed and attached c_id as a_id then

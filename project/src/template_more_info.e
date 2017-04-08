@@ -9,11 +9,6 @@ class
 
 inherit
 
-	TEMPLATE_PAGE
-		undefine
-			default_create
-		end
-
 	SHARED_TEMPLATE_CONTEXT
 		undefine
 			default_create
@@ -28,6 +23,8 @@ create
 	default_create
 
 feature
+
+	output: detachable STRING
 
 	default_create
 
@@ -280,8 +277,7 @@ feature {NONE} -- ojects to create page
 						financial_sources := field.item.value.repr
 					end
 				end
-				if attached project_title as a_project_title and attached iu_personnel_involved as a_iu_personnel_involved and attached external_personnel_involved as a_external_personnel_involved and
-				 attached start_date as a_start_date and attached expected_end_date as a_expected_end_date and attached financial_sources as a_financial_sources then
+				if attached project_title as a_project_title and attached iu_personnel_involved as a_iu_personnel_involved and attached external_personnel_involved as a_external_personnel_involved and attached start_date as a_start_date and attached expected_end_date as a_expected_end_date and attached financial_sources as a_financial_sources then
 					Result.force (create {PROJECT}.make (a_project_title, a_iu_personnel_involved, a_external_personnel_involved, a_start_date, a_expected_end_date, a_financial_sources, id))
 				end
 			end
@@ -290,13 +286,9 @@ feature {NONE} -- ojects to create page
 	research_collaborations: LIST [COLLABORATION]
 		local
 			installation_country: STRING
-
 			installation_name: STRING
-
 			installation_department: STRING
-
 			contacts: STRING
-
 			nature_of_collaboration: STRING
 		do
 			create {ARRAYED_LIST [COLLABORATION]} Result.make (0)
@@ -318,8 +310,7 @@ feature {NONE} -- ojects to create page
 						nature_of_collaboration := field.item.value.repr
 					end
 				end
-				if attached installation_country as a_installation_country and attached installation_name as a_installation_name and attached installation_department as a_installation_department and
-				 attached contacts as a_contacts and attached nature_of_collaboration as a_nature_of_collaboration then
+				if attached installation_country as a_installation_country and attached installation_name as a_installation_name and attached installation_department as a_installation_department and attached contacts as a_contacts and attached nature_of_collaboration as a_nature_of_collaboration then
 					Result.force (create {COLLABORATION}.make (a_installation_country, a_installation_name, a_installation_department, a_contacts, a_nature_of_collaboration, id))
 				end
 			end

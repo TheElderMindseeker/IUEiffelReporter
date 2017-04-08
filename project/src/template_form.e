@@ -9,17 +9,12 @@ class
 
 inherit
 
-	TEMPLATE_PAGE
-		undefine
-			default_create
-		end
-
 	SHARED_TEMPLATE_CONTEXT
 		redefine
 			default_create
 		end
 
-feature {NONE} -- Initialization
+feature -- Initialization
 
 	default_create
 			-- Initialize `Current'.
@@ -41,11 +36,13 @@ feature {NONE} -- Initialization
 			template.add_value (publications, "publications")
 				--template_context.enable_verbose
 			template.analyze
+			template.get_output
 			if attached template.output as l_output then
 				output := l_output
 			end
 		end
 
+	output: detachable STRING
 
 feature {NONE} -- Implementation
 
