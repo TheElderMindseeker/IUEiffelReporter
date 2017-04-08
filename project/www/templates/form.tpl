@@ -320,7 +320,7 @@
 						</tr>
 						<tr id="to-show-grants" name="new-line-for-adder" style="display: none;">
 							<td><input type="text" class="form-control input-in-table" name="grants[][project_title]" placeholder="Required" /></td>
-							<td><input type="text" class="form-control input-in-table" name="grants[][agency]" placeholder="Required" /></td>
+							<td><input type="text" class="form-control input-in-table" name="grants[][granting_agency]" placeholder="Required" /></td>
 							<td><input type="text" class="form-control input-in-table datepicker-here" name="grants[][start_date]" placeholder="Required" /></td>
 							<td><input type="text" class="form-control input-in-table datepicker-here" name="grants[][end_date]" placeholder="Required" /></td>
 							<td><input type="text" class="form-control input-in-table" name="grants[][is_continuation]" placeholder="Required" /></td>
