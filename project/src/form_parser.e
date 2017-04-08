@@ -87,11 +87,11 @@ feature {NONE} -- Implementation
 	database_manager: DATABASE_MANAGER
 			-- Database manager for data grouping purposes.
 
-	parse_json_string (key, value: JSON_STRING)
-			-- Parse json string
+	parse_json_string (name, value: JSON_STRING)
+			-- Parse json string.
 		do
 			if attached parse_result as hash_table then
-				if attached database_manager.which_table (key.item) as db_table_result then
+				if attached database_manager.which_table (name.item) as db_table_result then
 					if attached {STRING_8} db_table_result.at (1) as table_name and then attached {STRING_8} db_table_result.at (2) as arg_type then
 						if key.item.same_string ("rep_start") and then value.item.is_empty then
 							value.item.set ("10.10.2017", 1, 10)
@@ -99,7 +99,7 @@ feature {NONE} -- Implementation
 						if key.item.same_string ("rep_end") and value.item.is_empty then
 							value.item.set ("31.12.2017", 1, 10)
 						end
-						add_field_to_hash_table (key.item, value.item, table_name, arg_type, hash_table)
+						add_field_to_hash_table (name.item, value.item, table_name, arg_type, hash_table)
 					end
 				end
 			end

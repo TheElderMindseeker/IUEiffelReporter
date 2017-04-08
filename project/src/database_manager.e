@@ -187,7 +187,7 @@ feature {NONE} -- Implementation
 						if attached key and then not field_info.has (key) then
 							field_info.put (create {TUPLE [tbl_name, arg_type: STRING_8]}.default_create, key)
 							if attached field_info.at (key) as tuple then
-								tuple.put (key, 1)
+								tuple.put (tables.item, 1)
 								if attached q_row.string_value (3) as arg_type then
 									tuple.put (arg_type, 2)
 								end
@@ -225,19 +225,9 @@ feature -- Management
 			has_no_error: not has_error
 		end
 
-	create_report (unit_name, head_name: STRING_8; rep_start, rep_end: DATE)
+	create_report (arguments: ITERABLE [FIELD])
 			-- Creates new report and generates new `report_id'
-		require
-			arguments_exist: unit_name /= Void and head_name /= Void and
-					rep_start /= Void and rep_end /= Void
-		local
-			arguments: LINKED_LIST [FIELD]
 		do
-			create arguments.make
-			arguments.extend (create {FIELD}.make ("unit_name", create {STRING_REPRESENTABLE}.make (unit_name)))
-			arguments.extend (create {FIELD}.make ("head_name", create {STRING_REPRESENTABLE}.make (head_name)))
-			arguments.extend (create {FIELD}.make ("rep_start", rep_start))
-			arguments.extend (create {FIELD}.make ("rep_end", rep_end))
 			insert_report_row (arguments)
 		end
 
@@ -282,7 +272,6 @@ feature -- Management
 			if insert_statement.has_error then
 				has_error := True
 			end
-			database.commit
 		end
 
 	multiple_insert (table_name: STRING_8; arguments: ITERABLE [ITERABLE [FIELD]])
@@ -333,8 +322,8 @@ feature -- Management
 				if insert_statement.has_error then
 					has_error := True
 				end
+				iterable_cursor.forth
 			end
-			database.commit
 		end
 
 	single_select (table_name: STRING_8; report_id: INTEGER_32): ITERABLE [FIELD]
@@ -433,7 +422,6 @@ feature -- Management
 			if update_statement.has_error then
 				has_error := True
 			end
-			database.commit
 		end
 
 	multiple_delete (table_name: STRING_8; report_id: INTEGER_32)
@@ -454,7 +442,6 @@ feature -- Management
 			if delete_statement.has_error then
 				has_error := True
 			end
-			database.commit
 		end
 
 --	multiple_update (table_name: STRING_8; report_id: INTEGER_32; arguments: ITERABLE [ITERABLE [FIELD]])

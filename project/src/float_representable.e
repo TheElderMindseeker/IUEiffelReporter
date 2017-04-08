@@ -31,7 +31,7 @@ feature -- Access
 	repr: STRING_8
 			-- SQLite representation of the float.
 		do
-			Result := float_value.out
+			Result := float_value.to_double.out
 		end
 
 end

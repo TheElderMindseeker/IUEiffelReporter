@@ -21,13 +21,12 @@ CREATE TABLE courses (
 
 CREATE TABLE examinations (
 	exam_id INTEGER,
-	course_id INTEGER,
+	course_name TEXT,
+	semester TEXT,
 	report_id INTEGER,
 	exam_kind TEXT,
 	num_students INTEGER,
 	PRIMARY KEY (exam_id),
-	FOREIGN KEY (course_id) REFERENCES courses(course_id)
-    ON DELETE CASCADE,
 	FOREIGN KEY (report_id) REFERENCES reports(report_id)
     ON DELETE CASCADE
 );
@@ -101,8 +100,8 @@ CREATE TABLE research_collaborations (
   installation_country TEXT,
   installation_name TEXT,
   installation_department TEXT,
-  principal_contact_name TEXT,
   contacts TEXT,
+  nature_of_collaboration TEXT,
   PRIMARY KEY (research_collaboration_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
     ON DELETE CASCADE
