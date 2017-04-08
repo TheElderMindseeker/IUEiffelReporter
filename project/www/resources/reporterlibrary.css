@@ -101,7 +101,7 @@ a:link, a:active, a:visited {
   text-align: left;
 }
 .form {
-	width: 85%;
+	width: 90%;
 	margin:auto;
 }
 .table{
@@ -114,4 +114,20 @@ a:link, a:active, a:visited {
 .section-label {
   font-size: 24pt;
   text-decoration: underline;
+}
+
+/*For sorter*/
+th.header {
+	background-image: url(../resources/img/bg.gif);
+	cursor: pointer;
+	font-weight: bold;
+	background-repeat: no-repeat;
+	background-position: center left;
+}
+
+th.headerSortUp {
+	background-image: url(../resources/img/asc.gif);
+}
+th.headerSortDown {
+	background-image: url(../resources/img/desc.gif);
 }

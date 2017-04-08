@@ -316,7 +316,7 @@
 						</tr>
 						<tr id="to-show-grants" name="new-line-for-adder" style="display: none;">
 							<td><input type="text" class="form-control input-in-table" name="grants[][project_title]" placeholder="Required" required /></td>
-							<td><input type="text" class="form-control input-in-table" name="grants[][agency]" placeholder="Required" required /></td>
+							<td><input type="text" class="form-control input-in-table" name="grants[][granting_agency]" placeholder="Required" required /></td>
 							<td><input type="text" class="form-control input-in-table" name="grants[][start_date]" placeholder="Required" required /></td>
 							<td><input type="text" class="form-control input-in-table" name="grants[][end_date]" placeholder="Required" required /></td>
 							<td><input type="text" class="form-control input-in-table" name="grants[][is_continuation]" placeholder="Required" required /></td>

@@ -13,6 +13,9 @@ function addInput(tableId) {
 	var array = newNode.getElementsByTagName('input');
 	for (i=0; i<array.length; i++) {
 		array[i].setAttribute('onBlur', 'removeRow("' + tableId + '-' + id + '");');
+		if (array[i].getAttribute("placeholder") == "Required") {
+			array[i].required = true;
+		}
 	}
 	//Insert new node before the row with creators
 	tbody.insertBefore(newNode, mainTable.rows[mainTable.rows.length - 2]);
@@ -22,6 +25,7 @@ function addInput(tableId) {
 	newNode.setAttribute('id', 'el-' + tableId + '-' + id);
 	newNode.setAttribute('name', '');
 	newNode.setAttribute('class', 'required-row');
+	reinitializeDatepickers(dateParams, newNode);
 	array[0].focus();
 	/*mainTable.getElementsByName('courses-taught[][name]').focus();*/
 }
@@ -41,16 +45,17 @@ function removeRow(tableId) {
 }
 
 function sendForm(e){
-	clearForm();
-	if (checkRequired(document.getElementById('mainForm'))) {
-		var formData = JSON.stringify($('#mainForm').serializeJSON());
-	  $.ajax({
-	    url:'http://localhost/',
-	    type:'POST',
-	    data: formData,
-	    success: function(res) {
-	    }
-	  });
+	var form = document.getElementById('mainForm');
+	if (checkRequiredLists(form) && checkRequiredFields(form)) {
+			cleanForm();
+			var formData = JSON.stringify($('#mainForm').serializeJSON());
+	  	$.ajax({
+	    	url:'http://localhost:8080/form',
+	    	type:'POST',
+		    data: formData,
+	    	success: function(res) {
+	    	}
+	  	});
 	}
 }
 
@@ -62,17 +67,8 @@ function isEmpty(str)
   return true;
  }
 
-function checkRequired(f)
+function checkRequiredFields(f)
 {
-	var requiredTables = f.getElementsByClassName("required-table");
-	for (var i = 0; i < requiredTables.length; i++) {
-		var temp = requiredTables[i].getElementsByClassName("required-row");
-		if (temp.length == 0) {
-			requiredTables[i].getElementsByTagName("input")[0].focus();
-			alert("You should create at least one row in each of required tables!");
-			return false;
-		}
-	}
 	for (var intLoop = 0; intLoop < f.elements.length; intLoop++) {
 		if (null!=f.elements[intLoop].getAttribute("required")) {
 			if (isEmpty(f.elements[intLoop].value)) {
@@ -85,7 +81,20 @@ function checkRequired(f)
 	  return true;
 }
 
-function clearForm() {
+function checkRequiredLists(f) {
+	var requiredTables = f.getElementsByClassName("required-table");
+	for (var i = 0; i < requiredTables.length; i++) {
+		var temp = requiredTables[i].getElementsByClassName("required-row");
+		if (temp.length == 0) {
+			alert("You should create at least one row in each of required tables!");
+			requiredTables[i].getElementsByTagName('input')[0].focus();
+			return false;
+		}
+	}
+	return true;
+}
+
+function cleanForm() {
 	var adders = document.getElementsByName("adder");
 	var numberOfEntries = adders.length;
 	for (i = 0; i < numberOfEntries; i++) {
@@ -97,3 +106,24 @@ function clearForm() {
 		lines[0].remove();
 	}
 }
+
+function reinitializeDatepickers(param, element) {
+	var datepickers = element.getElementsByClassName("datepicker-here");
+	var counter = datepickers.length;
+	for (var i = 0; i < counter; i++) {
+			var temp = datepickers[i].value;
+			if (temp == "") temp = datepickers[i].getAttribute("value");
+			$(datepickers[i]).datepicker().data('datepicker').destroy();
+			$(datepickers[i]).datepicker(param);
+			datepickers[i].setAttribute("onkeypress", "return false;");
+			datepickers[i].setAttribute("oncontextmenu", "return false;");
+			$(datepickers[i]).val(temp);
+	}
+}
+
+var dateParams = {
+	maxDate: new Date(9999, 11, 31),
+	language: "en",
+	dateFormat: "dd.mm.yyyy",
+	autoClose: true
+};
