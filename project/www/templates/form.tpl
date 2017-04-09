@@ -466,7 +466,7 @@
 					<div class="modal-header">
 						<h4 class="modal-title">Warning!</h4>
 					</div>
-					<div class="modal-body">Текст уведомления</div>
+					<div class="modal-body"></div>
 					<div class="modal-footer"><button class="btn btn-danger" type="button" data-dismiss="modal">Close (ESC)</button></div>
 				</div>
 			</div>

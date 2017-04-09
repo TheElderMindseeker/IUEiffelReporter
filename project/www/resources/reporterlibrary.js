@@ -60,6 +60,24 @@ function sendForm(e){
 	}
 }
 
+function sendQuery(e){
+	var form = document.getElementById('request');
+	if (checkRequiredFields(form)) {
+			var formData = JSON.stringify($('#request').serializeJSON());
+			alert(formData);
+	  	$.ajax({
+	    	url:'/admin',
+	    	type:'POST',
+		    data: formData,
+	    	success: function(res) {
+					$('#query-result').empty();
+					$('#query-result').append(res);
+					alert(res);
+	    	}
+	  	});
+	}
+}
+
 function checkCookie() {
 	var id = Cookies.get('idOfLastAddedReport');
 	var button = document.getElementById("edit-button");
