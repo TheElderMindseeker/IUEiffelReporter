@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>IU Reporter</title>
+		<title>{$unit_name/} - Detailed View - IU Eiffel Reporter</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="../resources/bootstrap.css">
-		<link rel="stylesheet" type="text/css" href="../resources/bootstrap-theme.css" >
+		<script type="text/javascript" src="resources/jquery-3.2.0.min.js"></script>
 		<script type="text/javascript" src="../resources/bootstrap.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<link href="../resources/reporterlibrary.css" rel="stylesheet" type="text/css">
+		<link type="text/css" rel="stylesheet" href="../resources/bootstrap.css">
+		<link type="text/css" rel="stylesheet" href="../resources/bootstrap-theme.css" >
+		<link type="text/css" rel="stylesheet" href="../resources/reporterlibrary.css">
 	</head>
 	<body>
 		<div class="wrapper container">
 		<div class="logo-text">
-			<label class="logo-text">Detailed of Report</label>
+			<label class="logo-text">Detailed view of Report</label>
 		</div>
 		<div class="form">
 			<div class="form-group row">

@@ -1,3 +1,11 @@
+/*!
+ * IU Eiffel Reporter Library v0.1
+ *
+ * This is necessary part of the IU Eiffel Reporter
+ * This part implements styles of pages
+ *
+ * Written by Andrey Pavlenko, DANDy team
+ */
 
 @font-face {
     font-family: 'bpreplayregular';
@@ -7,68 +15,73 @@
     font-weight: normal;
     font-style: normal;
 }
+
 html {
 	height: 100%;
 }
+
 body {
     font-family: Verdana, Verdana, Geneva, sans-serif;
     background-color: #66ccff;
 	height: 86%
 }
-/*
-a:link, a:active, a:visited {
-		color: #000;
-}
-*/
+
 .wrapper {
     width: 94%;
     margin: 3% 3% 0 3%;
-    background:#ffffff; /* ��� ����� */
-    -moz-border-radius: 30px; /* ����������� ��� ������ Mozilla Firefox */
-    -webkit-border-radius: 30px; /* �������. ��� ������ Chrome � Safari */
-    -khtml-border-radius:30px; /* �������. ��� �������� Konquerer ������� Linux */
-    border-radius: 30px; /* ����������� ����� ��� ����, ��� �������� */
-    padding: 20px; /* ���������� ������� */
+    background:#ffffff;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -khtml-border-radius:30px;
+    border-radius: 30px;
+    padding: 20px;
 }
+
 .main-wrapper {
 	height: 100%;
 }
+
 .footer {
     margin: 1% 0 0.5%;
     text-align: center;
 }
+
 .logo-text {
 	font-size: 36pt;
 	text-align: center;
 	font-family: "Arial Rounded MT", "bpreplayregular", "Calibri", "Lato";
 	margin: 0 0 20px 0;
 }
+
 .team-logo {
     font-family: "Forte";
 }
+
 .button-yellow {
-	background:#ffdf6b; /* ��� ����� */
-	border: 5px #ffcc66 solid; /* ����� ����� */
-	-moz-border-radius: 10px; /* ����������� ��� ������ Mozilla Firefox */
-	-webkit-border-radius: 10px; /* �������. ��� ������ Chrome � Safari */
-	-khtml-border-radius: 10px; /* �������. ��� �������� Konquerer ������� Linux */
-	border-radius: 10px; /* ����������� ����� ��� ����, ��� �������� */
-	padding: 5px; /* ���������� ������� */
+	background:#ffdf6b;
+	border: 5px #ffcc66 solid;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+	padding: 5px;
 	text-align: center;
 	font-size: 24pt;
 	font-family: "Arial Rounded MT", "bpreplayregular", "Calibri", "Lato";
 }
+
 .input-text {
 	border: 5px #ffcc66 solid;
-	-moz-border-radius: 10px; /* ����������� ��� ������ Mozilla Firefox */
-	-webkit-border-radius: 10px; /* �������. ��� ������ Chrome � Safari */
-	-khtml-border-radius:10px; /* �������. ��� �������� Konquerer ������� Linux */
-	border-radius: 10px; /* ����������� ����� ��� ����, ��� �������� */
-	padding: 5px; /* ���������� ������� */
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-khtml-border-radius:10px;
+	border-radius: 10px;
+	padding: 5px;
 	height: 35pt;
 	width: 75%;
 	font-size: 14pt;
 }
+
 .input-in-table {
 	border: 0px;
 	font-size: 12pt;
@@ -76,12 +89,14 @@ a:link, a:active, a:visited {
 	-webkit-box-shadow: none;
 	box-shadow:
 }
+
 .control-label {
 	position: absolute;
 	right: 10px;
 	font-weight: normal;
 	font-size: 14pt;
 }
+
 .help-label {
 	position: absolute;
 	left: 10px;
@@ -93,6 +108,7 @@ a:link, a:active, a:visited {
   margin-bottom: 0;
   padding-top: 7px;
 }
+
 .view-label {
 	position: absolute;
 	left: 10px;
@@ -100,23 +116,26 @@ a:link, a:active, a:visited {
 	font-size: 14pt;
   text-align: left;
 }
+
 .form {
 	width: 90%;
 	margin:auto;
 }
+
 .table{
 	text-align: center;
 	margin-top: 30px;
 }
+
 .th {
 	text-align:center;
 }
+
 .section-label {
   font-size: 24pt;
   text-decoration: underline;
 }
 
-/*For sorter*/
 th.header {
 	background-image: url(../resources/img/bg.gif);
 	cursor: pointer;
@@ -128,6 +147,7 @@ th.header {
 th.headerSortUp {
 	background-image: url(../resources/img/asc.gif);
 }
+
 th.headerSortDown {
 	background-image: url(../resources/img/desc.gif);
 }
