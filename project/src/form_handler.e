@@ -61,7 +61,7 @@ feature
 									database_manager.single_insert (table_name.item, record)
 								elseif attached {LINKED_LIST [LINKED_LIST [FIELD]]} parsed_data.at (table_name.item) as record_list then
 									--adds report_id to each LINKED_LIST[FIELD]
-									add_id_field_to_linked_lists(database_manager.current_report_id.out, record_list)
+									add_id_field_to_linked_lists(database_manager.current_report_id, record_list, database_manager)
 									database_manager.multiple_insert (table_name.item, record_list)
 								end
 							end
@@ -78,14 +78,12 @@ feature {NONE} -- Implementation
 
 feature {NONE}
 
-	add_id_field_to_linked_lists (id: STRING_8; linked_lists: LINKED_LIST [LINKED_LIST [FIELD]])
+	add_id_field_to_linked_lists (id: INTEGER; linked_lists: LINKED_LIST [LINKED_LIST [FIELD]]; database_manager:DATABASE_MANAGER)
 			-- Add field id to each linked list at linked_lists
 		local
 			field: detachable FIELD
-			query_manager:QUERY_MANAGER
 		do
-			create query_manager.make
-			field := query_manager.database_manager.create_field ("report_id", create {DATE}.make_from_string (id))
+			field := database_manager.create_field ("report_id", id)
 			across
 				linked_lists as linked_list
 			loop
