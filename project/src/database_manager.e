@@ -639,7 +639,7 @@ feature -- Utility
 			name_not_empty: name.count > 0
 			object_exists: object /= Void
 			object_has_supported_type: attached {INTEGER} object or attached {REAL} object or
-					attached {STRING_8} object or attached {DATE} object
+					attached {STRING_8} object or attached {DATE} object or attached {REAL_64} object
 		do
 			if attached {INTEGER} object as int then
 				create Result.make (name, create {INTEGER_REPRESENTABLE}.make (int))

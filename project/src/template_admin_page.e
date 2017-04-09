@@ -60,7 +60,7 @@ feature {NONE} -- Access to database
 				list_labs as lab_name
 			loop
 				across
-					query_manager.cumulative_info (Void, Void, create {STRING_REPRESENTABLE}.make (lab_name.item)) as lab_report
+					query_manager.query_reports as lab_report
 				loop
 					across
 						lab_report.item as field
