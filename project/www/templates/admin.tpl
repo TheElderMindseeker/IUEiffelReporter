@@ -7,15 +7,21 @@
 		<link rel="stylesheet" type="text/css" href="../resources/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="../resources/bootstrap-theme.css" >
 		<script type="text/javascript" src="../resources/bootstrap.min.js"></script>
+		<!-- For calendar -->
+		<link href="../resources/datepicker.min.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="../resources/datepicker.min.js"></script>
+		<script type="text/javascript" src="../resources/i18n/datepicker.en.js"></script>
+		<script type="text/javascript" src="../resources/jquery.serializejson.js"></script>
 		<link href="../resources/reporterlibrary.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="../resources/reporterlibrary.js"></script>
 		<script type="text/javascript" src="../resources/jquery.tablesorter.js"></script>
 		<style type="text/css">
 			a {
-				outline: none; /* Убираем границу вокруг ссылок  */
+				outline: none;
  			}
  		</style>
 	</head>
-	<body onload='$("#list-of-reports").tablesorter();'>
+	<body onload='setTimeout(function() {  $("#list-of-reports").tablesorter(); reinitializeDatepickers(dateParams, document); }, 500);'>
 		<div class="wrapper container">
 			<div class="logo-text">
 				<label class="logo-text">Administrative Panel</label>
@@ -24,6 +30,7 @@
 				<ul class="nav nav-tabs" role="tablist">
     			<li class="active"><a href="#list" aria-controls="list" role="tab" data-toggle="tab">List of Reports</a></li>
     			<li><a href="#query" aria-controls="query" role="tab" data-toggle="tab">Make query</a></li>
+    			<li><a href="#query-result" aria-controls="query-result" role="tab" data-toggle="tab">Result of query</a></li>
   			</ul>
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane fade in active" id="list">
@@ -44,8 +51,9 @@
 										<td>{$report.rep_start/}</td>
 										<td>{$report.rep_end/}</td>
 										<td><a href="/details/{$report.id/}" class="btn btn-success" role="button">More details...</a></td>
-										<td><a href="/edit?id={$report.id/}" class="btn btn-primary" role="button">Edit</a></td>
-										<td><a href="/delete?id={$report.id/}" class="btn btn-danger" role="button">Delete</a></td>
+										<td><a href="/edit/{$report.id/}" class="btn btn-primary" role="button">Edit</a></td>
+										<td><a href="/delete/{$report.id/}" class="btn btn-danger" role="button">Delete</a></td>
+
 									</tr>
 								{/foreach}
 							</tbody>
@@ -53,20 +61,61 @@
 					</div>
 					<div role="tabpanel" class="tab-pane fade" id="query">
 						<div class="form" style="margin-top: 25px;">
-							<form class="form-horizontal" name="request" id="request" method="POST" action="/admin">
+							<form class="form-horizontal" name="request" id="request" method="POST" action="/admin" >
 								<div class="form-group row">
-									<div class="col-sm-4 col-md-4">
-										<label for="unit_name" class="control-label">Name of unit</label>
+									<div class="col-sm-6 col-md-6">
+										<label for="type_of_query" class="control-label">Select query</label>
 									</div>
-									<div class="col-sm-8 col-md-8">
-										<input type="text" class="form-control input-text" id="unit_name" name="unit_name" placeholder="Required" value="{$unit_name/}" required/>
+									<div class="col-sm-6 col-md-6">
+										<select name="type_of_query" style="font-size: 14pt; width: 75%;" required>
+											<option></option>
+  										<option value="query_publications">All publications of the university in a given year</option>
+	  									<option value="courses_taught">Courses taught by a Laboratory between initial and final date</option>
+	  									<option value="number_of_supervised_students">Number of supervised students by Laboratories</option>
+											<option value="number_of_research_collaborations">Number of research collaborations, if any, by Laboratories</option>
+											<option value="number_of_projects_awarded_grants">Number of projects awarded grants</option>
+	  									<option disabled value="cumulative_info">Cumulative info of a given unit over several years</option>
+											<option disabled value="patents_filed_or_submitted">Patents filed of submitted</option>
+										</select>
 									</div>
 								</div>
 								<div class="form-group row">
-									<button type="submit" class="btn button-yellow" style="font-size: 12pt; display:block; margin:10px auto; width:120px; height:40px;">Go!</button>
+									<div class="col-sm-6 col-md-6">
+										<label for="unit_name" class="control-label">Name of unit</label>
+									</div>
+									<div class="col-sm-6 col-md-6">
+										<select name="lab_name" style="font-size: 14pt; width: 75%;" required="">
+											<option></option>
+											{foreach from="$labs" item="item"}
+  											<option value="{$item/}">{$item/}</option>
+											{/foreach}
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6 col-md-6">
+										<label for="rep_start" class="control-label">Start of reporting period</label>
+									</div>
+									<div class="col-sm-6 col-md-6">
+										<input type="text" class="form-control input-text datepicker-here" placeholder="Required" name="end_date" required/>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6 col-md-6">
+										<label for="rep_end" class="control-label">End of reporting period</label>
+									</div>
+									<div class="col-sm-6 col-md-6">
+										<input type="text" class="form-control input-text datepicker-here" placeholder="Required" name="start_date" required/>
+									</div>
+								</div>
+								<div class="form-group row">
+									<button type="button" class="btn button-yellow" id="submit" name="submit" style="font-size: 12pt; display:block; margin:10px auto; width:120px; height:40px;">Go!</button>
 								</div>
 							</form>
 						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane fade" id="query-result">
+
 					</div>
 				</div>
 			</div>
@@ -74,5 +123,20 @@
 		<div class="footer">
     	Developed by <label class="team-logo">DANDy</label> team
   	</div>
+		<div id="warningModal" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Warning!</h4>
+					</div>
+					<div class="modal-body"></div>
+					<div class="modal-footer"><button class="btn btn-danger" type="button" data-dismiss="modal">Close (ESC)</button></div>
+				</div>
+			</div>
+		 </div>
+		<script>
+  		var submitButton = document.request.submit;
+			submitButton.addEventListener("click", sendQuery);
+		</script>
 	</body>
 </html>
