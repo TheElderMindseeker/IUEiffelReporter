@@ -829,7 +829,7 @@ feature {QUERY_MANAGER} -- Specific queries
 			s_query: STRING_8
 		do
 			s_query := "SELECT rep.unit_name unit_name, SUM(1) collaborations FROM reports rep INNER JOIN research_collaborations col" +
-					" ON rep.report_id = res.report_id"
+					" ON rep.report_id = col.report_id"
 			if attached start_date as rep_start and attached end_date as rep_end then
 				s_query := s_query + " WHERE rep.rep_start <= julianday(" + rep_start.repr + ") AND " +
 						"julianday(" + rep_end.repr + ") <= rep.rep_end"

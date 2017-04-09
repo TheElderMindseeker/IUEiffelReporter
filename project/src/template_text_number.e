@@ -17,7 +17,7 @@ create
 
 feature -- Initialization
 
-	make (text_column, number_column: STRING; a_elements: ITERABLE [ITERABLE [FIELD]])
+	make (pagename,text_column, number_column: STRING; a_elements: ITERABLE [ITERABLE [FIELD]])
 			-- Reads text number template for admin page, it will be availible in get_output.
 		local
 			p: PATH
@@ -30,6 +30,7 @@ feature -- Initialization
 			set_elements(a_elements)
 			template.add_value (text_column, "text_column")
 			template.add_value (number_column, "number_column")
+			template.add_value (pagename, "pagename")
 			template.add_value (elements, "elements")
 			template.analyze
 			template.get_output
@@ -59,7 +60,7 @@ feature {NONE} -- Implementation
 				loop
 					if field.item.name.same_string("unit_name") then
 						text:=without_quotes(field.item.value.repr)
-					elseif  field.item.name.same_string("supervised") then
+					elseif  field.item.name.same_string("supervised") or field.item.name.same_string("collaborations") or field.item.name.same_string("projects") then
 						number:=field.item.value.repr.to_integer
 					end
 				end
