@@ -50,11 +50,15 @@ feature
 						create form_parser.make (input_data, database_manager)
 						form_parser.parse
 						if attached form_parser.parse_result as parsed_data then
+							if attached {LINKED_LIST [FIELD]} parsed_data.at ("reports") as report_data then
+								database_manager.create_report (report_data)
+							end
+							parsed_data.remove ("reports")
 							across
 								parsed_data.current_keys as table_name
 							loop
 								if attached {LINKED_LIST [FIELD]} parsed_data.at (table_name.item) as record then
-									database_manager.create_report (record)
+									database_manager.single_insert (table_name.item, record)
 								elseif attached {LINKED_LIST [LINKED_LIST [FIELD]]} parsed_data.at (table_name.item) as record_list then
 									database_manager.multiple_insert (table_name.item, record_list)
 								end
@@ -63,6 +67,7 @@ feature
 					end
 				end
 			end
+			query_manager.database_manager.close -- Without this, "database is locked" bug is present
 		end
 
 feature {NONE} -- Implementation
