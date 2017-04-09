@@ -73,6 +73,7 @@ function sendQuery(e){
 	    	success: function(res) {
 					$('#query-result').empty();
 					$('#query-result').append(res);
+					$('#admin-tabs a:last').tab('show');
 					alert(res);
 	    	}
 	  	});

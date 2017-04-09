@@ -27,7 +27,7 @@
 				<label class="logo-text">Administrative Panel</label>
 			</div>
 			<div class="form">
-				<ul class="nav nav-tabs" role="tablist">
+				<ul id="admin-tabs" class="nav nav-tabs" role="tablist">
     			<li class="active"><a href="#list" aria-controls="list" role="tab" data-toggle="tab">List of Reports</a></li>
     			<li><a href="#query" aria-controls="query" role="tab" data-toggle="tab">Make query</a></li>
     			<li><a href="#query-result" aria-controls="query-result" role="tab" data-toggle="tab">Result of query</a></li>
@@ -114,7 +114,18 @@
 						</div>
 					</div>
 					<div role="tabpanel" class="tab-pane fade" id="query-result">
-
+						<div style="margin-top: 50px;">
+							<div class="row">
+								<div class="col-sm-12 col-md-12">
+									<center><label style="font-size: 24pt; font-weight: normal;">Here will be result of your query</label></center>
+								</div>
+							</div>
+							<div class="row">
+				 				<div class="col-sm-12 col-md-12">
+									<button type="button" class="button-yellow btn" onclick="$('#admin-tabs li:eq(1) a').tab('show');" style="font-size: 30pt; width:320px; height:80px; display:block; margin:7% auto 7% auto;">Make Query!</button>
+				 				</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -133,6 +144,7 @@
 				</div>
 			</div>
 		 </div>
+
 		<script>
   		var submitButton = document.request.submit;
 			submitButton.addEventListener("click", sendQuery);
