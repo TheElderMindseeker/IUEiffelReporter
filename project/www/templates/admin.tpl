@@ -43,7 +43,7 @@
 										<td>{$report.head_name/}</td>
 										<td>{$report.rep_start/}</td>
 										<td>{$report.rep_end/}</td>
-										<td><a href="/details?id={$report.id/}" class="btn btn-success" role="button">More details...</a></td>
+										<td><a href="/details/{$report.id/}" class="btn btn-success" role="button">More details...</a></td>
 										<td><a href="/edit?id={$report.id/}" class="btn btn-primary" role="button">Edit</a></td>
 										<td><a href="/delete?id={$report.id/}" class="btn btn-danger" role="button">Delete</a></td>
 									</tr>

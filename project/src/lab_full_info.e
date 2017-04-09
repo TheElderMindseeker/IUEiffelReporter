@@ -28,6 +28,11 @@ feature {NONE}
 
 feature
 
+	close_database
+		do
+			query_manager.database_manager.close
+		end
+
 	get_courses: LIST [COURSE]
 		local
 			course_name: STRING
@@ -43,11 +48,11 @@ feature
 					course.item as field
 				loop
 					if field.item.name.same_string ("course_name") then
-						course_name := field.item.value.repr
+						course_name := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("semester") then
-						semester := field.item.value.repr
+						semester := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("edu_level") then
-						edu_level := field.item.value.repr
+						edu_level := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("num_students") then
 						num_students := field.item.value.repr
 					end
@@ -71,9 +76,9 @@ feature
 					list.item as field
 				loop
 					if field.item.name.same_string ("student_name") then
-						student_name := field.item.value.repr
+						student_name := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("nature_of_work") then
-						nature_of_work := field.item.value.repr
+						nature_of_work := without_quotes (field.item.value.repr)
 					end
 				end
 				if attached student_name as a_student_name and attached nature_of_work as a_nature_of_work then
@@ -96,11 +101,11 @@ feature
 					list.item as field
 				loop
 					if field.item.name.same_string ("student_name") then
-						student_name := field.item.value.repr
+						student_name := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("title") then
-						title := field.item.value.repr
+						title := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("publication_plans") then
-						publication_plans := field.item.value.repr
+						publication_plans := without_quotes (field.item.value.repr)
 					end
 				end
 				if attached student_name as a_student_name and attached title as a_title and attached publication_plans as a_publication_plans then
@@ -126,17 +131,17 @@ feature
 					list.item as field
 				loop
 					if field.item.name.same_string ("student_name") then
-						student_name := field.item.value.repr
+						student_name := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("degree") then
-						degree := field.item.value.repr
+						degree := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("supervisor_name") then
-						supervisor_name := field.item.value.repr
+						supervisor_name := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("other_committee_members") then
-						other_committee_members := field.item.value.repr
+						other_committee_members := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("degree_granting_installation") then
-						degree_granting_installation := field.item.value.repr
+						degree_granting_installation := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("dissertation_title") then
-						dissertation_title := field.item.value.repr
+						dissertation_title := without_quotes (field.item.value.repr)
 					end
 				end
 				if attached student_name as a_student_name and attached degree as a_degree and attached supervisor_name as a_supervisor_name and attached other_committee_members as a_other_committee_members and attached degree_granting_installation as a_degree_granting_installation and attached dissertation_title as a_dissertation_title then
@@ -156,21 +161,21 @@ feature
 		do
 			create {ARRAYED_LIST [GRANT]} Result.make (0)
 			across
-				query_manager.database_manager.multiple_select ("completed_phd", id) as list
+				query_manager.database_manager.multiple_select ("grants", id) as list
 			loop
 				across
 					list.item as field
 				loop
 					if field.item.name.same_string ("project_title") then
-						project_title := field.item.value.repr
+						project_title := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("granting_agency") then
-						granting_agency := field.item.value.repr
+						granting_agency := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("start_date") then
-						start_date := field.item.value.repr
+						start_date := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("end_date") then
-						end_date := field.item.value.repr
+						end_date := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("is_continuation") then
-						is_continuation := field.item.value.repr
+						is_continuation := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("amount") then
 						amount := field.item.value.repr
 					end
@@ -192,23 +197,23 @@ feature
 		do
 			create {ARRAYED_LIST [PROJECT]} Result.make (0)
 			across
-				query_manager.database_manager.multiple_select ("completed_phd", id) as list
+				query_manager.database_manager.multiple_select ("research_projects", id) as list
 			loop
 				across
 					list.item as field
 				loop
 					if field.item.name.same_string ("project_title") then
-						project_title := field.item.value.repr
+						project_title := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("iu_personnel_involved") then
-						iu_personnel_involved := field.item.value.repr
+						iu_personnel_involved := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("external_personnel_involved") then
-						external_personnel_involved := field.item.value.repr
+						external_personnel_involved := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("start_date") then
-						start_date := field.item.value.repr
+						start_date := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("expected_end_date") then
-						expected_end_date := field.item.value.repr
+						expected_end_date := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("financial_sources") then
-						financial_sources := field.item.value.repr
+						financial_sources := without_quotes (field.item.value.repr)
 					end
 				end
 				if attached project_title as a_project_title and attached iu_personnel_involved as a_iu_personnel_involved and attached external_personnel_involved as a_external_personnel_involved and attached start_date as a_start_date and attached expected_end_date as a_expected_end_date and attached financial_sources as a_financial_sources then
@@ -233,15 +238,15 @@ feature
 					list.item as field
 				loop
 					if field.item.name.same_string ("installation_country") then
-						installation_country := field.item.value.repr
+						installation_country := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("installation_name") then
-						installation_name := field.item.value.repr
+						installation_name := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("installation_department") then
-						installation_department := field.item.value.repr
+						installation_department := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("contacts") then
-						contacts := field.item.value.repr
+						contacts := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("nature_of_collaboration") then
-						nature_of_collaboration := field.item.value.repr
+						nature_of_collaboration := without_quotes (field.item.value.repr)
 					end
 				end
 				if attached installation_country as a_installation_country and attached installation_name as a_installation_name and attached installation_department as a_installation_department and attached contacts as a_contacts and attached nature_of_collaboration as a_nature_of_collaboration then
@@ -262,7 +267,7 @@ feature
 					list.item as field
 				loop
 					if field.item.name.same_string ("publication_name") then
-						publication_name := field.item.value.repr
+						publication_name := without_quotes (field.item.value.repr)
 					end
 				end
 				if attached publication_name as a_publication_name then
@@ -286,11 +291,11 @@ feature
 					list.item as field
 				loop
 					if field.item.name.same_string ("course_name") then
-						course_name := field.item.value.repr
+						course_name := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("semester") then
-						semester := field.item.value.repr
+						semester := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("exam_kind") then
-						exam_kind := field.item.value.repr
+						exam_kind := without_quotes (field.item.value.repr)
 					elseif field.item.name.same_string ("num_students") then
 						num_students := field.item.value.repr
 					end
@@ -298,6 +303,53 @@ feature
 				if attached course_name as a_course_name and attached semester as a_semester and attached exam_kind as a_exam_kind and attached num_students as a_num_students then
 					Result.force (create {EXAM}.make (a_course_name, a_semester, a_exam_kind, a_num_students, id))
 				end
+			end
+		end
+
+	get_report: REPORT
+		local
+			u_name: STRING
+			h_name: STRING
+			s_date: STRING
+			e_date: STRING
+			c_id: INTEGER
+		do
+			create u_name.make_from_string ("our default unit name")
+			create h_name.make_from_string ("our default head name")
+			create s_date.make_from_string ("01.09.2016")
+			create e_date.make_from_string ("01.09.2017")
+			across
+				query_manager.database_manager.single_select ("reports", id) as field
+			loop
+				if field.item.name.same_string ("unit_name") then
+					u_name := field.item.value.repr
+					u_name := without_quotes (u_name)
+				elseif field.item.name.same_string ("head_name") then
+					h_name := field.item.value.repr
+					h_name := without_quotes (h_name)
+				elseif field.item.name.same_string ("rep_start") then
+					s_date := field.item.value.repr
+					s_date := without_quotes (s_date)
+				elseif field.item.name.same_string ("rep_end") then
+					e_date := field.item.value.repr
+					e_date := without_quotes (e_date)
+				elseif field.item.name.same_string ("report_id") then
+					c_id := field.item.value.repr.to_integer
+				end
+			end
+			create Result.make (u_name, h_name, s_date, e_date, c_id)
+		end
+
+feature {NONE}
+
+	without_quotes (str: STRING): STRING
+		require
+			str /= Void
+		do
+			if str.at (1).is_equal ('%'') and str.at (str.count).is_equal ('%'') then
+				create Result.make_from_string (str.substring (2, str.count - 1))
+			else
+				create Result.make_from_string (str)
 			end
 		end
 

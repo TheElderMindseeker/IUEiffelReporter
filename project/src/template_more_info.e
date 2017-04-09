@@ -16,9 +16,11 @@ create
 
 feature
 
+	id: INTEGER
+
 	output: detachable STRING
 
-	make(a_id:INTEGER)
+	make (a_id: INTEGER)
 
 			-- Initialize `Current'.
 		local
@@ -28,18 +30,8 @@ feature
 			p := p.appended ("/templates")
 			set_template_folder (p)
 			set_template_file_name ("view_detailed.tpl")
+			add_all_values (a_id)
 			create query_manager.make
-			set_attributes
-			id := a_id
-			template.add_value (courses, "courses")
-			template.add_value (examinations, "examinations")
-			template.add_value (supervised_students, "supervised_students")
-			template.add_value (student_reports, "student_reports")
-			template.add_value (completed_phd, "completed_phd")
-			template.add_value (grants, "grants")
-			template.add_value (research_projects, "research_projects")
-			template.add_value (research_collaborations, "research_collaborations")
-			template.add_value (publications, "publications")
 			template.analyze
 			template.get_output
 			if attached template.output as l_output then
@@ -49,11 +41,30 @@ feature
 
 feature {NONE} -- ojects to create page
 
-	set_attributes
+	add_all_values (a_id: INTEGER)
+		do
+			set_all_attributes (a_id)
+			template.add_value (report.unit_name, "unit_name")
+			template.add_value (report.head_name, "head_name")
+			template.add_value (report.rep_start, "rep_start")
+			template.add_value (report.rep_end, "rep_end")
+			template.add_value (courses, "courses")
+			template.add_value (examinations, "examinations")
+			template.add_value (supervised_students, "supervised_students")
+			template.add_value (student_reports, "student_reports")
+			template.add_value (completed_phd, "completed_phd")
+			template.add_value (grants, "grants")
+			template.add_value (research_projects, "research_projects")
+			template.add_value (research_collaborations, "research_collaborations")
+			template.add_value (publications, "publications")
+		end
+
+	set_all_attributes (a_id: INTEGER)
 		local
 			info: LAB_FULL_INFO
 		do
-			create info.make (id)
+			create info.make (a_id)
+			report := info.get_report
 			courses := info.get_courses
 			examinations := info.get_examinations
 			supervised_students := info.get_supervised_students
@@ -63,11 +74,12 @@ feature {NONE} -- ojects to create page
 			research_projects := info.get_research_projects
 			research_collaborations := info.get_research_collaborations
 			publications := info.get_publications
+			info.close_database
 		end
 
-	query_manager: QUERY_MANAGER
+	report: REPORT
 
-	id: INTEGER
+	query_manager: QUERY_MANAGER
 
 	courses: LIST [COURSE]
 

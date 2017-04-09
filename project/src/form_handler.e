@@ -42,8 +42,8 @@ feature
 					res.put_string (body)
 				end
 			elseif req.is_post_request_method then
-				if attached req.content_length as con_len then
-					if con_len.to_integer_32 > 0 then
+				if attached req.content_length_value as con_len then
+					if con_len > 0 then
 						page.set_status_code ({HTTP_STATUS_CODE}.ok)
 						create input_data.make (con_len.to_integer_32)
 						req.read_input_data_into (input_data)

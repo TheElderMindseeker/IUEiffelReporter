@@ -9,7 +9,7 @@ class
 
 inherit
 
-	WSF_URI_HANDLER
+	WSF_STARTS_WITH_HANDLER
 
 create
 	make
@@ -27,16 +27,18 @@ feature
 
 feature
 
-	execute (req: WSF_REQUEST; res: WSF_RESPONSE)
+	execute (a_start_path: READABLE_STRING_8; req: WSF_REQUEST; res: WSF_RESPONSE)
 			-- Execute handler for `req' and respond in `res'.
 			-- returns more information about some report
 		local
 			template:TEMPLATE_MORE_INFO
+			s_id:STRING
 		do
 			page.set_status_code ({HTTP_STATUS_CODE}.ok)
 			if req.is_get_request_method then
-				if attached req.path_parameter ("id") as id then
-					create template.make(id.string_representation.to_integer)
+				s_id:= create{STRING}.make_from_string (req.path_info.substring (a_start_path.count+2, req.path_info.count))
+				if attached s_id.to_integer as id then
+					create template.make(id)
 					if attached template.output as body then
 						res.put_string(body)
 					end

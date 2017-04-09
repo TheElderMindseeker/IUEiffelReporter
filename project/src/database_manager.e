@@ -541,7 +541,7 @@ feature -- Management
 			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
 			s_query: STRING_8
 		do
-			s_query := "SELECT 1 FROM reports WHERE reports_id = " + report_id.out + ";"
+			s_query := "SELECT 1 FROM reports WHERE report_id = " + report_id.out + ";"
 			create query_statement.make (s_query, database)
 			cursor := query_statement.execute_new
 			cursor.start
@@ -750,7 +750,7 @@ feature {QUERY_MANAGER} -- Specific queries
 			result_exists: Result /= Void
 		end
 
-	cumulative_info (start_date, end_date: detachable DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
+	 cumulative_info (start_date, end_date: detachable DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
 			-- Query cumulative info of the given `laboratory' unit
 		require
 			database_initialized: is_initialized
@@ -763,9 +763,9 @@ feature {QUERY_MANAGER} -- Specific queries
 			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
 			s_query: STRING_8
 		do
-			s_query := "SELECT rep.unit_name, rep.head_name," +
-					" date(rep.rep_start) start_date, date(rep.rep_end) end_date," +
-					" rel.info" +
+			s_query := "SELECT rep.unit_name unit_name, rep.head_name head_name," +
+					" date(rep.rep_start) rep_start, date(rep.rep_end) rep_end," +
+					" rel.info info" +
 					" FROM reports rep LEFT OUTER JOIN relevant_info rel ON rep.report_id = rel.report_id" +
 					" WHERE rep.unit_name = " + laboratory.repr
 			if attached start_date as sd and attached end_date as ed then
@@ -797,7 +797,7 @@ feature {QUERY_MANAGER} -- Specific queries
 			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
 			s_query: STRING_8
 		do
-			s_query := "SELECT rep.unit_name, SUM(1) supervised FROM reports rep INNER JOIN supervised_students sup" +
+			s_query := "SELECT rep.unit_name unit_name, SUM(1) supervised FROM reports rep INNER JOIN supervised_students sup" +
 					" ON rep.report_id = sup.report_id"
 			if start_date /= Void then
 				s_query := s_query + " WHERE rep.start_date <= julianday(" + start_date.repr + ") AND " +
@@ -828,7 +828,7 @@ feature {QUERY_MANAGER} -- Specific queries
 			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
 			s_query: STRING_8
 		do
-			s_query := "SELECT rep.unit_name, SUM(1) collaborations FROM reports rep INNER JOIN research_collaborations col" +
+			s_query := "SELECT rep.unit_name unit_name, SUM(1) collaborations FROM reports rep INNER JOIN research_collaborations col" +
 					" ON rep.report_id = res.report_id"
 			if start_date /= Void then
 				s_query := s_query + " WHERE rep.start_date <= julianday(" + start_date.repr + ") AND " +
@@ -859,7 +859,7 @@ feature {QUERY_MANAGER} -- Specific queries
 			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
 			s_query: STRING_8
 		do
-			s_query := "SELECT rep.unit_name, SUM(1) collaborations FROM reports rep INNER JOIN grants gr" +
+			s_query := "SELECT rep.unit_name unit_name, SUM(1) collaborations FROM reports rep INNER JOIN grants gr" +
 					" ON rep.report_id = gr.report_id"
 			if start_date /= Void then
 				s_query := s_query + " WHERE rep.start_date <= julianday(" + start_date.repr + ") AND " +
