@@ -214,6 +214,15 @@ feature -- Access
 	current_report_id: INTEGER_32
 			-- Report id of the last created report
 
+	close
+			-- Close database after use.
+		do
+			database.close
+			is_initialized := False
+		ensure
+			not_initialized: not is_initialized
+		end
+
 feature -- Management
 
 	clear_error
