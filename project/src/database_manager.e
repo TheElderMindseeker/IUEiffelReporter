@@ -758,7 +758,7 @@ feature {QUERY_MANAGER} -- Specific queries
 			s_query: STRING_8
 		do
 			s_query := "SELECT rep.unit_name, rep.head_name," +
-					" date(rep.rep_start) start_date, date(rep.rep_end) end_date" +
+					" date(rep.rep_start) start_date, date(rep.rep_end) end_date," +
 					" rel.info" +
 					" FROM reports rep LEFT OUTER JOIN relevant_info rel ON rep.report_id = rel.report_id" +
 					" WHERE rep.unit_name = " + laboratory.repr
