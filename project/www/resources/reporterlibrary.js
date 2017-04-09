@@ -1,49 +1,68 @@
-function addInput(tableId) {
-	//Get value of id counter and increase it
-	var id = document.getElementById('id-counter').value;
-	id++;
-	document.getElementById('id-counter').setAttribute('value', id);
+/*!
+ * IU Eiffel Reporter Library v0.1
+ *
+ * This is necessary part of the IU Eiffel Reporter
+ * This library implements dynamic lists, part of
+ * client-server interaction, etc.
+ *
+ * Written by Andrey Pavlenko, DANDy team
+ */
+
+function addInput(elem) {
+	setTimeout(function() { _addInput(elem); }, 250);
+}
+
+function _addInput(elem) {
 	//Get reference on table with given ID
-	var mainTable = document.getElementById(tableId);
+	var mainTable = $(elem).parents(".table")[0];
 	//Get reference on body of table
 	var tbody = mainTable.children[1];
 	//Clone last row of table`s body
 	var newNode = mainTable.rows[mainTable.rows.length - 1].cloneNode(true);
 	//Change attribute onBlur for all the inputs in new node
 	var array = newNode.getElementsByTagName('input');
+	var flag = false;
 	for (i=0; i<array.length; i++) {
-		array[i].setAttribute('onBlur', 'removeRow("' + tableId + '-' + id + '");');
+		array[i].setAttribute('onBlur', "removeRow(this);");
 		if (array[i].getAttribute("placeholder") == "Required") {
 			array[i].required = true;
+			flag = true;
 		}
 	}
+	if (flag) {
+		newNode.setAttribute('class', 'required-row row-in-table');
+	} else {
+		newNode.setAttribute('class', 'row-in-table');
+	}
+	//Change some attributes in new node
+	newNode.setAttribute('name', '');
 	//Insert new node before the row with creators
 	tbody.insertBefore(newNode, mainTable.rows[mainTable.rows.length - 2]);
 	//Show the new node
-	$("#to-show-" + tableId).show('slow');
-	//Change some attributes in new node
-	newNode.setAttribute('id', 'el-' + tableId + '-' + id);
-	newNode.setAttribute('name', '');
-	newNode.setAttribute('class', 'required-row');
+	$(newNode).show('slow');
 	reinitializeDatepickers(dateParams, newNode);
 	array[0].focus();
 }
 
-function removeRow(tableId) {
-	var elem = document.getElementById("el-" + tableId);
-	var array = elem.getElementsByTagName('input');
+function removeRow(elem) {
+	setTimeout(function() { _removeRow(elem); }, 500);
+}
+
+function _removeRow(elem) {
+	var parent = $(elem).parents(".row-in-table")[0];
+	var array = parent.getElementsByTagName('input');
 	var statement = true;
 	for (i=0; i<array.length; i++) {
-		statement = statement && array[i].value == '';
+		statement = statement && array[i].value == '' &&  !($(array[i]).is( ":focus" ));
 	}
 	if (statement) {
-		$("#el-" + tableId).hide(500, function(){
+		$(parent).hide(500, function(){
 			$(this).remove();
 		});
 	}
 }
 
-function sendForm(e){
+function sendForm(e) {
 	var form = document.getElementById('mainForm');
 	if (checkRequiredLists(form) && checkRequiredFields(form)) {
 			cleanForm();
@@ -61,7 +80,7 @@ function sendForm(e){
 	}
 }
 
-function sendQuery(e){
+function sendQuery(e) {
 	var form = document.getElementById('request');
 	if (checkRequiredFields(form)) {
 			var formData = JSON.stringify($('#request').serializeJSON());
@@ -89,16 +108,14 @@ function checkCookie() {
 	}
 }
 
-function isEmpty(str)
- {
+function isEmpty(str) {
   // Проверка на пустую строку.
   for (var intLoop = 0; intLoop < str.length; intLoop++)
     if (" " != str.charAt(intLoop)) return false;
   return true;
- }
+}
 
-function checkRequiredFields(f)
-{
+function checkRequiredFields(f) {
 	for (var intLoop = 0; intLoop < f.elements.length; intLoop++) {
 		if (null!=f.elements[intLoop].getAttribute("required")) {
 			if (isEmpty(f.elements[intLoop].value)) {
