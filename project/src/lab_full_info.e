@@ -7,6 +7,10 @@ note
 class
 	LAB_FULL_INFO
 
+inherit
+
+	WITHOUT_QUOTES
+
 create
 	make
 
@@ -338,19 +342,6 @@ feature
 				end
 			end
 			create Result.make (u_name, h_name, s_date, e_date, c_id)
-		end
-
-feature {NONE}
-
-	without_quotes (str: STRING): STRING
-		require
-			str /= Void
-		do
-			if str.at (1).is_equal ('%'') and str.at (str.count).is_equal ('%'') then
-				create Result.make_from_string (str.substring (2, str.count - 1))
-			else
-				create Result.make_from_string (str)
-			end
 		end
 
 end

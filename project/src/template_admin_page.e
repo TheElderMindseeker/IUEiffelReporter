@@ -9,6 +9,10 @@ class
 
 inherit
 
+	WITHOUT_QUOTES
+		undefine
+			default_create
+		end
 	SHARED_TEMPLATE_CONTEXT
 		redefine
 			default_create
@@ -25,8 +29,9 @@ feature -- Initialization
 			p := p.appended ("/templates")
 			set_template_folder (p)
 			set_template_file_name ("admin.tpl")
-			set_reports
+			set_reports_and_labs
 			template.add_value (reports, "reports")
+			template.add_value (labs, "labs")
 				--template_context.enable_verbose
 			template.analyze
 			template.get_output
@@ -43,10 +48,11 @@ feature {NONE} -- Access to database
 
 	reports: LINKED_LIST [REPORT]
 
-	set_reports
+	labs: ITERABLE [STRING]
+
+	set_reports_and_labs
 		local
 			query_manager: QUERY_MANAGER
-			list_labs: ITERABLE [STRING]
 			u_name: STRING
 			h_name: STRING
 			s_date: STRING
@@ -55,6 +61,7 @@ feature {NONE} -- Access to database
 		do
 			create reports.make
 			create query_manager.make
+			labs := query_manager.list_laboratories
 			across
 				query_manager.query_reports as lab_report
 			loop
@@ -63,16 +70,16 @@ feature {NONE} -- Access to database
 				loop
 					if field.item.name.same_string ("unit_name") then
 						u_name := field.item.value.repr
-						u_name:=without_quotes(u_name)
+						u_name := without_quotes (u_name)
 					elseif field.item.name.same_string ("head_name") then
 						h_name := field.item.value.repr
-						h_name:=without_quotes(h_name)
+						h_name := without_quotes (h_name)
 					elseif field.item.name.same_string ("rep_start") then
 						s_date := field.item.value.repr
-						s_date:=without_quotes(s_date)
+						s_date := without_quotes (s_date)
 					elseif field.item.name.same_string ("rep_end") then
 						e_date := field.item.value.repr
-						e_date:=without_quotes(e_date)
+						e_date := without_quotes (e_date)
 					elseif field.item.name.same_string ("report_id") then
 						c_id := field.item.value.repr.to_integer
 					end
@@ -102,22 +109,4 @@ feature {NONE} -- Implementation
 
 	template: TEMPLATE_FILE
 
-		--	reports : LIST[REPORT]
-		--		do
-		--			create {ARRAYED_LIST[REPORT]}Result.make(5)
-		--			Result.force(create {REPORT}.make ("n1", "head1", "a_start_date1", "a_end_date1", 0))
-		--			Result.force(create {REPORT}.make ("n2", "head2", "a_start_date2", "a_end_date2", 0))
-		--			Result.force(create {REPORT}.make ("n3", "head3", "a_start_date3", "a_end_date3", 0))
-		--			Result.force(create {REPORT}.make ("n4", "head4", "a_start_date4", "a_end_date4", 0))
-		--		end
-	without_quotes(str:STRING):STRING
-	require
-		str/=Void
-	do
-		if str.at (1).is_equal ('%'') and str.at (str.count).is_equal ('%'') then
-			create Result.make_from_string (str.substring (2, str.count-1))
-		else
-			create Result.make_from_string (str)
-		end
-	end
 end

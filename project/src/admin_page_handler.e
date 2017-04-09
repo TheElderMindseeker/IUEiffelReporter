@@ -29,6 +29,8 @@ feature
 			temp: TEMPLATE_ADMIN_PAGE
 			admin_parser:ADMIN_PAGE_PARSER
 			input_data:STRING
+			number_text_temp:TEMPLATE_TEXT_NUMBER
+			query_manager:QUERY_MANAGER
 		do
 			if req.is_get_request_method then
 				create temp
@@ -41,6 +43,15 @@ feature
 					req.read_input_data_into (input_data)
 					create admin_parser.make (input_data)
 					admin_parser.parse
+					if attached admin_parser.type_of_query as type then
+						create query_manager.make
+						if type.same_string ("number_of_supervised_students") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed then-- or type.same_string ("number_of_research_collaborations") or type.same_string ("number_of_projects_awarded_grants") then
+							create number_text_temp.make ("name of laboratory", "number of supervised students", query_manager.number_of_supervised_students (sd, ed))
+							if attached number_text_temp.output as output then
+								res.put_string (output)
+							end
+						end
+					end
 				end
 			end
 		end

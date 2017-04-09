@@ -768,9 +768,9 @@ feature {QUERY_MANAGER} -- Specific queries
 					" rel.info info" +
 					" FROM reports rep LEFT OUTER JOIN relevant_info rel ON rep.report_id = rel.report_id" +
 					" WHERE rep.unit_name = " + laboratory.repr
-			if attached start_date as sd and attached end_date as ed then
-				s_query := s_query + " AND rep.start_date <= julianday(" + sd.repr + ") AND " +
-						"julianday(" + ed.repr + ") <= rep.end_date"
+			if attached start_date as rep_start and attached end_date as rep_end then
+				s_query := s_query + " WHERE rep.rep_start <= julianday(" + rep_start.repr + ") AND " +
+						"julianday(" + rep_end.repr + ") <= rep.rep_end"
 			end
 			s_query := s_query + ";"
 			create query_statement.make (s_query, database)
@@ -799,9 +799,9 @@ feature {QUERY_MANAGER} -- Specific queries
 		do
 			s_query := "SELECT rep.unit_name unit_name, SUM(1) supervised FROM reports rep INNER JOIN supervised_students sup" +
 					" ON rep.report_id = sup.report_id"
-			if start_date /= Void then
-				s_query := s_query + " WHERE rep.start_date <= julianday(" + start_date.repr + ") AND " +
-						"julianday(" + end_date.repr + ") <= rep.end_date"
+			if attached start_date as rep_start and attached end_date as rep_end then
+				s_query := s_query + " WHERE rep.rep_start <= julianday(" + rep_start.repr + ") AND " +
+						"julianday(" + rep_end.repr + ") <= rep.rep_end"
 			end
 			s_query := s_query + " GROUP BY rep.report_id;"
 			create query_statement.make (s_query, database)
@@ -830,9 +830,9 @@ feature {QUERY_MANAGER} -- Specific queries
 		do
 			s_query := "SELECT rep.unit_name unit_name, SUM(1) collaborations FROM reports rep INNER JOIN research_collaborations col" +
 					" ON rep.report_id = res.report_id"
-			if start_date /= Void then
-				s_query := s_query + " WHERE rep.start_date <= julianday(" + start_date.repr + ") AND " +
-						"julianday(" + end_date.repr + ") <= rep.end_date"
+			if attached start_date as rep_start and attached end_date as rep_end then
+				s_query := s_query + " WHERE rep.rep_start <= julianday(" + rep_start.repr + ") AND " +
+						"julianday(" + rep_end.repr + ") <= rep.rep_end"
 			end
 			s_query := s_query + " GROUP BY rep.report_id;"
 			create query_statement.make (s_query, database)
@@ -861,9 +861,9 @@ feature {QUERY_MANAGER} -- Specific queries
 		do
 			s_query := "SELECT rep.unit_name unit_name, SUM(1) collaborations FROM reports rep INNER JOIN grants gr" +
 					" ON rep.report_id = gr.report_id"
-			if start_date /= Void then
-				s_query := s_query + " WHERE rep.start_date <= julianday(" + start_date.repr + ") AND " +
-						"julianday(" + end_date.repr + ") <= rep.end_date"
+			if attached start_date as rep_start and attached end_date as rep_end then
+				s_query := s_query + " WHERE rep.rep_start <= julianday(" + rep_start.repr + ") AND " +
+						"julianday(" + rep_end.repr + ") <= rep.rep_end"
 			end
 			s_query := s_query + " GROUP BY rep.report_id;"
 			create query_statement.make (s_query, database)
@@ -892,9 +892,9 @@ feature {QUERY_MANAGER} -- Specific queries
 		do
 			s_query := "SELECT patent_id, report_id, patent_title, patent_office_country FROM patents_and_ip" +
 					" WHERE type = 'P'"
-			if start_date /= Void then
-				s_query := s_query + " AND rep.start_date <= julianday(" + start_date.repr + ") AND " +
-						"julianday(" + end_date.repr + ") <= rep.end_date"
+			if attached start_date as rep_start and attached end_date as rep_end then
+				s_query := s_query + " WHERE rep.rep_start <= julianday(" + rep_start.repr + ") AND " +
+						"julianday(" + rep_end.repr + ") <= rep.rep_end"
 			end
 			s_query := s_query + ";"
 			create query_statement.make (s_query, database)
