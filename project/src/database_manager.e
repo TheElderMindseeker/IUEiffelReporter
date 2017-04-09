@@ -675,7 +675,7 @@ feature {QUERY_MANAGER} -- Specific queries
 		do
 			create {LINKED_LIST [STRING_8]} Result.make
 			if attached {LINKED_LIST [STRING_8]} Result as list then
-				s_query := "SELECT DISCTINCT unit_name FROM reports;"
+				s_query := "SELECT DISTINCT unit_name FROM reports;"
 				create query_statement.make (s_query, database)
 				if not query_statement.is_compiled then
 					if query_statement.has_error then
