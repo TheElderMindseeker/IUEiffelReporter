@@ -54,6 +54,7 @@ function sendForm(e){
 	    	type:'POST',
 		    data: formData,
 	    	success: function(res) {
+					$('#submissionSuccessModal').modal({backdrop: "static", keyboard: false, show: true});
 	    	}
 	  	});
 	}
@@ -72,8 +73,9 @@ function checkRequiredFields(f)
 	for (var intLoop = 0; intLoop < f.elements.length; intLoop++) {
 		if (null!=f.elements[intLoop].getAttribute("required")) {
 			if (isEmpty(f.elements[intLoop].value)) {
-				f.elements[intLoop].focus();
-				alert("You should fill all the required fields!");
+				$(document.getElementById("warningModal").getElementsByClassName("modal-body")).text("You should fill all the required fields!");
+				$('#warningModal').modal({backdrop: "true", show: true});
+				f.elements[intLoop].focus()
 				return false;
 			}
 		}
@@ -86,7 +88,8 @@ function checkRequiredLists(f) {
 	for (var i = 0; i < requiredTables.length; i++) {
 		var temp = requiredTables[i].getElementsByClassName("required-row");
 		if (temp.length == 0) {
-			alert("You should create at least one row in each of required tables!");
+			$(document.getElementById("warningModal").getElementsByClassName("modal-body")).text("You should create at least one row in each of required tables!");
+			$('#warningModal').modal({backdrop: "true", show: true});
 			requiredTables[i].getElementsByTagName('input')[0].focus();
 			return false;
 		}
