@@ -235,6 +235,7 @@ feature -- Management
 			has_no_error: not has_error
 		end
 
+
 	create_report (arguments: ITERABLE [FIELD])
 			-- Creates new report and generates new `report_id'
 		do
