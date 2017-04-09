@@ -124,7 +124,6 @@ feature {NONE} -- Implementation
 							end
 						end
 					end
-					add_field_to_linked_list ("report_id", database_manager.current_report_id.out, "INTEGER", record)
 					if attached parse_result as hash_table then
 						if not hash_table.has (name.item) then
 							hash_table.put (create {LINKED_LIST [LINKED_LIST [FIELD]]}.make, name.item)
