@@ -79,6 +79,10 @@ feature {NONE} -- Implementation
 				if attached create_field (row.column_name (column), c_value) as field then
 					list.extend (field)
 				end
+			else
+				if attached create_field (row.column_name (column), "") as field then
+					list.extend (field)
+				end
 			end
 		ensure
 			list_extended: list.count = old list.count + 1
@@ -640,7 +644,9 @@ feature -- Utility
 			if attached {INTEGER} object as int then
 				create Result.make (name, create {INTEGER_REPRESENTABLE}.make (int))
 			elseif attached {REAL} object as float then
-				create Result.make (name, create {FLOAT_REPRESENTABLE}.make (float))
+				if attached {DATE} date_from_julianday (create {FLOAT_REPRESENTABLE}.make (float)) as date then
+					create Result.make (name, date)
+				end
 			elseif attached {STRING_8} object as str then
 				create Result.make (name, create {STRING_REPRESENTABLE}.make (str))
 			elseif attached {DATE} object as date then
@@ -672,6 +678,32 @@ feature -- Utility
 		end
 
 feature {QUERY_MANAGER} -- Specific queries
+
+	query_reports: ITERABLE [ITERABLE [FIELD]]
+			-- All reports present in the database
+		require
+			database_initialized: is_initialized
+			no_error: not has_error
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			s_query: STRING_8
+		do
+			s_query := "[
+					SELECT unit_name, head_name, rep_start, rep_end
+					FROM reports;
+					]"
+			create query_statement.make (s_query, database)
+			cursor := query_statement.execute_new
+			create {LINKED_LIST [LINKED_LIST [FIELD]]} Result.make
+			if not query_statement.has_error and attached {LINKED_LIST [LINKED_LIST [FIELD]]} Result as table then
+				fill_table (table, cursor)
+			else
+				has_error := True
+			end
+		ensure
+			result_exists: Result /= Void
+		end
 
 	list_laboratories: ITERABLE [STRING_8]
 			-- List all the laboratory units known to the database
@@ -728,7 +760,7 @@ feature {QUERY_MANAGER} -- Specific queries
 			s_query := "SELECT rep.unit_name, rep.head_name," +
 					" date(rep.rep_start) start_date, date(rep.rep_end) end_date" +
 					" rel.info" +
-					" FROM reports rep INNER JOIN relevant_info rel ON rep.report_id = rel.report_id" +
+					" FROM reports rep LEFT OUTER JOIN relevant_info rel ON rep.report_id = rel.report_id" +
 					" WHERE rep.unit_name = " + laboratory.repr
 			if attached start_date as sd and attached end_date as ed then
 				s_query := s_query + " AND rep.start_date <= julianday(" + sd.repr + ") AND " +

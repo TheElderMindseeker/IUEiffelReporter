@@ -27,6 +27,12 @@ feature -- Access
 
 feature -- Access
 
+	query_reports: ITERABLE [ITERABLE [FIELD]]
+			-- All reports present in the database
+		do
+			Result := database_manager.query_reports
+		end
+
 	query_publications (start_date, end_date: DATE): ITERABLE [ITERABLE [FIELD]]
 			-- All publications of the university in a given year.
 		require
