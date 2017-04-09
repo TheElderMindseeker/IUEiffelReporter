@@ -1,44 +1,56 @@
-function addInput(tableId) {
-	//Get value of id counter and increase it
-	var id = document.getElementById('id-counter').value;
-	id++;
-	document.getElementById('id-counter').setAttribute('value', id);
+function addInput(elem) {
+		setTimeout(function() { _addInput(elem); }, 250);
+}
+
+function _addInput(elem) {
 	//Get reference on table with given ID
-	var mainTable = document.getElementById(tableId);
+	var mainTable = $(elem).parents(".table")[0];
 	//Get reference on body of table
 	var tbody = mainTable.children[1];
 	//Clone last row of table`s body
 	var newNode = mainTable.rows[mainTable.rows.length - 1].cloneNode(true);
 	//Change attribute onBlur for all the inputs in new node
 	var array = newNode.getElementsByTagName('input');
+
+	var flag = false;
+
 	for (i=0; i<array.length; i++) {
-		array[i].setAttribute('onBlur', 'removeRow("' + tableId + '-' + id + '");');
+		array[i].setAttribute('onBlur', "removeRow(this);");
 		if (array[i].getAttribute("placeholder") == "Required") {
 			array[i].required = true;
+			flag = true;
 		}
 	}
+	if (flag) {
+		newNode.setAttribute('class', 'required-row row-in-table');
+	} else {
+		newNode.setAttribute('class', 'row-in-table');
+	}
+	//Change some attributes in new node
+	newNode.setAttribute('name', '');
 	//Insert new node before the row with creators
 	tbody.insertBefore(newNode, mainTable.rows[mainTable.rows.length - 2]);
 	//Show the new node
-	$("#to-show-" + tableId).show('slow');
-	//Change some attributes in new node
-	newNode.setAttribute('id', 'el-' + tableId + '-' + id);
-	newNode.setAttribute('name', '');
-	newNode.setAttribute('class', 'required-row');
+	$(newNode).show('slow');
 	reinitializeDatepickers(dateParams, newNode);
 	array[0].focus();
 	/*mainTable.getElementsByName('courses-taught[][name]').focus();*/
 }
 
-function removeRow(tableId) {
-	var elem = document.getElementById("el-" + tableId);
-	var array = elem.getElementsByTagName('input');
+function removeRow(elem) {
+	setTimeout(function() { _removeRow(elem); }, 500);
+}
+
+function _removeRow(elem) {
+	//var elem = document.getElementById("el-" + tableId);
+	var parent = $(elem).parents(".row-in-table")[0];
+	var array = parent.getElementsByTagName('input');
 	var statement = true;
 	for (i=0; i<array.length; i++) {
-		statement = statement && array[i].value == '';
+		statement = statement && array[i].value == '' &&  !($(array[i]).is( ":focus" ));
 	}
 	if (statement) {
-		$("#el-" + tableId).hide(500, function(){
+		$(parent).hide(500, function(){
 			$(this).remove();
 		});
 	}
