@@ -20,7 +20,7 @@
  			}
  		</style>
 	</head>
-	<body onload='setTimeout(function() {  $("#list-of-reports").tablesorter(); reinitializeDatepickers(dateParams, document); }, 500);'>
+	<body onload="adminPageInitialization();">
 		<div class="wrapper container">
 			<div class="logo-text">
 				<label class="logo-text">Administrative Panel</label>
@@ -52,6 +52,7 @@
 										<td><a href="/details/{$report.id/}" class="btn btn-success" role="button">More details...</a></td>
 										<td><a href="/edit/{$report.id/}" class="btn btn-primary" role="button">Edit</a></td>
 										<td><a href="/delete/{$report.id/}" class="btn btn-danger" role="button">Delete</a></td>
+
 									</tr>
 								{/foreach}
 							</tbody>
@@ -144,8 +145,6 @@
 			</div>
 		</div>
 		<script>
-  		var submitButton = document.request.submit;
-			submitButton.addEventListener("click", sendQuery);
 		</script>
 	</body>
 </html>

@@ -62,6 +62,27 @@ function _removeRow(elem) {
 	}
 }
 
+function formInitialization() {
+	var submitButton = document.mainForm.submit;
+	submitButton.addEventListener("click", sendForm);
+	window.onbeforeunload = function () {
+		return ((!isDataSubmitted()) ? "The data is not submitted. Do you really want to leave the page?" : null);
+	}
+	setTimeout(function() { reinitializeDatepickers(dateParams, document); }, 500);
+
+	document.getElementById("is-data-submitted").setAttribute("value", "false");
+}
+
+function adminPageInitialization() {
+		var submitButton = document.request.submit;
+		submitButton.addEventListener("click", sendQuery);
+		setTimeout(function() {  $("#list-of-reports").tablesorter(); reinitializeDatepickers(dateParams, document); }, 500);
+}
+
+function isDataSubmitted() {
+	return (document.getElementById("is-data-submitted").getAttribute("value") == "true");
+}
+
 function sendForm(e) {
 	var form = document.getElementById('mainForm');
 	if (checkRequiredLists(form) && checkRequiredFields(form)) {
@@ -73,7 +94,7 @@ function sendForm(e) {
 		    data: formData,
 	    	success: function(res) {
 					Cookies.set('idOfLastAddedReport', res, { expires: ((new Date).getTime() + (24 * 60 * 60 * 1000)) });
-					is_data_changed = true;
+					document.getElementById("is-data-submitted").setAttribute("value", "true");
 					$('#submissionSuccessModal').modal({backdrop: "static", keyboard: false, show: true});
 	    	}
 	  	});
