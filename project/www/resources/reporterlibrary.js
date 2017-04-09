@@ -50,7 +50,7 @@ function sendForm(e){
 			cleanForm();
 			var formData = JSON.stringify($('#mainForm').serializeJSON());
 	  	$.ajax({
-	    	url:'/form',
+	    	url:'http://localhost:8080/form',
 	    	type:'POST',
 		    data: formData,
 	    	success: function(res) {
