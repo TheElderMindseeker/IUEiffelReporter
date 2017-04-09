@@ -60,6 +60,8 @@ feature
 								if attached {LINKED_LIST [FIELD]} parsed_data.at (table_name.item) as record then
 									database_manager.single_insert (table_name.item, record)
 								elseif attached {LINKED_LIST [LINKED_LIST [FIELD]]} parsed_data.at (table_name.item) as record_list then
+									--adds report_id to each LINKED_LIST[FIELD]
+									add_id_field_to_linked_lists(database_manager.current_report_id.out, record_list)
 									database_manager.multiple_insert (table_name.item, record_list)
 								end
 							end
@@ -74,4 +76,22 @@ feature {NONE} -- Implementation
 
 	page: WSF_HTML_PAGE_RESPONSE
 
+feature {NONE}
+
+	add_id_field_to_linked_lists (id: STRING_8; linked_lists: LINKED_LIST [LINKED_LIST [FIELD]])
+			-- Add field id to each linked list at linked_lists
+		local
+			field: detachable FIELD
+			query_manager:QUERY_MANAGER
+		do
+			create query_manager.make
+			field := query_manager.database_manager.create_field ("report_id", create {DATE}.make_from_string (id))
+			across
+				linked_lists as linked_list
+			loop
+				if attached field as att_field then
+					linked_list.item.extend (att_field)
+				end
+			end
+		end
 end
