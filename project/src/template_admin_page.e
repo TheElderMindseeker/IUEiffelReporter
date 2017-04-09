@@ -55,31 +55,30 @@ feature {NONE} -- Access to database
 		do
 			create reports.make
 			create query_manager.make
-			list_labs := query_manager.list_laboratories
 			across
-				list_labs as lab_name
+				query_manager.query_reports as lab_report
 			loop
 				across
-					query_manager.query_reports as lab_report
+					lab_report.item as field
 				loop
-					across
-						lab_report.item as field
-					loop
-						if field.item.name.same_string ("unit_name") then
-							u_name := field.item.value.repr
-						elseif field.item.name.same_string ("head_name") then
-							h_name := field.item.value.repr
-						elseif field.item.name.same_string ("rep_start") then
-							s_date := field.item.value.repr
-						elseif field.item.name.same_string ("rep_end") then
-							e_date := field.item.value.repr
-						elseif field.item.name.same_string ("id") then
-							c_id := field.item.value.repr.to_integer
-						end
+					if field.item.name.same_string ("unit_name") then
+						u_name := field.item.value.repr
+						u_name:=without_quotes(u_name)
+					elseif field.item.name.same_string ("head_name") then
+						h_name := field.item.value.repr
+						h_name:=without_quotes(h_name)
+					elseif field.item.name.same_string ("rep_start") then
+						s_date := field.item.value.repr
+						s_date:=without_quotes(s_date)
+					elseif field.item.name.same_string ("rep_end") then
+						e_date := field.item.value.repr
+						e_date:=without_quotes(e_date)
+					elseif field.item.name.same_string ("report_id") then
+						c_id := field.item.value.repr.to_integer
 					end
-					if attached u_name as un and attached h_name as hn and attached s_date as sd and attached e_date as ed and attached c_id as a_id then
-						reports.force (create {REPORT}.make (un, hn, sd, ed, a_id))
-					end
+				end
+				if attached u_name as un and attached h_name as hn and attached s_date as sd and attached e_date as ed and attached c_id as a_id then
+					reports.force (create {REPORT}.make (un, hn, sd, ed, a_id))
 				end
 			end
 		end
@@ -111,5 +110,14 @@ feature {NONE} -- Implementation
 		--			Result.force(create {REPORT}.make ("n3", "head3", "a_start_date3", "a_end_date3", 0))
 		--			Result.force(create {REPORT}.make ("n4", "head4", "a_start_date4", "a_end_date4", 0))
 		--		end
-
+	without_quotes(str:STRING):STRING
+	require
+		str/=Void
+	do
+		if str.at (1).is_equal ('%'') and str.at (str.count).is_equal ('%'') then
+			create Result.make_from_string (str.substring (2, str.count-1))
+		else
+			create Result.make_from_string (str)
+		end
+	end
 end

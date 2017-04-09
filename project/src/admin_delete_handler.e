@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {ADMIN_DELETE_HANDLER}."
+	description: ""
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"

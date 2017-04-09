@@ -639,12 +639,18 @@ feature -- Utility
 			name_not_empty: name.count > 0
 			object_exists: object /= Void
 			object_has_supported_type: attached {INTEGER} object or attached {REAL} object or
-					attached {STRING_8} object or attached {DATE} object or attached {REAL_64} object
+					attached {STRING_8} object or attached {DATE} object or attached {REAL_64} object or attached {INTEGER_64} object
 		do
 			if attached {INTEGER} object as int then
 				create Result.make (name, create {INTEGER_REPRESENTABLE}.make (int))
+			elseif attached {INTEGER_64} object as int then
+				create Result.make (name, create {INTEGER_REPRESENTABLE}.make (int.as_integer_32))
 			elseif attached {REAL} object as float then
 				if attached {DATE} date_from_julianday (create {FLOAT_REPRESENTABLE}.make (float)) as date then
+					create Result.make (name, date)
+				end
+			elseif attached {REAL_64} object as float then
+				if attached {DATE} date_from_julianday (create {FLOAT_REPRESENTABLE}.make (float.truncated_to_real)) as date then
 					create Result.make (name, date)
 				end
 			elseif attached {STRING_8} object as str then
@@ -690,7 +696,7 @@ feature {QUERY_MANAGER} -- Specific queries
 			s_query: STRING_8
 		do
 			s_query := "[
-					SELECT unit_name, head_name, rep_start, rep_end
+					SELECT report_id, unit_name, head_name, rep_start, rep_end
 					FROM reports;
 					]"
 			create query_statement.make (s_query, database)
