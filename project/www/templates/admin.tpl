@@ -11,7 +11,7 @@
 		<script type="text/javascript" src="../resources/jquery.tablesorter.js"></script>
 		<style type="text/css">
 			a {
-				outline: none; /* Убираем границу вокруг ссылок  */
+				outline: none;
  			}
  		</style>
 	</head>
@@ -43,9 +43,9 @@
 										<td>{$report.head_name/}</td>
 										<td>{$report.rep_start/}</td>
 										<td>{$report.rep_end/}</td>
-										<td><a href="/details?id={$report.id/}" class="btn btn-success" role="button">More details...</a></td>
-										<td><a href="/edit?id={$report.id/}" class="btn btn-primary" role="button">Edit</a></td>
-										<td><a href="/delete?id={$report.id/}" class="btn btn-danger" role="button">Delete</a></td>
+										<td><a href="/details/{$report.id/}" class="btn btn-success" role="button">More details...</a></td>
+										<td><a href="/edit/{$report.id/}" class="btn btn-primary" role="button">Edit</a></td>
+										<td><a href="/delete/{$report.id/}" class="btn btn-danger" role="button">Delete</a></td>
 									</tr>
 								{/foreach}
 							</tbody>
@@ -55,11 +55,32 @@
 						<div class="form" style="margin-top: 25px;">
 							<form class="form-horizontal" name="request" id="request" method="POST" action="/admin">
 								<div class="form-group row">
-									<div class="col-sm-4 col-md-4">
+									<div class="col-sm-6 col-md-6">
 										<label for="unit_name" class="control-label">Name of unit</label>
 									</div>
-									<div class="col-sm-8 col-md-8">
-										<input type="text" class="form-control input-text" id="unit_name" name="unit_name" placeholder="Required" value="{$unit_name/}" required/>
+									<div class="col-sm-6 col-md-6">
+										<select name="unit" style="font-size: 12pt;">
+											<option>Select unit</option>
+											{foreach from="$labs" item="item"}
+  											<option value="{$item/}">{$item/}</option>
+											{/foreach}
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6 col-md-6">
+										<label for="rep_start" class="control-label">Start of reporting period</label>
+									</div>
+									<div class="col-sm-6 col-md-6">
+										<input type="text" class="form-control input-text datepicker-here" id="rep_start" name="rep_start"/>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6 col-md-6">
+										<label for="rep_end" class="control-label">End of reporting period</label>
+									</div>
+									<div class="col-sm-6 col-md-6">
+										<input type="text" class="form-control input-text datepicker-here" id="rep_end" name="rep_end"/>
 									</div>
 								</div>
 								<div class="form-group row">

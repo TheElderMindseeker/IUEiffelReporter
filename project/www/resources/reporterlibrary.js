@@ -1,56 +1,43 @@
-function addInput(elem) {
-		setTimeout(function() { _addInput(elem); }, 250);
-}
-
-function _addInput(elem) {
+function addInput(tableId) {
+	//Get value of id counter and increase it
+	var id = document.getElementById('id-counter').value;
+	id++;
+	document.getElementById('id-counter').setAttribute('value', id);
 	//Get reference on table with given ID
-	var mainTable = $(elem).parents(".table")[0];
+	var mainTable = document.getElementById(tableId);
 	//Get reference on body of table
 	var tbody = mainTable.children[1];
 	//Clone last row of table`s body
 	var newNode = mainTable.rows[mainTable.rows.length - 1].cloneNode(true);
 	//Change attribute onBlur for all the inputs in new node
 	var array = newNode.getElementsByTagName('input');
-
-	var flag = false;
-
 	for (i=0; i<array.length; i++) {
-		array[i].setAttribute('onBlur', "removeRow(this);");
+		array[i].setAttribute('onBlur', 'removeRow("' + tableId + '-' + id + '");');
 		if (array[i].getAttribute("placeholder") == "Required") {
 			array[i].required = true;
-			flag = true;
 		}
 	}
-	if (flag) {
-		newNode.setAttribute('class', 'required-row row-in-table');
-	} else {
-		newNode.setAttribute('class', 'row-in-table');
-	}
-	//Change some attributes in new node
-	newNode.setAttribute('name', '');
 	//Insert new node before the row with creators
 	tbody.insertBefore(newNode, mainTable.rows[mainTable.rows.length - 2]);
 	//Show the new node
-	$(newNode).show('slow');
+	$("#to-show-" + tableId).show('slow');
+	//Change some attributes in new node
+	newNode.setAttribute('id', 'el-' + tableId + '-' + id);
+	newNode.setAttribute('name', '');
+	newNode.setAttribute('class', 'required-row');
 	reinitializeDatepickers(dateParams, newNode);
 	array[0].focus();
-	/*mainTable.getElementsByName('courses-taught[][name]').focus();*/
 }
 
-function removeRow(elem) {
-	setTimeout(function() { _removeRow(elem); }, 500);
-}
-
-function _removeRow(elem) {
-	//var elem = document.getElementById("el-" + tableId);
-	var parent = $(elem).parents(".row-in-table")[0];
-	var array = parent.getElementsByTagName('input');
+function removeRow(tableId) {
+	var elem = document.getElementById("el-" + tableId);
+	var array = elem.getElementsByTagName('input');
 	var statement = true;
 	for (i=0; i<array.length; i++) {
-		statement = statement && array[i].value == '' &&  !($(array[i]).is( ":focus" ));
+		statement = statement && array[i].value == '';
 	}
 	if (statement) {
-		$(parent).hide(500, function(){
+		$("#el-" + tableId).hide(500, function(){
 			$(this).remove();
 		});
 	}
@@ -66,9 +53,19 @@ function sendForm(e){
 	    	type:'POST',
 		    data: formData,
 	    	success: function(res) {
+					Cookies.set('idOfLastAddedReport', res, { expires: ((new Date).getTime() + (24 * 60 * 60 * 1000)) });
 					$('#submissionSuccessModal').modal({backdrop: "static", keyboard: false, show: true});
 	    	}
 	  	});
+	}
+}
+
+function checkCookie() {
+	var id = Cookies.get('idOfLastAddedReport');
+	var button = document.getElementById("edit-button");
+	if (id != undefined && id != null) {
+		button.setAttribute("href", "/edit/" + id);
+		button.setAttribute("class", "btn button-yellow")
 	}
 }
 
