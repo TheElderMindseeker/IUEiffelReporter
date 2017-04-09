@@ -83,7 +83,7 @@ function sendQuery(e){
 function checkCookie() {
 	var id = Cookies.get('idOfLastAddedReport');
 	var button = document.getElementById("edit-button");
-	if (id != undefined && id != null) {
+	if (id != undefined && id != null && id != "null") {
 		button.setAttribute("href", "/edit/" + id);
 		button.setAttribute("class", "btn button-yellow")
 	}
