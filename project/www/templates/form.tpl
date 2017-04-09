@@ -453,19 +453,10 @@
 						</div>
 					</div>
 				</form>
->>>>>>> frontend
 			</div>
 		</div>
 		<input id="id-counter" type="hidden" value="0" />
 		<div class="footer">
-<<<<<<< HEAD
-    Developed by <label class="team-logo">DANDy</label> team
-  </div>
-  <script>
-  	var submitButton = document.mainForm.submit;
-		submitButton.addEventListener("click", sendForm);
-	</script>
-=======
     	Developed by <label class="team-logo">DANDy</label> team
   	</div>
 		<div id="warningModal" class="modal fade">
