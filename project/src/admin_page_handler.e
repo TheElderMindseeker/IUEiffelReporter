@@ -45,18 +45,18 @@ feature
 					admin_parser.parse
 					if attached admin_parser.type_of_query as type then
 						create query_manager.make
-						if type.same_string ("number_of_supervised_students") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed then-- or type.same_string ("number_of_research_collaborations") or type.same_string ("number_of_projects_awarded_grants") then
-							create number_text_temp.make ("Supervised students","name of laboratory", "number of supervised students", query_manager.number_of_supervised_students (sd, ed))
+						if type.same_string ("number_of_supervised_students") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed then
+							create number_text_temp.make ("Supervised students","Name of Laboratory", "Number of Supervised students", query_manager.number_of_supervised_students (sd, ed))
 							if attached number_text_temp.output as output then
 								res.put_string (output)
 							end
-						elseif type.same_string ("number_of_research_collaborations") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed then-- or type.same_string ("number_of_research_collaborations") or type.same_string ("number_of_projects_awarded_grants") then
-							create number_text_temp.make ("Research collaborations","name of laboratory", "number of research collaborations", query_manager.number_of_research_collaborations (sd, ed))
+						elseif type.same_string ("number_of_research_collaborations") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed then
+							create number_text_temp.make ("Research collaborations","Name of Laboratory", "Number of Research collaborations", query_manager.number_of_research_collaborations (sd, ed))
 							if attached number_text_temp.output as output then
 								res.put_string (output)
 							end
-						elseif type.same_string ("number_of_projects_awarded_grants") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed then-- or type.same_string ("number_of_research_collaborations") or type.same_string ("number_of_projects_awarded_grants") then
-							create number_text_temp.make ("Projects awarded grants","name of laboratory", "number of projects awarded grants", query_manager.number_of_projects_awarded_grants (sd, ed))
+						elseif type.same_string ("number_of_projects_awarded_grants") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed then
+							create number_text_temp.make ("Projects awarded grants","Name of Laboratory", "Number of Projects awarded grants", query_manager.number_of_projects_awarded_grants (sd, ed))
 							if attached number_text_temp.output as output then
 								res.put_string (output)
 							end
@@ -65,5 +65,4 @@ feature
 				end
 			end
 		end
-
 end
