@@ -54,6 +54,7 @@ function sendForm(e){
 		    data: formData,
 	    	success: function(res) {
 					Cookies.set('idOfLastAddedReport', res, { expires: ((new Date).getTime() + (24 * 60 * 60 * 1000)) });
+					is_data_changed = true;
 					$('#submissionSuccessModal').modal({backdrop: "static", keyboard: false, show: true});
 	    	}
 	  	});

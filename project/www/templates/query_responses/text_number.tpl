@@ -8,14 +8,14 @@
     <thead>
       <tr>
         <th style="text-align: center;">{$text_column/}</th>
-        <th style="text-align: center;">{$string_column/}</th>
+        <th style="text-align: center;">{$number_column/}</th>
       </tr>
     </thead>
     <tbody>
-      {foreach from="$elements" item="text_string"}
+      {foreach from="$elements" item="element"}
       <tr>
-        <td>{$course.text/}</td>
-        <td>{$course.number/}</td>
+        <td>{$element.text/}</td>
+        <td>{$element.number/}</td>
       </tr>
       {/foreach}
     </tbody>
