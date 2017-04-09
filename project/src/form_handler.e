@@ -60,11 +60,11 @@ feature
 								if attached {LINKED_LIST [FIELD]} parsed_data.at (table_name.item) as record then
 									database_manager.single_insert (table_name.item, record)
 								elseif attached {LINKED_LIST [LINKED_LIST [FIELD]]} parsed_data.at (table_name.item) as record_list then
-									--adds report_id to each LINKED_LIST[FIELD]
 									add_id_field_to_linked_lists(database_manager.current_report_id, record_list, database_manager)
 									database_manager.multiple_insert (table_name.item, record_list)
 								end
 							end
+							res.put_string (database_manager.current_report_id.out)
 						end
 					end
 				end
