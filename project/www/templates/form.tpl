@@ -1,26 +1,19 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>IU Reporter</title>
+		<title>Report Creation - IU Eiffel Reporter</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
-
 		<script type="text/javascript" src="../resources/jquery-3.2.0.min.js"></script>
-
-		<link rel="stylesheet" type="text/css" href="../resources/bootstrap.css">
-		<link rel="stylesheet" type="text/css" href="../resources/bootstrap-theme.css" >
 		<script type="text/javascript" src="../resources/bootstrap.min.js"></script>
-
-		<!-- For calendar -->
-		<link href="../resources/datepicker.min.css" rel="stylesheet" type="text/css">
 		<script type="text/javascript" src="../resources/datepicker.min.js"></script>
 		<script type="text/javascript" src="../resources/i18n/datepicker.en.js"></script>
-
-		<!-- For serialization -->
 		<script type="text/javascript" src="../resources/jquery.serializejson.js"></script>
 		<script type="text/javascript" src="../resources/js.cookie.js"></script>
-
 		<script type="text/javascript" src="../resources/reporterlibrary.js"></script>
-		<link href="../resources/reporterlibrary.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" type="text/css" href="../resources/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="../resources/bootstrap-theme.css">
+		<link type="text/css" rel="stylesheet" href="../resources/datepicker.min.css">
+		<link type="text/css" rel="stylesheet" href="../resources/reporterlibrary.css">
 	</head>
 	<body onload="setTimeout(function() { reinitializeDatepickers(dateParams, document); }, 500);">
 		<div class="wrapper container">
