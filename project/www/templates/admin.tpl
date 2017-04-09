@@ -9,6 +9,11 @@
 		<script type="text/javascript" src="../resources/bootstrap.min.js"></script>
 		<link href="../resources/reporterlibrary.css" rel="stylesheet" type="text/css">
 		<script type="text/javascript" src="../resources/jquery.tablesorter.js"></script>
+		<style type="text/css">
+			a {
+				outline: none; /* Убираем границу вокруг ссылок  */
+ 			}
+ 		</style>
 	</head>
 	<body onload='$("#list-of-reports").tablesorter();'>
 		<div class="wrapper container">
