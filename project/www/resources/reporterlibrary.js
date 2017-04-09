@@ -54,6 +54,7 @@ function sendForm(e){
 		    data: formData,
 	    	success: function(res) {
 					Cookies.set('idOfLastAddedReport', res, { expires: ((new Date).getTime() + (24 * 60 * 60 * 1000)) });
+					is_data_changed = true;
 					$('#submissionSuccessModal').modal({backdrop: "static", keyboard: false, show: true});
 	    	}
 	  	});
@@ -72,6 +73,7 @@ function sendQuery(e){
 	    	success: function(res) {
 					$('#query-result').empty();
 					$('#query-result').append(res);
+					$('#admin-tabs a:last').tab('show');
 					alert(res);
 	    	}
 	  	});
@@ -81,7 +83,7 @@ function sendQuery(e){
 function checkCookie() {
 	var id = Cookies.get('idOfLastAddedReport');
 	var button = document.getElementById("edit-button");
-	if (id != undefined && id != null) {
+	if (id != undefined && id != null && id != "null") {
 		button.setAttribute("href", "/edit/" + id);
 		button.setAttribute("class", "btn button-yellow")
 	}

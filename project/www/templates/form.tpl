@@ -483,8 +483,12 @@
  			</div>
  		 </div>
   	<script>
+			var is_data_changed = false;
   		var submitButton = document.mainForm.submit;
 			submitButton.addEventListener("click", sendForm);
+			window.onbeforeunload = function () {
+  			return ((!is_data_changed) ? "The data is not submitted. Do you really want to leave the page?" : null);
+			}
 		</script>
 	</body>
 </html>

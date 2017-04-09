@@ -31,7 +31,7 @@
  				</div>
 			</div>
 			<div class="row">
-				<a id="edit-button" class="btn button-yellow disabled" href=""#" role="button" style="width:270px; height:67.5px; display:block; margin: 1% auto 7% auto;">Edit last report</a>
+				<a id="edit-button" class="btn button-yellow disabled" href="#" role="button" style="width:270px; height:67.5px; display:block; margin: 1% auto 7% auto;">Edit last report</a>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-12">
