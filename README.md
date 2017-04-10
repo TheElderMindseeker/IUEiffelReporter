@@ -20,8 +20,6 @@ The __IUEiffelReporter__ directory has the following structure:
       \  
       |-- project/ # directory with main project source files for compilation. Attention: main project .ecf file is situated here
       |
-      |-- design/ # technical directory for storing web interface files
-      |
       \-- README.txt # the document you are currently reading`
 
 ### Compilation
