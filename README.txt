@@ -43,3 +43,20 @@ IUEiffelReporter uses the port 80 for users' convenience but it will not work pr
 
 Press "Run" button to start the application. The application web interface is now available on localhost/; the user interface,
 report form is availabale on localhost/form and administative interface is available on localhost/admin
+
+--- Some other information
+
+Feature of editing of reports does not work. This feature has Conditional (C) importance parameter, and will be implemented in
+next version.
+
+--- Contacts
+
+In case if you have any questions or problems, feel free to contact us:
+
+Daniil Botnarenku
+e-mail: d.botnarenku@innopolis.ru
+telegram: @ElderMindseeker
+
+Andrey Pavlenko
+e-mail: a.pavlenko@innopolis.ru
+telegram: @Voisvet
