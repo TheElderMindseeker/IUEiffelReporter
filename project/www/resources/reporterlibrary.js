@@ -105,7 +105,6 @@ function sendQuery(e) {
 	var form = document.getElementById('request');
 	if (checkRequiredFields(form)) {
 			var formData = JSON.stringify($('#request').serializeJSON());
-			alert(formData);
 	  	$.ajax({
 	    	url:'/admin',
 	    	type:'POST',
@@ -114,10 +113,36 @@ function sendQuery(e) {
 					$('#query-result').empty();
 					$('#query-result').append(res);
 					$('#admin-tabs a:last').tab('show');
-					alert(res);
 	    	}
 	  	});
 	}
+}
+
+function requestDeletion(id, name) {
+	var modal = document.getElementById("deletionModal");
+	$(modal.getElementsByClassName("modal-title")[0]).empty();
+	$(modal.getElementsByClassName("message")[0]).empty();
+	$(modal.getElementsByClassName("modal-title")[0]).text("Deletion of " + name);
+	$(modal.getElementsByClassName("message")[0]).text("Deletion of " + name + "in progress. Please, wait!");
+	$('#deletionModal').modal({backdrop: "static", keyboard: false, show: true});
+	$.ajax({
+		url:'/delete/' + id,
+	  type:'GET',
+	  data: '',
+		timeout: 10000,
+  	success: function() {
+			$(modal.getElementsByClassName("message")[0]).empty();
+			$(modal.getElementsByClassName("message")[0]).text("Deletion complete!");
+			modal.getElementsByClassName("active")[0].setAttribute("class", "progress progress-striped");
+			modal.getElementsByClassName("disabled")[0].setAttribute("class", "btn btn-danger");
+    },
+		error: function() {
+			$(modal.getElementsByClassName("message")[0]).empty();
+			$(modal.getElementsByClassName("message")[0]).text("Something has gone wrong. Please, try again later.");
+			modal.getElementsByClassName("active")[0].setAttribute("class", "progress progress-striped");
+			modal.getElementsByClassName("disabled")[0].setAttribute("class", "btn btn-danger");
+		}
+	});
 }
 
 function checkCookie() {

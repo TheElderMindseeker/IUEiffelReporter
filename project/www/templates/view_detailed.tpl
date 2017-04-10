@@ -3,7 +3,7 @@
 	<head>
 		<title>{$unit_name/} - Detailed View - IU Eiffel Reporter</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
-		<script type="text/javascript" src="resources/jquery-3.2.0.min.js"></script>
+		<script type="text/javascript" src="../resources/jquery-3.2.0.min.js"></script>
 		<script type="text/javascript" src="../resources/bootstrap.min.js"></script>
 		<link type="text/css" rel="stylesheet" href="../resources/bootstrap.css">
 		<link type="text/css" rel="stylesheet" href="../resources/bootstrap-theme.css" >

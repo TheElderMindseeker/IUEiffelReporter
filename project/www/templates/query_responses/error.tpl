@@ -6,7 +6,7 @@
   </div>
   <div class="row">
     <div class="col-sm-12 col-md-12">
-      <button type="button" class="button-yellow btn" onclick="$('#admin-tabs li:eq(1) a').tab('show');" style="font-size: 30pt; width:320px; height:80px; display:block; margin:7% auto 7% auto;">Make New Query!</button>
+      <button type="button" class="button-yellow btn" onclick="$('#admin-tabs li:eq(1) a').tab('show');" style="font-size: 30pt; width:360px; height:80px; display:block; margin:7% auto 7% auto;">Make New Query!</button>
     </div>
   </div>
 </div>

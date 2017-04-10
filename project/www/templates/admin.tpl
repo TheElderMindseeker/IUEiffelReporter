@@ -50,8 +50,8 @@
 										<td>{$report.rep_start/}</td>
 										<td>{$report.rep_end/}</td>
 										<td><a href="/details/{$report.id/}" class="btn btn-success" role="button">More details...</a></td>
-										<td><a href="/edit/{$report.id/}" class="btn btn-primary" role="button">Edit</a></td>
-										<td><a href="/delete/{$report.id/}" class="btn btn-danger" role="button">Delete</a></td>
+										<td><a href="/edit/{$report.id/}" class="btn btn-primary disabled" role="button">Edit</a></td>
+										<td><button onclick="requestDeletion('{$report.id/}', '{$report.unit_name/}');"type="button" class="btn btn-danger">Delete</button></td>
 
 									</tr>
 								{/foreach}
@@ -143,6 +143,26 @@
 					<div class="modal-footer"><button class="btn btn-danger" type="button" data-dismiss="modal">Close (ESC)</button></div>
 				</div>
 			</div>
+		</div>
+		<div id="deletionModal" class="modal fade">
+		 <div class="modal-dialog">
+			 <div class="modal-content">
+				 <div class="modal-header">
+					 <h4 class="modal-title"></h4>
+				 </div>
+				 <div class="modal-body">
+					 <div class="row message" style="margin: auto auto 30px auto;"></div>
+					 <div class="row active-bar" style="margin: auto;">
+						 <div class="progress progress-striped active">
+  					 	<div class="progress-bar" style="width: 100%;">
+    						<span class="sr-only">Deletion in progress</span>
+  						</div>
+						</div>
+					 </div>
+				 </div>
+				 <div class="modal-footer"><a href="javascript:window.location.reload()" class="btn btn-danger disabled" role="button">Close</a></div>
+			 </div>
+		 </div>
 		</div>
 		<script>
 		</script>
