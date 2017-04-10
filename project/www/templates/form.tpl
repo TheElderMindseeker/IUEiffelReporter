@@ -88,7 +88,7 @@
 										<td><input type="text" class="form-control input-in-table" onblur="removeRow(this);" name="courses[][course_name]" placeholder="Required" value="{$course.course_name/}" required/></td>
 										<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="courses[][semester]" placeholder="Required" value="{$course.semester/}" required/></td>
 										<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="courses[][edu_level]" placeholder="Required" value="{$course.edu_level/}" required/></td>
-										<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="courses[][num_students]" placeholder="Required" value="{$course.num_students/}" required/></td>
+										<td><input type="text" class="form-control input-in-table digit-only" onBlur="removeRow(this);" name="courses[][num_students]" placeholder="Required" value="{$course.num_students/}" required/></td>
 									</tr>
 								{/foreach}
 								<tr name="adder">
@@ -101,7 +101,7 @@
 									<td><input type="text" class="form-control input-in-table" name="courses[][course_name]" placeholder="Required"/></td>
 									<td><input type="text" class="form-control input-in-table" name="courses[][semester]" placeholder="Required"/></td>
 									<td><input type="text" class="form-control input-in-table" name="courses[][edu_level]" placeholder="Required"/></td>
-									<td><input type="text" class="form-control input-in-table" name="courses[][num_students]" placeholder="Required"/></td>
+									<td><input type="text" class="form-control input-in-table digit-only" name="courses[][num_students]" placeholder="Required"/></td>
 								</tr>
 							</tbody>
 						</table>
@@ -130,7 +130,7 @@
 										<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="examinations[][course_name]" placeholder="Required" value="{$exam.course_name/}" required/></td>
 										<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="examinations[][semester]" placeholder="Required" value="{$exam.semester/}" required/></td>
 										<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="examinations[][exam_kind]" placeholder="Required" value="{$exam.exam_kind/}" required/></td>
-										<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="examinations[][num_students]" placeholder="Required" value="{$exam.num_students/}" required/></td>
+										<td><input type="text" class="form-control input-in-table digit-only" onBlur="removeRow(this);" name="examinations[][num_students]" placeholder="Required" value="{$exam.num_students/}" required/></td>
 									</tr>
 								{/foreach}
 								<tr name="adder">
@@ -143,7 +143,7 @@
 									<td><input type="text" class="form-control input-in-table" name="examinations[][course_name]" placeholder="Required"/></td>
 									<td><input type="text" class="form-control input-in-table" name="examinations[][semester]" placeholder="Required"/></td>
 									<td><input type="text" class="form-control input-in-table" name="examinations[][exam_kind]" placeholder="Required"/></td>
-									<td><input type="text" class="form-control input-in-table" name="examinations[][num_students]" placeholder="Required"/></td>
+									<td><input type="text" class="form-control input-in-table digit-only" name="examinations[][num_students]" placeholder="Required"/></td>
 								</tr>
 							</tbody>
 						</table>
@@ -300,7 +300,7 @@
 										<td><input type="text" class="form-control input-in-table datepicker-here" onBlur="removeRow(this);" name="grants[][start_date]" placeholder="Required" value="{$grant.start_date/}" required/></td>
 										<td><input type="text" class="form-control input-in-table datepicker-here" onBlur="removeRow(this);" name="grants[][end_date]" placeholder="Required" value="{$grant.end_date/}" required/></td>
 										<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="grants[][is_continuation]" placeholder="Required" value="{$grant.is_continuation/}" required/></td>
-										<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="grants[][amount]" placeholder="Required" value="{$grant.amount/}" required/></td>
+										<td><input type="text" class="form-control input-in-table digit-only" onBlur="removeRow(this);" name="grants[][amount]" placeholder="Required" value="{$grant.amount/}" required/></td>
 									</tr>
 								{/foreach}
 								<tr name="adder">
@@ -317,7 +317,7 @@
 									<td><input type="text" class="form-control input-in-table datepicker-here" name="grants[][start_date]" placeholder="Required" /></td>
 									<td><input type="text" class="form-control input-in-table datepicker-here" name="grants[][end_date]" placeholder="Required" /></td>
 									<td><input type="text" class="form-control input-in-table" name="grants[][is_continuation]" placeholder="Required" /></td>
-									<td><input type="text" class="form-control input-in-table" name="grants[][amount]" placeholder="Required" /></td>
+									<td><input type="text" class="form-control input-in-table digit-only" name="grants[][amount]" placeholder="Required" /></td>
 								</tr>
 							</tbody>
 						</table>

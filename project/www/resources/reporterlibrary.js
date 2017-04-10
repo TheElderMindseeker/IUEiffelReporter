@@ -41,6 +41,7 @@ function _addInput(elem) {
 	//Show the new node
 	$(newNode).show('slow');
 	reinitializeDatepickers(dateParams, newNode);
+	onlyDigitsInitialization(newNode);
 	array[0].focus();
 }
 
@@ -69,8 +70,20 @@ function formInitialization() {
 		return ((!isDataSubmitted()) ? "The data is not submitted. Do you really want to leave the page?" : null);
 	}
 	setTimeout(function() { reinitializeDatepickers(dateParams, document); }, 500);
-
 	document.getElementById("is-data-submitted").setAttribute("value", "false");
+	onlyDigitsInitialization(document);
+}
+
+function onlyDigitsInitialization(elem) {
+	var digitInputs = elem.getElementsByClassName("digit-only");
+	var counter = digitInputs.length;
+	for (var i = 0; i < counter; i++) {
+		$(digitInputs[i]).bind("change keyup input click", function() {
+			if (this.value.match(/[^0-9]/g)) {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			}
+		});
+	}
 }
 
 function adminPageInitialization() {
@@ -123,7 +136,7 @@ function requestDeletion(id, name) {
 	$(modal.getElementsByClassName("modal-title")[0]).empty();
 	$(modal.getElementsByClassName("message")[0]).empty();
 	$(modal.getElementsByClassName("modal-title")[0]).text("Deletion of " + name);
-	$(modal.getElementsByClassName("message")[0]).text("Deletion of " + name + "in progress. Please, wait!");
+	$(modal.getElementsByClassName("message")[0]).text("Deletion of " + name + " in progress. Please, wait!");
 	$('#deletionModal').modal({backdrop: "static", keyboard: false, show: true});
 	$.ajax({
 		url:'/delete/' + id,
@@ -200,6 +213,20 @@ function cleanForm() {
 	for (i = 0; i < numberOfEntries; i++) {
 		lines[0].remove();
 	}
+}
+
+function isNumber(elem) {
+	var str = elem.value;
+  var re = /^[-]?\d*\.?\d*$/;
+  str = str.toString();
+  if (!str.match(re)) {
+		//alert("Только номера.");
+		elem.setAttribute("value", "");
+	  elem.focus();
+	  elem.select();
+    return false;
+  }
+  return true;
 }
 
 function reinitializeDatepickers(param, element) {
