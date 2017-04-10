@@ -50,11 +50,21 @@ feature
 							end
 						end
 						query_manager.database_manager.multiple_delete ("reports", id)
+					else
+						not_found_page(id.to_hex_string, req, res)
 					end
 				end
 			end
-			res.send (page)
+			--res.send (page)
 			query_manager.database_manager.close
 		end
 
+	not_found_page(id: READABLE_STRING_8; req: WSF_REQUEST; res: WSF_RESPONSE)
+	local
+		not_found:WSF_NOT_FOUND_RESPONSE
+	do
+		create not_found.make (req)
+		not_found.set_body ("There is no such report")
+		res.send (not_found)
+	end
 end
