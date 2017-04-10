@@ -50,17 +50,17 @@ feature -- Parsing
 			parser.parse_content
 			if parser.is_parsed and then parser.is_valid and then attached parser.parsed_json_value as jv then
 				if attached {JSON_OBJECT} jv as j_object then
-					if attached {JSON_STRING} j_object.item ("lab_name") as a then
-						create lab_name.make_from_string (a.item)
+					if attached {JSON_STRING} j_object.item ("lab_name") as n then
+						create lab_name.make_from_string (n.item)
 					end
-					if attached {JSON_STRING} j_object.item ("type_of_query") as a then
-						create type_of_query.make_from_string (a.item)
+					if attached {JSON_STRING} j_object.item ("type_of_query") as t then
+						create type_of_query.make_from_string (t.item)
 					end
-					if attached {JSON_STRING} j_object.item ("end_date") as a then
-						create end_date.make_from_string (a.item)
+					if attached {JSON_STRING} j_object.item ("end_date") as ed then
+						create end_date.make_from_string (ed.item)
 					end
-					if attached {JSON_STRING} j_object.item ("start_date") as a then
-						create start_date.make_from_string (a.item)
+					if attached {JSON_STRING} j_object.item ("start_date") as sd then
+						create start_date.make_from_string (sd.item)
 					end
 				end
 			end

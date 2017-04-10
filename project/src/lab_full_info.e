@@ -62,7 +62,7 @@ feature
 					end
 				end
 				if attached course_name as a_course_name and attached semester as a_semester and attached edu_level as a_edu_level and attached num_students as a_num_students then
-					Result.force (create {COURSE}.make (a_course_name, a_semester, a_edu_level, a_num_students, id))
+					Result.force (create {COURSE}.make (a_course_name, a_semester, a_edu_level, a_num_students))
 				end
 			end
 		end
@@ -275,7 +275,7 @@ feature
 					end
 				end
 				if attached publication_name as a_publication_name then
-					Result.force (create {PUBLICATION}.make (publication_name, id))
+					Result.force (create {PUBLICATION}.make (publication_name))
 				end
 			end
 		end

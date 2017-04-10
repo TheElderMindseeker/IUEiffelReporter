@@ -97,7 +97,7 @@
 										<label for="rep_start" class="control-label">Start of reporting period</label>
 									</div>
 									<div class="col-sm-6 col-md-6">
-										<input type="text" class="form-control input-text datepicker-here" placeholder="Required" name="end_date" required/>
+										<input type="text" class="form-control input-text datepicker-here" placeholder="Required" name="start_date" required/>
 									</div>
 								</div>
 								<div class="form-group row">
@@ -105,7 +105,7 @@
 										<label for="rep_end" class="control-label">End of reporting period</label>
 									</div>
 									<div class="col-sm-6 col-md-6">
-										<input type="text" class="form-control input-text datepicker-here" placeholder="Required" name="start_date" required/>
+										<input type="text" class="form-control input-text datepicker-here" placeholder="Required" name="end_date" required/>
 									</div>
 								</div>
 								<div class="form-group row">

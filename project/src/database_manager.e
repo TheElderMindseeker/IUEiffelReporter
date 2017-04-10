@@ -451,7 +451,7 @@ feature -- Management
 			delete_statement: SQLITE_MODIFY_STATEMENT
 			d_query: STRING_8
 		do
-			d_query := "DELETE FROM " + table_name + " WHERE report_id = " + report_id.out
+			d_query := "DELETE FROM " + table_name + " WHERE report_id = " + report_id.out + ";"
 			create delete_statement.make (d_query, database)
 			delete_statement.execute
 			if delete_statement.has_error then
@@ -511,7 +511,7 @@ feature -- Management
 			create {LINKED_LIST [INTEGER_32]} Result.make
 			if attached {LINKED_LIST [INTEGER_32]} Result as list then
 				s_query := " SELECT report_id FROM reports WHERE julianday(" +
-						start_date.repr + ") <= start_date AND end_date <= julianday(" + end_date.repr + ");"
+						start_date.repr + ") <= rep_start AND rep_end <= julianday(" + end_date.repr + ");"
 				create query_statement.make (s_query, database)
 				cursor := query_statement.execute_new
 				if not query_statement.has_error then
@@ -520,7 +520,7 @@ feature -- Management
 					until
 						cursor.after
 					loop
-						list.extend (cursor.item.integer_value (0))
+						list.extend (cursor.item.integer_value (1))
 						cursor.forth
 					end
 				end
@@ -572,7 +572,7 @@ feature -- Utility
 			s_query: STRING_8
 		do
 			create {LINKED_LIST [STRING_8]} Result.make
-			s_query := "SELECT tbl_name FROM sqlite_master"
+			s_query := "SELECT tbl_name FROM sqlite_master;"
 			create query_statement.make (s_query, database)
 			cursor := query_statement.execute_new
 			if attached {LINKED_LIST [STRING_8]} Result as linked_list then
@@ -750,7 +750,36 @@ feature {QUERY_MANAGER} -- Specific queries
 			result_exists: Result /= Void
 		end
 
-	 cumulative_info (start_date, end_date: detachable DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
+	courses_taught (start_date, end_date: DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
+		-- Courses taught by a Laboratory between initial and final date.
+		require
+			both_dates_exist_or_neither: (start_date = Void and end_date = Void) or
+					(start_date /= Void and end_date /= Void)
+		local
+			query_statement: SQLITE_QUERY_STATEMENT
+			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			s_query: STRING_8
+		do
+			s_query := "SELECT crs.report_id, crs.course_id course_id, crs.course_name course_name,	crs.semester semester, crs.edu_level edu_level, crs.num_students num_students" +
+					" FROM courses crs INNER JOIN reports rep ON crs.report_id = rep.report_id WHERE rep.unit_name = " + laboratory.repr
+			if attached start_date as rep_start and attached end_date as rep_end then
+				s_query := s_query + " AND rep.rep_start >= julianday(" + rep_start.repr + ") AND " +
+						"julianday(" + rep_end.repr + ") >= rep.rep_end"
+			end
+			s_query := s_query + ";"
+			create query_statement.make (s_query, database)
+			cursor := query_statement.execute_new
+			create {LINKED_LIST [LINKED_LIST [FIELD]]} Result.make
+			if not query_statement.has_error and attached {LINKED_LIST [LINKED_LIST [FIELD]]} Result as table then
+				fill_table (table, cursor)
+			else
+				has_error := True
+			end
+		ensure
+			result_exists: Result /= Void
+		end
+
+	cumulative_info (start_date, end_date: detachable DATE; laboratory: STRING_REPRESENTABLE): ITERABLE [ITERABLE [FIELD]]
 			-- Query cumulative info of the given `laboratory' unit
 		require
 			database_initialized: is_initialized
@@ -769,7 +798,7 @@ feature {QUERY_MANAGER} -- Specific queries
 					" FROM reports rep LEFT OUTER JOIN relevant_info rel ON rep.report_id = rel.report_id" +
 					" WHERE rep.unit_name = " + laboratory.repr
 			if attached start_date as rep_start and attached end_date as rep_end then
-				s_query := s_query + " WHERE rep.rep_start <= julianday(" + rep_start.repr + ") AND " +
+				s_query := s_query + " AND rep.rep_start <= julianday(" + rep_start.repr + ") AND " +
 						"julianday(" + rep_end.repr + ") <= rep.rep_end"
 			end
 			s_query := s_query + ";"
@@ -800,8 +829,8 @@ feature {QUERY_MANAGER} -- Specific queries
 			s_query := "SELECT rep.unit_name unit_name, SUM(1) supervised FROM reports rep INNER JOIN supervised_students sup" +
 					" ON rep.report_id = sup.report_id"
 			if attached start_date as rep_start and attached end_date as rep_end then
-				s_query := s_query + " WHERE rep.rep_start <= julianday(" + rep_start.repr + ") AND " +
-						"julianday(" + rep_end.repr + ") <= rep.rep_end"
+				s_query := s_query + " WHERE rep.rep_start >= julianday(" + rep_start.repr + ") AND " +
+						"julianday(" + rep_end.repr + ") >= rep.rep_end"
 			end
 			s_query := s_query + " GROUP BY rep.report_id;"
 			create query_statement.make (s_query, database)
@@ -831,8 +860,8 @@ feature {QUERY_MANAGER} -- Specific queries
 			s_query := "SELECT rep.unit_name unit_name, SUM(1) collaborations FROM reports rep INNER JOIN research_collaborations col" +
 					" ON rep.report_id = col.report_id"
 			if attached start_date as rep_start and attached end_date as rep_end then
-				s_query := s_query + " WHERE rep.rep_start <= julianday(" + rep_start.repr + ") AND " +
-						"julianday(" + rep_end.repr + ") <= rep.rep_end"
+				s_query := s_query + " WHERE rep.rep_start >= julianday(" + rep_start.repr + ") AND " +
+						"julianday(" + rep_end.repr + ") >= rep.rep_end"
 			end
 			s_query := s_query + " GROUP BY rep.report_id;"
 			create query_statement.make (s_query, database)
@@ -862,8 +891,8 @@ feature {QUERY_MANAGER} -- Specific queries
 			s_query := "SELECT rep.unit_name unit_name, SUM(1) collaborations FROM reports rep INNER JOIN grants gr" +
 					" ON rep.report_id = gr.report_id"
 			if attached start_date as rep_start and attached end_date as rep_end then
-				s_query := s_query + " WHERE rep.rep_start <= julianday(" + rep_start.repr + ") AND " +
-						"julianday(" + rep_end.repr + ") <= rep.rep_end"
+				s_query := s_query + " WHERE rep.rep_start >= julianday(" + rep_start.repr + ") AND " +
+						"julianday(" + rep_end.repr + ") >= rep.rep_end"
 			end
 			s_query := s_query + " GROUP BY rep.report_id;"
 			create query_statement.make (s_query, database)
@@ -893,8 +922,8 @@ feature {QUERY_MANAGER} -- Specific queries
 			s_query := "SELECT patent_id, report_id, patent_title, patent_office_country FROM patents_and_ip" +
 					" WHERE type = 'P'"
 			if attached start_date as rep_start and attached end_date as rep_end then
-				s_query := s_query + " WHERE rep.rep_start <= julianday(" + rep_start.repr + ") AND " +
-						"julianday(" + rep_end.repr + ") <= rep.rep_end"
+				s_query := s_query + " WHERE rep.rep_start >= julianday(" + rep_start.repr + ") AND " +
+						"julianday(" + rep_end.repr + ") >= rep.rep_end"
 			end
 			s_query := s_query + ";"
 			create query_statement.make (s_query, database)

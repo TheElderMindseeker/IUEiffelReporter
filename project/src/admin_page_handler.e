@@ -30,6 +30,8 @@ feature
 			admin_parser:ADMIN_PAGE_PARSER
 			input_data:STRING
 			number_text_temp:TEMPLATE_TEXT_NUMBER
+			courses_taught_template:TEMPLATE_COURSES_TAUGHT
+			publications_template:TEMPLATE_PUBLICATIONS
 			query_manager:QUERY_MANAGER
 		do
 			if req.is_get_request_method then
@@ -60,7 +62,19 @@ feature
 							if attached number_text_temp.output as output then
 								res.put_string (output)
 							end
+							--TODO need to fix bug in query_manager.courses_taught
+						elseif type.same_string ("courses_taught") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed and attached admin_parser.lab_name as ln then
+							create courses_taught_template.make (ln, query_manager.courses_taught(sd, ed, create {STRING_REPRESENTABLE}.make (ln)))
+							if attached courses_taught_template.output as output then
+								res.put_string (output)
+							end
+						elseif type.same_string ("query_publications") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed and attached admin_parser.lab_name as ln then
+							create publications_template.make (query_manager.query_publications (sd, ed))
+							if attached publications_template.output as output then
+								res.put_string (output)
+							end
 						end
+						query_manager.database_manager.close
 					end
 				end
 			end

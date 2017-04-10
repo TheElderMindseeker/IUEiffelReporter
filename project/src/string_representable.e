@@ -46,7 +46,7 @@ feature -- Comparison
 	is_equal (other: like Current): BOOLEAN
 			-- Is `Current' equal to `other'?
 		do
-			Result := string_value.is_equal (other.string_value)
+			Result := string_value.same_string (other.string_value)
 		end
 
 end

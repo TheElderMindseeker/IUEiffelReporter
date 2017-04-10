@@ -90,47 +90,8 @@ feature -- Access
 		require
 			both_dates_exist_or_neither: (start_date = Void and end_date = Void) or
 					(start_date /= Void and end_date /= Void)
-		local
-			courses: LINKED_LIST [ITERABLE [FIELD]]
-			report_id_cursor: ITERATION_CURSOR [INTEGER_32]
-			courses_cursor: ITERATION_CURSOR [ITERABLE [FIELD]]
-			attr_cursor: ITERATION_CURSOR [FIELD]
-			add: BOOLEAN
 		do
-			-- TODO: Refactor this nightmare to database manager to let SQLite do the most of the job
-			create courses.make
-			from
-				report_id_cursor := database_manager.reports_by_date (start_date, end_date).new_cursor
-			until
-				report_id_cursor.after
-			loop
-				from
-					courses_cursor := database_manager.multiple_select ("courses", report_id_cursor.item).new_cursor
-				until
-					courses_cursor.after
-				loop
-					add := False
-					from
-						attr_cursor := courses_cursor.item.new_cursor
-					until
-						attr_cursor.after or add
-					loop
-						if attr_cursor.item.name.is_equal ("unit_name") and then
-								attached {STRING_REPRESENTABLE} attr_cursor.item.value as str_repr then
-							if str_repr.is_equal (laboratory) then
-								add := True
-							end
-						end
-						attr_cursor.forth
-					end
-					if add then
-						courses.extend (courses_cursor.item)
-					end
-					courses_cursor.forth
-				end
-				report_id_cursor.forth
-			end
-			Result := courses
+			Result := database_manager.courses_taught (start_date, end_date, laboratory)
 		ensure
 			result_exists: Result /= Void
 		end

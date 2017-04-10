@@ -9,7 +9,7 @@ class
 
 inherit
 
-	WSF_URI_HANDLER
+	WSF_STARTS_WITH_HANDLER
 
 create
 	make
@@ -27,26 +27,34 @@ feature
 
 feature
 
-	execute (req: WSF_REQUEST; res: WSF_RESPONSE)
+	execute (a_start_path: READABLE_STRING_8; req: WSF_REQUEST; res: WSF_RESPONSE)
 			-- Execute handler for `req' and respond in `res'.
 			-- returns administator panel
 		local
 			query_manager:QUERY_MANAGER
+			s_id:STRING
+			redirect:WSF_HTML_REDIRECTION_RESPONSE
 		do
-			create query_manager.make
 			page.set_status_code ({HTTP_STATUS_CODE}.ok)
+			create query_manager.make
 			if req.is_get_request_method then
-				if attached req.path_parameter ("id") as wsf_value_id and then attached wsf_value_id.string_representation.to_integer as id then
+				s_id:= create{STRING}.make_from_string (req.path_info.substring (a_start_path.count+2, req.path_info.count))
+				if attached s_id.to_integer as id then
 					if query_manager.database_manager.has_report (id) then
 						across
 							query_manager.database_manager.list_tables as table_name
 						loop
-							query_manager.database_manager.multiple_delete (table_name.item, id)
+							if query_manager.database_manager.has_report (6) then
+								query_manager.database_manager.multiple_delete (table_name.item, id)
+							end
 						end
 					end
 				end
 			end
 			res.send (page)
+			query_manager.database_manager.close
+			create redirect.make("/admin")
+			res.send (redirect)
 		end
 
 end
