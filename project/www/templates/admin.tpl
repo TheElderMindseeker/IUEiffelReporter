@@ -20,7 +20,7 @@
  			}
  		</style>
 	</head>
-	<body onload='setTimeout(function() {  $("#list-of-reports").tablesorter(); reinitializeDatepickers(dateParams, document); }, 500);'>
+	<body onload="adminPageInitialization();">
 		<div class="wrapper container">
 			<div class="logo-text">
 				<label class="logo-text">Administrative Panel</label>
@@ -145,8 +145,6 @@
 			</div>
 		</div>
 		<script>
-  		var submitButton = document.request.submit;
-			submitButton.addEventListener("click", sendQuery);
 		</script>
 	</body>
 </html>

@@ -15,13 +15,13 @@
 		<link type="text/css" rel="stylesheet" href="../resources/datepicker.min.css">
 		<link type="text/css" rel="stylesheet" href="../resources/reporterlibrary.css">
 	</head>
-	<body onload="setTimeout(function() { reinitializeDatepickers(dateParams, document); }, 500);">
+	<body onload="formInitialization();">
 		<div class="wrapper container">
 			<div class="logo-text">
 				<label class="logo-text">Report Creation</label>
 			</div>
 			<div class="form">
-				<form class="form-horizontal" name="mainForm" id="mainForm">
+				<form class="form-horizontal" name="mainForm" id="mainForm" action="/form">
 					<div class="form-group row">
 						<div class="col-sm-6 col-md-6 " style="margin-bottom: 75px;">
 							<label class="control-label" style="font-size: 24pt;">Section 1: General information</label>
@@ -450,7 +450,7 @@
 				</form>
 			</div>
 		</div>
-		<input id="id-counter" type="hidden" value="0" />
+		<input id="is-data-submitted" type="hidden" value="" />
 		<div class="footer">
     	Developed by <label class="team-logo">DANDy</label> team
   	</div>
@@ -476,13 +476,5 @@
  				</div>
  			</div>
  		 </div>
-  	<script>
-			var is_data_changed = false;
-  		var submitButton = document.mainForm.submit;
-			submitButton.addEventListener("click", sendForm);
-			window.onbeforeunload = function () {
-  			return ((!is_data_changed) ? "The data is not submitted. Do you really want to leave the page?" : null);
-			}
-		</script>
 	</body>
 </html>
