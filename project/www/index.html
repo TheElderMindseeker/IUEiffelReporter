@@ -30,8 +30,8 @@
 					<a class="button-yellow btn" href="/form" role="button" style="font-size: 30pt; width:320px; height:80px; display:block; margin:7% auto 0 auto;">Create Report</a>
  				</div>
 			</div>
-			<div class="row">
-				<a id="edit-button" class="btn button-yellow disabled" href="#" role="button" style="width:270px; height:67.5px; display:block; margin: 1% auto 7% auto;">Edit last report</a>
+			<div class="row" data-toggle="tooltip" data-placement="bottom" title="It is not working yet" style="display:block; margin: 1% auto 7% auto;">
+				<a id="edit-button" class="btn button-yellow disabled" href="#" role="button" style="width:270px; height:67.5px; display:block; margin: 0 auto 0 auto;">Edit last report</a>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-12">
@@ -39,6 +39,11 @@
 				</div>
 			</div>
     </div>
+		<script>
+  		$(function () {
+    		$("[data-toggle='tooltip']").tooltip();
+  		});
+		</script>
   	<div class="footer">
     	Developed by <label class="team-logo">DANDy</label> team
   	</div>

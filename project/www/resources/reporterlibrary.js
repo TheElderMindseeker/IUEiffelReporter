@@ -90,6 +90,9 @@ function adminPageInitialization() {
 		var submitButton = document.request.submit;
 		submitButton.addEventListener("click", sendQuery);
 		setTimeout(function() {  $("#list-of-reports").tablesorter(); reinitializeDatepickers(dateParams, document); }, 500);
+		$(function () {
+			$("[data-toggle='tooltip']").tooltip();
+		});
 }
 
 function isDataSubmitted() {
