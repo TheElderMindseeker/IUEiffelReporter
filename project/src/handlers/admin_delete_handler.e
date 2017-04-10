@@ -50,6 +50,8 @@ feature
 							end
 						end
 						query_manager.database_manager.multiple_delete ("reports", id)
+					else
+						
 					end
 				end
 			end
