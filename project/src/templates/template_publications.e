@@ -18,7 +18,7 @@ create
 
 feature -- Initialization
 
-	make (a_courses: ITERABLE [ITERABLE [FIELD]])
+	make (a_publications: ITERABLE [ITERABLE [FIELD]])
 			-- Reads text number template for admin page, it will be availible in get_output.
 		local
 			p: PATH
@@ -28,7 +28,7 @@ feature -- Initialization
 			p := p.appended ("/templates/query_responses")
 			set_template_folder (p)
 			set_template_file_name ("publications.tpl")
-			set_publications (a_courses)
+			set_publications (a_publications)
 			template.add_value (publications, "publications")
 			template.analyze
 			template.get_output
@@ -60,7 +60,7 @@ feature {NONE} -- Implementation
 				across
 					publication.item as field
 				loop
-					if field.item.name.same_string ("publication_name") and field.item.value.repr.same_string ("%'%'") then
+					if field.item.name.same_string ("publication_id") and not field.item.value.repr.same_string ("%'%'") then
 						publication_name := without_quotes (field.item.value.repr)
 					end
 				end

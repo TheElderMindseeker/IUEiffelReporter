@@ -39,16 +39,17 @@ feature
 			create query_manager.make
 			if req.is_get_request_method then
 				path_components := req.path_info.split ('/')
-				s_id:= create{STRING}.make_from_string (path_components.i_th(2))
+				s_id:= create{STRING}.make_from_string (path_components.i_th(3))
 				if attached s_id.to_integer as id then
 					if query_manager.database_manager.has_report (id) then
 						across
 							query_manager.database_manager.list_tables as table_name
 						loop
-							if query_manager.database_manager.has_report (id) then
+							if query_manager.database_manager.has_report (id) and not table_name.item.same_string("reports") then
 								query_manager.database_manager.multiple_delete (table_name.item, id)
 							end
 						end
+						query_manager.database_manager.multiple_delete ("reports", id)
 					end
 				end
 			end

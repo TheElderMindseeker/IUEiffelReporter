@@ -3,6 +3,7 @@ note
 	author: "Niyaz Ginatullin"
 	date: "10.04.2017"
 	revision: "1.0"
+
 class
 	PUBLICATION
 
@@ -18,7 +19,7 @@ feature
 		do
 			publication_name := a_publication_name
 		ensure
-			publication_name.same_string(a_publication_name)
+			publication_name.same_string (a_publication_name)
 		end
 
 	publication_name: STRING

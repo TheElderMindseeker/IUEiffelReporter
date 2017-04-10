@@ -33,7 +33,6 @@ feature
 			set_template_folder (p)
 			set_template_file_name ("view_detailed.tpl")
 			add_all_values (a_id)
-			create query_manager.make
 			template.analyze
 			template.get_output
 			if attached template.output as l_output then
@@ -83,9 +82,6 @@ feature {NONE} -- Implementation
 
 	report: REPORT
 			-- Report main info
-
-	query_manager: QUERY_MANAGER
-			-- Access to database
 
 	courses: LIST [COURSE]
 			-- List of courses

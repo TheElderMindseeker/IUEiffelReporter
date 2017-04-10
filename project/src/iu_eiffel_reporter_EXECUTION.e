@@ -33,6 +33,7 @@ feature -- Router
 			router.handle ("/admin", create {ADMIN_PAGE_HANDLER}.make, router.methods_get_post)
 			router.handle ("/form", create {FORM_HANDLER}.make, router.methods_get_post)
 			router.handle ("", fhdl, router.methods_get_post)
+			query_manager.database_manager.close
 		end
 
 end

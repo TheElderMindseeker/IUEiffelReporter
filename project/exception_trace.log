@@ -24,3 +24,33 @@ Class / Object      Routine                Nature of exception           Effect
 IU_EIFFEL_REPORTER  root's creation        Unexpected harmful signal (Segmentation violation):
 <00000000046F4098>                         Eiffel run-time panic.        Bye
 -------------------------------------------------------------------------------
+
+iu_eiffel_reporter: PANIC: Unexpected harmful signal (Segmentation violation) ...
+
+iu_eiffel_reporter: system execution failed.
+Following is the set of recorded exceptions.
+NB: The raised panic may have induced completely inconsistent information:
+
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+IU_EIFFEL_REPORTER  root's creation        Unexpected harmful signal (Segmentation violation):
+<00000000047B9098>                         Eiffel run-time panic.        Bye
+-------------------------------------------------------------------------------
+
+iu_eiffel_reporter: dumping core to generate debugging information...
+
+iu_eiffel_reporter: PANIC: Unexpected harmful signal (Segmentation violation) ...
+
+iu_eiffel_reporter: system execution failed.
+Following is the set of recorded exceptions.
+NB: The raised panic may have induced completely inconsistent information:
+
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+IU_EIFFEL_REPORTER  root's creation        Unexpected harmful signal (Segmentation violation):
+<0000000004450098>                         Eiffel run-time panic.        Bye
+-------------------------------------------------------------------------------
+
+iu_eiffel_reporter: dumping core to generate debugging information...

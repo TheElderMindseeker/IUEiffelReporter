@@ -38,7 +38,7 @@ feature
 			page.set_status_code ({HTTP_STATUS_CODE}.ok)
 			if req.is_get_request_method then
 				path_components := req.path_info.split ('/')
-				s_id:= create{STRING}.make_from_string (path_components.i_th(2))
+				s_id:= create{STRING}.make_from_string (path_components.i_th(3))
 				if attached s_id.to_integer as id then
 					create template.make (id)
 					if attached template.output as body then

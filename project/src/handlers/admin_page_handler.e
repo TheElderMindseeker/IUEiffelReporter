@@ -69,7 +69,7 @@ feature {NONE} -- Implementation
 			error: TEMPLATE_ADMIN_QUERY_ERROR
 		do
 			if type.same_string ("number_of_supervised_students") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed then
-				if attached query_manager.number_of_supervised_students (sd, ed) then
+				if query_manager.number_of_supervised_students (sd, ed).new_cursor.after then
 					has_info := False
 				else
 					has_info := True
@@ -79,7 +79,7 @@ feature {NONE} -- Implementation
 					end
 				end
 			elseif type.same_string ("number_of_research_collaborations") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed then
-				if attached query_manager.number_of_research_collaborations (sd, ed) then
+				if query_manager.number_of_research_collaborations (sd, ed).new_cursor.after then
 					has_info := False
 				else
 					has_info := True
@@ -92,7 +92,7 @@ feature {NONE} -- Implementation
 					end
 				end
 			elseif type.same_string ("number_of_projects_awarded_grants") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed then
-				if attached query_manager.number_of_projects_awarded_grants (sd, ed) then
+				if query_manager.number_of_projects_awarded_grants (sd, ed).new_cursor.after then
 					has_info := False
 				else
 					has_info := True
@@ -102,7 +102,7 @@ feature {NONE} -- Implementation
 					end
 				end
 			elseif type.same_string ("courses_taught") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed and attached admin_parser.lab_name as ln then
-				if attached query_manager.courses_taught (sd, ed, create {STRING_REPRESENTABLE}.make (ln)) then
+				if query_manager.courses_taught (sd, ed, create {STRING_REPRESENTABLE}.make (ln)).new_cursor.after then
 					has_info := False
 				else
 					has_info := True
@@ -112,7 +112,7 @@ feature {NONE} -- Implementation
 					end
 				end
 			elseif type.same_string ("query_publications") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed and attached admin_parser.lab_name as ln then
-				if attached query_manager.query_publications (sd, ed) then
+				if query_manager.query_publications (sd, ed).new_cursor.after then
 					has_info := False
 				else
 					has_info := True
