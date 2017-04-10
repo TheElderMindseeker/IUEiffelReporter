@@ -26,8 +26,7 @@ feature {NONE} -- Initialization
 			-- Initialize current service.
 		do
 			Precursor
-			set_service_option ("port", 3850)
-			set_service_option ("verbose", True)
+			set_service_option ("port", 80)
 		end
 
 end
