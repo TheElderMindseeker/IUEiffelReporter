@@ -8,6 +8,7 @@ class
 	TEMPLATE_COURSES_TAUGHT
 
 inherit
+
 	WITHOUT_QUOTES
 
 	SHARED_TEMPLATE_CONTEXT
@@ -18,7 +19,7 @@ create
 feature -- Initialization
 
 	make (labname: STRING; a_courses: ITERABLE [ITERABLE [FIELD]])
-			-- Reads text number template for admin page, it will be availible in get_output.
+			-- Reads text number template for admin page, it will be available in get_output.
 		local
 			p: PATH
 		do
@@ -27,7 +28,7 @@ feature -- Initialization
 			p := p.appended ("/templates/query_responses")
 			set_template_folder (p)
 			set_template_file_name ("courses.tpl")
-			set_courses(a_courses)
+			set_courses (a_courses)
 			template.add_value (labname, "labname")
 			template.add_value (courses, "courses")
 			template.analyze
@@ -44,9 +45,10 @@ feature -- Initialization
 feature {NONE} -- Implementation
 
 	courses: LINKED_LIST [COURSE]
-		--list of courses
-	set_courses(a_courses: ITERABLE [ITERABLE [FIELD]])
-			--reads courses from database and fill list of courses
+			-- List of courses.
+
+	set_courses (a_courses: ITERABLE [ITERABLE [FIELD]])
+			-- Reads courses from database and fill list of courses.
 		local
 			course_name: STRING
 			semester: STRING
@@ -93,4 +95,3 @@ feature {NONE} -- Implementation
 	template: TEMPLATE_FILE
 
 end
-

@@ -28,27 +28,28 @@ feature {NONE} -- Initialization
 feature --Attributes
 
 	start_date: detachable DATE
-			--start date of query
+			-- Start date of query.
 
 	end_date: detachable DATE
-			--end date of query
+			-- End date of query.
 
 	type_of_query: detachable STRING
-			--type of query
+			-- Type of query.
 
 	lab_name: detachable STRING
-			-- name of laboratory
-	is_parsed:BOOLEAN
-			--is content parsed
+			-- Name of laboratory.
+
+	is_parsed: BOOLEAN
+			-- Is content parsed.
 
 feature -- Parsing
 
 	parse
-			--parses content and fills attributes
+			-- Parses content and fills attributes.
 		local
 			parser: JSON_PARSER
 		do
-			is_parsed:=True
+			is_parsed := True
 			create parser.make_with_string (source_json)
 			parser.parse_content
 			if parser.is_parsed and then parser.is_valid and then attached parser.parsed_json_value as jv then
@@ -65,7 +66,7 @@ feature -- Parsing
 					if attached {JSON_STRING} j_object.item ("start_date") as sd then
 						create start_date.make_from_string (sd.item)
 					else
-						is_parsed:=False
+						is_parsed := False
 					end
 				end
 			end

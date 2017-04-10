@@ -45,7 +45,7 @@ feature -- Initialization
 
 	output: detachable STRING
 
-feature {NONE} -- Access to database
+feature {NONE} -- Database access
 
 	reports: LINKED_LIST [REPORT]
 

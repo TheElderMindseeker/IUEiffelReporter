@@ -36,7 +36,7 @@ feature {NONE}
 feature
 
 	close_database
-			-- close data base. This feature should be used after gettinig all info that you need from this class.
+			-- Close database. This feature should be used after getting all info that is needed from this class.
 		do
 			query_manager.database_manager.close
 		end

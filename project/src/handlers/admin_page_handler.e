@@ -53,10 +53,10 @@ feature
 			end
 		end
 
-feature {NONE} --Implementation
+feature {NONE} -- Implementation
 
 	handle_query (type: STRING; query_manager: QUERY_MANAGER; admin_parser: ADMIN_PAGE_PARSER): detachable STRING
-			--retruns answer for query
+			-- Returns answer for query
 		require
 			is_availible_type_of_query: is_availible_type (type)
 			query_manager_is_not_Void: query_manager /= Void

@@ -15,7 +15,7 @@ feature {NONE} -- Initialization
 	make
 			-- Initialization for `Current'.
 		do
-			create database_manager.make ("reports.db")
+			create database_manager.make ("db/reports.db")
 		ensure
 			no_error: not database_manager.has_error
 		end

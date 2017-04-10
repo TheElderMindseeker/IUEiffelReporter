@@ -459,46 +459,6 @@ feature -- Management
 			end
 		end
 
---	multiple_update (table_name: STRING_8; report_id: INTEGER_32; arguments: ITERABLE [ITERABLE [FIELD]])
---			-- Update multiple rows of the specified table
---		require
---			table_name_exists: table_name /= Void
---			table_name_not_empty: table_name.count > 0
---			arguments_not_empty: not arguments.new_cursor.after and
---					across arguments as argument all not argument.item.new_cursor.after end
---			database_initialized: is_initialized
---			no_error: not has_error
---		local
---			update_statement: SQLITE_MODIFY_STATEMENT
---			u_query: STRING_8
---			iterable_cursor: ITERATION_CURSOR [ITERABLE [FIELD]]
---			cursor: ITERATION_CURSOR [FIELD]
---		do
---			from
---				iterable_cursor := arguments.new_cursor
---			until
---				iterable_cursor.after or has_error
---			loop
---				cursor := iterable_cursor.item.new_cursor
---				u_query := "UPDATE " + table_name + " SET "
---				from
---					u_query := u_query + cursor.item.name + "=" + cursor.item.value.repr
---					cursor.forth
---				until
---					cursor.after
---				loop
---					u_query := u_query + ", " + cursor.item.name + "=" + cursor.item.value.repr
---					cursor.forth
---				end
---				u_query := u_query + " WHERE report_id = " + report_id.out + ";"
---				create update_statement.make (u_query, database)
---				update_statement.execute
---				if update_statement.has_error then
---					has_error := True
---				end
---			end
---		end
-
 	reports_by_date (start_date, end_date: DATE): ITERABLE [INTEGER_32]
 			-- Finds all reports that are between `start_date' and `end_date'
 		require

@@ -17,10 +17,10 @@ create
 feature
 
 	id: INTEGER
-			--id of report
+			-- Id of report.
 
 	output: detachable STRING
-			--output of template
+			-- Output of template.
 
 	make (a_id: INTEGER)
 
@@ -41,10 +41,10 @@ feature
 			end
 		end
 
-feature {NONE} -- ojects to create page
+feature {NONE} -- Implementation
 
 	add_all_values (a_id: INTEGER)
-			--fills template
+			-- Fills template.
 		do
 			set_all_attributes (a_id)
 			template.add_value (report.unit_name, "unit_name")
@@ -63,7 +63,7 @@ feature {NONE} -- ojects to create page
 		end
 
 	set_all_attributes (a_id: INTEGER)
-			--fills lists of nedeed information
+			-- Fills lists of nedeed information.
 		local
 			info: LAB_FULL_INFO
 		do
@@ -82,37 +82,37 @@ feature {NONE} -- ojects to create page
 		end
 
 	report: REPORT
-			--report main info
+			-- Report main info
 
 	query_manager: QUERY_MANAGER
-			--access to database
+			-- Access to database
 
 	courses: LIST [COURSE]
-			--list of courses
+			-- List of courses
 
 	examinations: LIST [EXAM]
-			--list of examinations
+			-- List of examinations
 
 	supervised_students: LIST [STUDENT]
-			--list of supervised students
+			-- List of supervised students
 
 	student_reports: LIST [S_REPORT]
-			--list of studen reports
+			-- List of studen reports
 
 	completed_phd: LIST [PHD]
-			--list of completed phds
+			-- List of completed phds
 
 	grants: LIST [GRANT]
-			--list of grants
+			-- List of grants
 
 	research_projects: LIST [PROJECT]
-			--list of research projects
+			-- List of research projects
 
 	research_collaborations: LIST [COLLABORATION]
-			--list of research collaborations
+			-- List of research collaborations
 
 	publications: LIST [PUBLICATION]
-			--list of publications
+			-- List of publications
 
 feature {NONE}
 

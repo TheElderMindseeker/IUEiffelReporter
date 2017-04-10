@@ -140,7 +140,7 @@ feature -- Constraints
 		do
 			month_30 := <<4, 6, 9, 11>>
 			Result := True
-			if yy <= 0 then
+			if yy <= 0 or yy >= 10000 then
 				Result := False
 			end
 			if mm < 1 or mm > 12 then

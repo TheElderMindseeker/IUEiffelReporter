@@ -43,14 +43,14 @@ feature -- Initialization
 		end
 
 	output: detachable STRING
-			--output of template
+			-- Output of template.
 
 feature {NONE} -- Implementation
 
 	elements: LINKED_LIST [TEXT_NUMBER]
 
 	set_elements (a_elements: ITERABLE [ITERABLE [FIELD]])
-			--set list of elemants
+			-- Set list of elemants.
 		local
 			text: STRING
 			number: INTEGER

@@ -17,7 +17,7 @@ create
 feature -- Initialization
 
 	make
-			--initialize Current
+			-- Initialize `Current'.
 		local
 			p: PATH
 		do

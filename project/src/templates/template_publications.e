@@ -40,15 +40,15 @@ feature -- Initialization
 		end
 
 	output: detachable STRING
-			--output of template
+			-- Output of template.
 
 feature {NONE} -- Implementation
 
 	publications: LINKED_LIST [PUBLICATION]
-			--list of publications
+			-- List of publications.
 
 	set_publications (a_publications: ITERABLE [ITERABLE [FIELD]])
-			-- fiils list of publications
+			-- Fills list of publications.
 		require
 			a_publications /= Void
 		local
