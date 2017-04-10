@@ -12,7 +12,7 @@ create
 
 feature
 
-	make (a_name: STRING; a_head: STRING; a_start_date: STRING; a_end_date: STRING)
+	make (a_name: STRING; a_head: STRING; a_start_date: STRING; a_end_date: STRING; a_id:INTEGER)
 			-- creates report about some unit, that contains a lot general information abut this report
 		require
 			a_name /= Void
@@ -24,13 +24,16 @@ feature
 			head_name := a_head
 			rep_start := a_start_date
 			rep_end := a_end_date
+			id:=a_id
 		ensure
 			unit_name /= Void
 			head_name /= Void
 			rep_start /= Void
 			rep_end /= Void
+			id=a_id
 		end
-
+	id:INTEGER
+			--id of report
 	unit_name: STRING
 			-- name of unit
 

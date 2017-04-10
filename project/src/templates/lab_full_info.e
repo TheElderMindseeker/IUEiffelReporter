@@ -345,7 +345,7 @@ feature
 					c_id := field.item.value.repr.to_integer
 				end
 			end
-			create Result.make (u_name, h_name, s_date, e_date)
+			create Result.make (u_name, h_name, s_date, e_date, id)
 		end
 
 end

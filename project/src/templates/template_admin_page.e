@@ -86,7 +86,7 @@ feature {NONE} -- Access to database
 					end
 				end
 				if attached u_name as un and attached h_name as hn and attached s_date as sd and attached e_date as ed and attached c_id as a_id then
-					reports.force (create {REPORT}.make (un, hn, sd, ed))
+					reports.force (create {REPORT}.make (un, hn, sd, ed, a_id))
 				end
 			end
 		end
