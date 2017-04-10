@@ -1,8 +1,8 @@
 note
-	description: ""
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "Handles deletion of some report"
+	author: "Niyaz Ginatullin"
+	date: "10.04.2017"
+	revision: "1.0"
 
 class
 	ADMIN_DELETE_HANDLER
@@ -29,22 +29,23 @@ feature
 
 	execute (a_start_path: READABLE_STRING_8; req: WSF_REQUEST; res: WSF_RESPONSE)
 			-- Execute handler for `req' and respond in `res'.
-			-- returns administator panel
+			-- delete report with some id (path contains this id)
 		local
 			query_manager:QUERY_MANAGER
 			s_id:STRING
-			redirect:WSF_HTML_REDIRECTION_RESPONSE
+			path_components: LIST [READABLE_STRING_32]
 		do
 			page.set_status_code ({HTTP_STATUS_CODE}.ok)
 			create query_manager.make
 			if req.is_get_request_method then
-				s_id:= create{STRING}.make_from_string (req.path_info.substring (a_start_path.count+2, req.path_info.count))
+				path_components := req.path_info.split ('/')
+				s_id:= create{STRING}.make_from_string (path_components.i_th(2))
 				if attached s_id.to_integer as id then
 					if query_manager.database_manager.has_report (id) then
 						across
 							query_manager.database_manager.list_tables as table_name
 						loop
-							if query_manager.database_manager.has_report (6) then
+							if query_manager.database_manager.has_report (id) then
 								query_manager.database_manager.multiple_delete (table_name.item, id)
 							end
 						end
@@ -53,8 +54,6 @@ feature
 			end
 			res.send (page)
 			query_manager.database_manager.close
-			create redirect.make("/admin")
-			res.send (redirect)
 		end
 
 end

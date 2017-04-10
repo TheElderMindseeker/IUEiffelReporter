@@ -1,8 +1,11 @@
 note
-	description: "Summary description for {LAB_FULL_INFO}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "[
+			This class returns LISTs of objects (additional smarty classes)
+		 It's additional class to get data from database in needed form.
+	]"
+	author: "Niyaz Ginatullin"
+	date: "10.04.2017"
+	revision: "1.0"
 
 class
 	LAB_FULL_INFO
@@ -33,6 +36,7 @@ feature {NONE}
 feature
 
 	close_database
+			-- close data base. This feature should be used after gettinig all info that you need from this class.
 		do
 			query_manager.database_manager.close
 		end
@@ -86,7 +90,7 @@ feature
 					end
 				end
 				if attached student_name as a_student_name and attached nature_of_work as a_nature_of_work then
-					Result.force (create {STUDENT}.make (a_student_name, a_nature_of_work, id))
+					Result.force (create {STUDENT}.make (a_student_name, a_nature_of_work))
 				end
 			end
 		end
@@ -113,7 +117,7 @@ feature
 					end
 				end
 				if attached student_name as a_student_name and attached title as a_title and attached publication_plans as a_publication_plans then
-					Result.force (create {S_REPORT}.make (a_student_name, a_title, a_publication_plans, id))
+					Result.force (create {S_REPORT}.make (a_student_name, a_title, a_publication_plans))
 				end
 			end
 		end
@@ -149,7 +153,7 @@ feature
 					end
 				end
 				if attached student_name as a_student_name and attached degree as a_degree and attached supervisor_name as a_supervisor_name and attached other_committee_members as a_other_committee_members and attached degree_granting_installation as a_degree_granting_installation and attached dissertation_title as a_dissertation_title then
-					Result.force (create {PHD}.make (a_student_name, a_degree, a_supervisor_name, a_other_committee_members, a_degree_granting_installation, a_dissertation_title, id))
+					Result.force (create {PHD}.make (a_student_name, a_degree, a_supervisor_name, a_other_committee_members, a_degree_granting_installation, a_dissertation_title))
 				end
 			end
 		end
@@ -185,7 +189,7 @@ feature
 					end
 				end
 				if attached project_title as a_project_title and attached granting_agency as a_granting_agency and attached start_date as a_start_date and attached end_date as a_end_date and attached is_continuation as a_is_continuation and attached amount as a_amount then
-					Result.force (create {GRANT}.make (a_project_title, a_granting_agency, a_start_date, a_end_date, a_is_continuation, a_amount, id))
+					Result.force (create {GRANT}.make (a_project_title, a_granting_agency, a_start_date, a_end_date, a_is_continuation, a_amount))
 				end
 			end
 		end
@@ -221,7 +225,7 @@ feature
 					end
 				end
 				if attached project_title as a_project_title and attached iu_personnel_involved as a_iu_personnel_involved and attached external_personnel_involved as a_external_personnel_involved and attached start_date as a_start_date and attached expected_end_date as a_expected_end_date and attached financial_sources as a_financial_sources then
-					Result.force (create {PROJECT}.make (a_project_title, a_iu_personnel_involved, a_external_personnel_involved, a_start_date, a_expected_end_date, a_financial_sources, id))
+					Result.force (create {PROJECT}.make (a_project_title, a_iu_personnel_involved, a_external_personnel_involved, a_start_date, a_expected_end_date, a_financial_sources))
 				end
 			end
 		end
@@ -254,7 +258,7 @@ feature
 					end
 				end
 				if attached installation_country as a_installation_country and attached installation_name as a_installation_name and attached installation_department as a_installation_department and attached contacts as a_contacts and attached nature_of_collaboration as a_nature_of_collaboration then
-					Result.force (create {COLLABORATION}.make (a_installation_country, a_installation_name, a_installation_department, a_contacts, a_nature_of_collaboration, id))
+					Result.force (create {COLLABORATION}.make (a_installation_country, a_installation_name, a_installation_department, a_contacts, a_nature_of_collaboration))
 				end
 			end
 		end
@@ -305,7 +309,7 @@ feature
 					end
 				end
 				if attached course_name as a_course_name and attached semester as a_semester and attached exam_kind as a_exam_kind and attached num_students as a_num_students then
-					Result.force (create {EXAM}.make (a_course_name, a_semester, a_exam_kind, a_num_students, id))
+					Result.force (create {EXAM}.make (a_course_name, a_semester, a_exam_kind, a_num_students))
 				end
 			end
 		end
@@ -341,7 +345,7 @@ feature
 					c_id := field.item.value.repr.to_integer
 				end
 			end
-			create Result.make (u_name, h_name, s_date, e_date, c_id)
+			create Result.make (u_name, h_name, s_date, e_date)
 		end
 
 end

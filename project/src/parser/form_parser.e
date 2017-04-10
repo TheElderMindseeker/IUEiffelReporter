@@ -1,5 +1,5 @@
 note
-	description: "Class that is used for user form parsing from JSON string representation."
+	description: "Class that parses json string from form page"
 	author: "Niyaz Guinatullin and Daniil Botnarenku"
 	date: "$Date$"
 	revision: "$Revision$"

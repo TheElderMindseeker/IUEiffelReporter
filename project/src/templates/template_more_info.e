@@ -1,8 +1,8 @@
 note
-	description: "Summary description for {TEMPLATE_MORE_INFO}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "Template for detailed view of some report"
+	author: "Ginatullin Niyaz"
+	date: "10.04.2017"
+	revision: "1.0"
 
 class
 	TEMPLATE_MORE_INFO
@@ -17,8 +17,10 @@ create
 feature
 
 	id: INTEGER
+			--id of report
 
 	output: detachable STRING
+			--output of template
 
 	make (a_id: INTEGER)
 
@@ -42,6 +44,7 @@ feature
 feature {NONE} -- ojects to create page
 
 	add_all_values (a_id: INTEGER)
+			--fills template
 		do
 			set_all_attributes (a_id)
 			template.add_value (report.unit_name, "unit_name")
@@ -60,6 +63,7 @@ feature {NONE} -- ojects to create page
 		end
 
 	set_all_attributes (a_id: INTEGER)
+			--fills lists of nedeed information
 		local
 			info: LAB_FULL_INFO
 		do
@@ -78,26 +82,37 @@ feature {NONE} -- ojects to create page
 		end
 
 	report: REPORT
+			--report main info
 
 	query_manager: QUERY_MANAGER
+			--access to database
 
 	courses: LIST [COURSE]
+			--list of courses
 
 	examinations: LIST [EXAM]
+			--list of examinations
 
 	supervised_students: LIST [STUDENT]
+			--list of supervised students
 
 	student_reports: LIST [S_REPORT]
+			--list of studen reports
 
 	completed_phd: LIST [PHD]
+			--list of completed phds
 
 	grants: LIST [GRANT]
+			--list of grants
 
 	research_projects: LIST [PROJECT]
+			--list of research projects
 
 	research_collaborations: LIST [COLLABORATION]
+			--list of research collaborations
 
 	publications: LIST [PUBLICATION]
+			--list of publications
 
 feature {NONE}
 

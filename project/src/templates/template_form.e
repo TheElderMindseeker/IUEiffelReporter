@@ -1,8 +1,8 @@
 note
-	description: "Summary description for {HTML_TABLE_TEMPLATE}."
-	author: ""
-	date: "$Date: 2013-08-02 01:17:37 -0800 (Fri, 02 Aug 2013) $"
-	revision: "$Revision: 92838 $"
+	description: "Template for /form"
+	author: "Ginatullin Niyaz"
+	date: "10.04.2017"
+	revision: "1.0"
 
 class
 	TEMPLATE_FORM

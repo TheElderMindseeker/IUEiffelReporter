@@ -1,8 +1,8 @@
 note
-	description: "creates admin page  from /www/templates/form.tpl and adds needed data from database"
-	author: ""
-	date: "$Date: 2013-08-02 01:17:37 -0800 (Fri, 02 Aug 2013) $"
-	revision: "$Revision: 92838 $"
+	description: "creates admin page  from /www/templates/admin.tpl and adds needed data from database"
+	author: "Niyaz Ginatullin"
+	date: "10.04.2017"
+	revision: "1.0"
 
 class
 	TEMPLATE_ADMIN_PAGE
@@ -13,6 +13,7 @@ inherit
 		undefine
 			default_create
 		end
+
 	SHARED_TEMPLATE_CONTEXT
 		redefine
 			default_create
@@ -85,7 +86,7 @@ feature {NONE} -- Access to database
 					end
 				end
 				if attached u_name as un and attached h_name as hn and attached s_date as sd and attached e_date as ed and attached c_id as a_id then
-					reports.force (create {REPORT}.make (un, hn, sd, ed, a_id))
+					reports.force (create {REPORT}.make (un, hn, sd, ed))
 				end
 			end
 		end

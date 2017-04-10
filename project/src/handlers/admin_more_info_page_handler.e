@@ -1,8 +1,8 @@
 note
-	description: "Summary description for {ADMIN_MORE_INFO_PAGE_HANDLER}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "Handels page that returns detailed information about some report."
+	author: "Niyaz Ginatullin"
+	date: "10.04.2017"
+	revision: "1.0"
 
 class
 	ADMIN_MORE_INFO_PAGE_HANDLER
@@ -31,16 +31,18 @@ feature
 			-- Execute handler for `req' and respond in `res'.
 			-- returns more information about some report
 		local
-			template:TEMPLATE_MORE_INFO
-			s_id:STRING
+			template: TEMPLATE_MORE_INFO
+			s_id: STRING
+			path_components:LIST[READABLE_STRING_32]
 		do
 			page.set_status_code ({HTTP_STATUS_CODE}.ok)
 			if req.is_get_request_method then
-				s_id:= create{STRING}.make_from_string (req.path_info.substring (a_start_path.count+2, req.path_info.count))
+				path_components := req.path_info.split ('/')
+				s_id:= create{STRING}.make_from_string (path_components.i_th(2))
 				if attached s_id.to_integer as id then
-					create template.make(id)
+					create template.make (id)
 					if attached template.output as body then
-						res.put_string(body)
+						res.put_string (body)
 					end
 				end
 			end

@@ -1,9 +1,8 @@
 note
-	description: "Summary description for {PUBLICATION}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
-
+	description: "This class is additional class for creating template. It contains attributes only"
+	author: "Niyaz Ginatullin"
+	date: "10.04.2017"
+	revision: "1.0"
 class
 	PUBLICATION
 

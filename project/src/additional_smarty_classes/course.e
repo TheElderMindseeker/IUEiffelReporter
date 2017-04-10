@@ -1,8 +1,8 @@
 note
-	description: "Additional class"
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "This class is additional class for creating template. It contains attributes only"
+	author: "Niyaz Ginatullin"
+	date: "10.04.2017"
+	revision: "1.0"
 
 class
 	COURSE
@@ -25,10 +25,10 @@ feature
 			edu_level := a_edu_level
 			num_students := a_num_students
 		ensure
-			course_name.same_string(a_course_name)
-			semester.same_string(a_semester)
-			edu_level.same_string(a_edu_level)
-			num_students.same_string(a_num_students)
+			course_name.same_string (a_course_name)
+			semester.same_string (a_semester)
+			edu_level.same_string (a_edu_level)
+			num_students.same_string (a_num_students)
 		end
 
 	course_name: STRING

@@ -1,8 +1,8 @@
 note
-	description: "Summary description for {TEXT_NUMBER}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "Template that will be returned for courses taught by some laboratory"
+	author: "Ginatullin Niyaz"
+	date: "10.04.2017"
+	revision: "1.0"
 
 class
 	TEMPLATE_COURSES_TAUGHT
@@ -44,8 +44,9 @@ feature -- Initialization
 feature {NONE} -- Implementation
 
 	courses: LINKED_LIST [COURSE]
-
+		--list of courses
 	set_courses(a_courses: ITERABLE [ITERABLE [FIELD]])
+			--reads courses from database and fill list of courses
 		local
 			course_name: STRING
 			semester: STRING
