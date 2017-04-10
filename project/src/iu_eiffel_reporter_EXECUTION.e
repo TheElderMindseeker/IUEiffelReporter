@@ -28,6 +28,7 @@ feature -- Router
 			create fhdl.make_with_path (create {PATH}.make_from_string ("www"))
 			create query_manager.make
 			fhdl.set_directory_index (<<"index.html">>)
+			fhdl.set_not_found_handler (agent not_found_page)
 			router.handle ("/delete", create{ADMIN_DELETE_HANDLER}.make, router.methods_get_post)
 			router.handle ("/details", create{ADMIN_MORE_INFO_PAGE_HANDLER}.make, router.methods_get_post)
 			router.handle ("/admin", create {ADMIN_PAGE_HANDLER}.make, router.methods_get_post)
@@ -36,4 +37,13 @@ feature -- Router
 			query_manager.database_manager.close
 		end
 
+feature{NONE}
+	not_found_page(uri: READABLE_STRING_8; req: WSF_REQUEST; res: WSF_RESPONSE)
+	local
+		not_found:WSF_NOT_FOUND_RESPONSE
+	do
+		create not_found.make (req)
+		not_found.set_body ("There is no such resourse")
+		res.send (not_found)
+	end
 end
