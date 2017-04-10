@@ -725,13 +725,6 @@ feature {QUERY_MANAGER} -- Specific queries
 			if attached {LINKED_LIST [STRING_8]} Result as list then
 				s_query := "SELECT DISTINCT unit_name FROM reports;"
 				create query_statement.make (s_query, database)
-				if not query_statement.is_compiled then
-					if query_statement.has_error then
-						if attached query_statement.last_exception as ex then
-							print (ex.code.out + " " + ex.extended_code.out)
-						end
-					end
-				end
 				cursor := query_statement.execute_new
 				if not query_statement.has_error then
 					from
