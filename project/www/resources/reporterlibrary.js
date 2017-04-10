@@ -163,7 +163,7 @@ function checkCookie() {
 	var button = document.getElementById("edit-button");
 	if (id != undefined && id != null && id != "null") {
 		button.setAttribute("href", "/edit/" + id);
-		button.setAttribute("class", "btn button-yellow")
+		button.setAttribute("class", "btn button-yellow disabled")
 	}
 }
 
