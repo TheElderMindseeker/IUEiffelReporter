@@ -44,10 +44,10 @@ Feature of editing of reports does not work. This feature has Conditional \(C\) 
 
 In case if you have any questions or problems, feel free to contact us:
 
-Daniil Botnarenku
-e-mail: d.botnarenku@innopolis.ru
+Daniil Botnarenku  
+e-mail: d.botnarenku@innopolis.ru  
 telegram: @ElderMindseeker
 
-Andrey Pavlenko
-e-mail: a.pavlenko@innopolis.ru
+Andrey Pavlenko  
+e-mail: a.pavlenko@innopolis.ru  
 telegram: @Voisvet
