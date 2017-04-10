@@ -1,8 +1,8 @@
 note
-	description: "Summary description for {GRANT}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "This class is additional class for creating template. It contains attributes only"
+	author: "Niyaz Ginatullin"
+	date: "10.04.2017"
+	revision: "1.0"
 
 class
 	GRANT
@@ -12,7 +12,7 @@ create
 
 feature
 
-	make (a_project_title: STRING; a_granting_agency: STRING; a_start_date: STRING; a_end_date: STRING; a_is_continuation: STRING; a_amount: STRING; a_id: INTEGER)
+	make (a_project_title: STRING; a_granting_agency: STRING; a_start_date: STRING; a_end_date: STRING; a_is_continuation: STRING; a_amount: STRING)
 			-- creates report about some unit, that contains a lot general information abut this report
 		require
 			a_project_title /= Void
@@ -28,18 +28,14 @@ feature
 			end_date := a_end_date
 			is_continuation := a_is_continuation
 			amount := a_amount
-			id := a_id
 		ensure
-			project_title.same_string(a_project_title)
-			granting_agency.same_string(a_granting_agency)
-			start_date.same_string(a_start_date)
-			end_date.same_string(a_end_date)
-			is_continuation.same_string(a_is_continuation)
-			amount.same_string(a_amount)
-			id = a_id
+			project_title.same_string (a_project_title)
+			granting_agency.same_string (a_granting_agency)
+			start_date.same_string (a_start_date)
+			end_date.same_string (a_end_date)
+			is_continuation.same_string (a_is_continuation)
+			amount.same_string (a_amount)
 		end
-
-	id: INTEGER
 
 	project_title: STRING
 

@@ -1,8 +1,8 @@
 note
-	description: "creates admin page  from /www/templates/form.tpl and adds needed data from database"
-	author: ""
-	date: "$Date: 2013-08-02 01:17:37 -0800 (Fri, 02 Aug 2013) $"
-	revision: "$Revision: 92838 $"
+	description: "creates admin page  from /www/templates/admin.tpl and adds needed data from database"
+	author: "Niyaz Ginatullin"
+	date: "10.04.2017"
+	revision: "1.0"
 
 class
 	TEMPLATE_ADMIN_PAGE
@@ -13,6 +13,7 @@ inherit
 		undefine
 			default_create
 		end
+
 	SHARED_TEMPLATE_CONTEXT
 		redefine
 			default_create

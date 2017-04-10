@@ -1,5 +1,5 @@
 note
-	description: "Class that is used for user form parsing from JSON string representation."
+	description: "Class that parses json string from form page"
 	author: "Niyaz Guinatullin and Daniil Botnarenku"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -94,7 +94,7 @@ feature {NONE} -- Implementation
 				if attached database_manager.which_table (name.item) as db_table_result then
 					if attached {STRING_8} db_table_result.at (1) as table_name and then attached {STRING_8} db_table_result.at (2) as arg_type then
 						if name.item.same_string ("rep_start") and then value.item.is_empty then
-							value.item.set ("10.10.2017", 1, 10)
+							value.item.set ("01.01.2017", 1, 10)
 						end
 						if name.item.same_string ("rep_end") and value.item.is_empty then
 							value.item.set ("31.12.2017", 1, 10)

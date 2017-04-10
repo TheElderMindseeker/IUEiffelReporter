@@ -1,8 +1,8 @@
 note
-	description: "Summary description for {PHD}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "This class is additional class for creating template. It contains attributes only"
+	author: "Niyaz Ginatullin"
+	date: "10.04.2017"
+	revision: "1.0"
 
 class
 	PHD
@@ -12,7 +12,7 @@ create
 
 feature
 
-	make (a_student_name: STRING; a_degree: STRING; a_supervisor_name: STRING; a_other_committee_members: STRING; a_degree_granting_installation: STRING; a_dissertation_title: STRING; a_id: INTEGER)
+	make (a_student_name: STRING; a_degree: STRING; a_supervisor_name: STRING; a_other_committee_members: STRING; a_degree_granting_installation: STRING; a_dissertation_title: STRING)
 			-- creates report about some unit, that contains a lot general information abut this report
 		require
 			a_student_name /= Void
@@ -27,18 +27,14 @@ feature
 			other_committee_members := a_other_committee_members
 			degree_granting_installation := a_degree_granting_installation
 			dissertation_title := a_dissertation_title
-			id := a_id
 		ensure
-			student_name.same_string(a_student_name)
-			degree.same_string(a_degree)
+			student_name.same_string (a_student_name)
+			degree.same_string (a_degree)
 			supervisor_name.same_string (a_supervisor_name)
-			other_committee_members.same_string(a_other_committee_members)
-			degree_granting_installation.same_string(a_degree_granting_installation)
-			dissertation_title.same_string(a_dissertation_title)
-			id = a_id
+			other_committee_members.same_string (a_other_committee_members)
+			degree_granting_installation.same_string (a_degree_granting_installation)
+			dissertation_title.same_string (a_dissertation_title)
 		end
-
-	id: INTEGER
 
 	student_name: STRING
 

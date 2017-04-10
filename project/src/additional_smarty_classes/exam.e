@@ -1,8 +1,8 @@
 note
-	description: "Summary description for {EXAM}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "This class is additional class for creating template. It contains attributes only"
+	author: "Niyaz Ginatullin"
+	date: "10.04.2017"
+	revision: "1.0"
 
 class
 	EXAM
@@ -12,7 +12,7 @@ create
 
 feature
 
-	make (a_course_name: STRING; a_semester: STRING; a_exam_kind: STRING; a_num_students: STRING; a_id: INTEGER)
+	make (a_course_name: STRING; a_semester: STRING; a_exam_kind: STRING; a_num_students: STRING)
 			-- creates report about some unit, that contains a lot general information abut this report
 		require
 			a_course_name /= Void
@@ -24,16 +24,12 @@ feature
 			semester := a_semester
 			exam_kind := a_exam_kind
 			num_students := a_num_students
-			id := a_id
 		ensure
-			course_name.same_string(a_course_name)
-			semester.same_string(a_semester)
-			exam_kind.same_string(a_exam_kind)
-			num_students.same_string(a_num_students)
-			id = a_id
+			course_name.same_string (a_course_name)
+			semester.same_string (a_semester)
+			exam_kind.same_string (a_exam_kind)
+			num_students.same_string (a_num_students)
 		end
-
-	id: INTEGER
 
 	course_name: STRING
 

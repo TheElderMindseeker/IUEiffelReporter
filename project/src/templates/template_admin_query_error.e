@@ -1,14 +1,13 @@
 note
-	description: "Summary description for {TEMPLATE_ADMIN_QUERY_ERROR}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "Template for query if in data base no asked info"
+	author: "Andrey Pavlenko"
+	date: "10.04.2017"
+	revision: "1.0"
 
 class
 	TEMPLATE_ADMIN_QUERY_ERROR
 
 inherit
-	WITHOUT_QUOTES
 
 	SHARED_TEMPLATE_CONTEXT
 
@@ -18,11 +17,10 @@ create
 feature -- Initialization
 
 	make
-
+			--initialize Current
 		local
 			p: PATH
 		do
-			create elements.make
 			create p.make_from_string ("www")
 			p := p.appended ("/templates/query_responses")
 			set_template_folder (p)

@@ -1,8 +1,8 @@
 note
-	description: "Summary description for {S_REPORT}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "This class is additional class for creating template. It contains attributes only"
+	author: "Niyaz Ginatullin"
+	date: "10.04.2017"
+	revision: "1.0"
 
 class
 	S_REPORT
@@ -12,7 +12,7 @@ create
 
 feature
 
-	make (a_student_name: STRING; a_title: STRING; a_publication_plans: STRING; a_id: INTEGER)
+	make (a_student_name: STRING; a_title: STRING; a_publication_plans: STRING)
 			-- creates report about some unit, that contains a lot general information abut this report
 		require
 			a_student_name /= Void
@@ -22,15 +22,11 @@ feature
 			student_name := a_student_name
 			title := a_title
 			publication_plans := a_publication_plans
-			id := a_id
 		ensure
-			student_name.same_string(a_student_name)
-			title.same_string(a_title)
-			publication_plans.same_string(a_publication_plans)
-			id = a_id
+			student_name.same_string (a_student_name)
+			title.same_string (a_title)
+			publication_plans.same_string (a_publication_plans)
 		end
-
-	id: INTEGER
 
 	student_name: STRING
 
