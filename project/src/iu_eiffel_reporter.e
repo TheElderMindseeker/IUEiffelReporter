@@ -7,7 +7,7 @@ note
 
 class
 	IU_EIFFEL_REPORTER
-	
+
 
 inherit
 	WSF_LAUNCHABLE_SERVICE
@@ -15,7 +15,7 @@ inherit
 			initialize
 		end
 	APPLICATION_LAUNCHER [IU_EIFFEL_REPORTER_EXECUTION]
-	
+
 
 create
 	make_and_launch
@@ -26,8 +26,7 @@ feature {NONE} -- Initialization
 			-- Initialize current service.
 		do
 			Precursor
-			set_service_option ("port", 3849)
-			set_service_option ("verbose", True)
+			set_service_option ("port", 80)
 		end
 
 end
