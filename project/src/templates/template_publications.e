@@ -60,7 +60,7 @@ feature {NONE} -- Implementation
 				across
 					publication.item as field
 				loop
-					if field.item.name.same_string ("publication_id") and not field.item.value.repr.same_string ("%'%'") then
+					if field.item.name.same_string ("publication_name") and not field.item.value.repr.same_string ("%'%'") then
 						publication_name := without_quotes (field.item.value.repr)
 					end
 				end
