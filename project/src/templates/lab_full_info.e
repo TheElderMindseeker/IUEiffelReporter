@@ -325,7 +325,7 @@ feature
 			create u_name.make_from_string ("our default unit name")
 			create h_name.make_from_string ("our default head name")
 			create s_date.make_from_string ("01.09.2016")
-			create e_date.make_from_string ("01.09.2017")
+			create e_date.make_from_string ("15.05.2017")
 			across
 				query_manager.database_manager.single_select ("reports", id) as field
 			loop

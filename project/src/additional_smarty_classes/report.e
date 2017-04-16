@@ -34,7 +34,7 @@ feature
 		end
 
 	id: INTEGER
-			--id of report
+			-- id of report
 
 	unit_name: STRING
 			-- name of unit
