@@ -9,8 +9,6 @@ class
 
 inherit
 
-	WITHOUT_QUOTES
-
 	SHARED_TEMPLATE_CONTEXT
 
 create
@@ -62,11 +60,11 @@ feature {NONE} -- Implementation
 					course.item as field
 				loop
 					if field.item.name.same_string ("course_name") then
-						course_name := without_quotes (field.item.value.repr)
+						course_name := field.item.value.usual_repr
 					elseif field.item.name.same_string ("semester") then
-						semester := without_quotes (field.item.value.repr)
+						semester := field.item.value.usual_repr
 					elseif field.item.name.same_string ("edu_level") then
-						edu_level := without_quotes (field.item.value.repr)
+						edu_level := field.item.value.usual_repr
 					elseif field.item.name.same_string ("num_students") then
 						num_students := field.item.value.repr
 					end

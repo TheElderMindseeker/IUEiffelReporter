@@ -9,8 +9,6 @@ class
 
 inherit
 
-	WITHOUT_QUOTES
-
 	SHARED_TEMPLATE_CONTEXT
 
 create
@@ -60,8 +58,8 @@ feature {NONE} -- Implementation
 				across
 					publication.item as field
 				loop
-					if field.item.name.same_string ("publication_name") and not field.item.value.repr.same_string ("%'%'") then
-						publication_name := without_quotes (field.item.value.repr)
+					if field.item.name.same_string ("publication_name") and not field.item.value.repr.same_string ("''") then
+						publication_name := field.item.value.usual_repr
 					end
 				end
 				if attached publication_name as a_publication_name then

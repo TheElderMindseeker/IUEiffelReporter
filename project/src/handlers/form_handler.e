@@ -33,6 +33,7 @@ feature
 			input_data: STRING
 			query_manager: QUERY_MANAGER
 			database_manager: DATABASE_MANAGER
+			id: STRING
 		do
 			create query_manager.make
 			database_manager := query_manager.database_manager
@@ -51,6 +52,16 @@ feature
 						form_parser.parse
 						if attached form_parser.parse_result as parsed_data then
 							if attached {LINKED_LIST [FIELD]} parsed_data.at ("reports") as report_data then
+								across
+									report_data as field
+								loop
+									if field.item.name.same_string ("id") then
+										create id.make_from_string (field.item.value.usual_repr)
+									end
+								end
+								if attached id and then id.is_integer and then id.to_integer > 0 then
+									delete_report (id.to_integer, query_manager.database_manager, res, req)
+								end
 								database_manager.create_report (report_data)
 							end
 							parsed_data.remove ("reports")
@@ -60,7 +71,7 @@ feature
 								if attached {LINKED_LIST [FIELD]} parsed_data.at (table_name.item) as record then
 									database_manager.single_insert (table_name.item, record)
 								elseif attached {LINKED_LIST [LINKED_LIST [FIELD]]} parsed_data.at (table_name.item) as record_list then
-									add_id_field_to_linked_lists(database_manager.current_report_id, record_list, database_manager)
+									add_id_field_to_linked_lists (database_manager.current_report_id, record_list, database_manager)
 									database_manager.multiple_insert (table_name.item, record_list)
 								end
 							end
@@ -78,7 +89,7 @@ feature {NONE} -- Implementation
 
 feature {NONE}
 
-	add_id_field_to_linked_lists (id: INTEGER; linked_lists: LINKED_LIST [LINKED_LIST [FIELD]]; database_manager:DATABASE_MANAGER)
+	add_id_field_to_linked_lists (id: INTEGER; linked_lists: LINKED_LIST [LINKED_LIST [FIELD]]; database_manager: DATABASE_MANAGER)
 			-- Add field id to each linked list at linked_lists
 		local
 			field: detachable FIELD
@@ -92,4 +103,30 @@ feature {NONE}
 				end
 			end
 		end
+
+	delete_report (id: INTEGER; database_manager: DATABASE_MANAGER; res:WSF_RESPONSE;req:WSF_REQUEST)
+		do
+			if database_manager.has_report (id) then
+				across
+					database_manager.list_tables as table_name
+				loop
+					if database_manager.has_report (id) and not table_name.item.same_string ("reports") then
+						database_manager.multiple_delete (table_name.item, id)
+					end
+				end
+				database_manager.multiple_delete ("reports", id)
+			else
+				not_found_page (id.to_hex_string, res,req)
+			end
+		end
+
+	not_found_page (id: READABLE_STRING_8; res: WSF_RESPONSE; req:WSF_REQUEST)
+		local
+			not_found: WSF_NOT_FOUND_RESPONSE
+		do
+			create not_found.make (req)
+			not_found.set_body ("There is no such report")
+			res.send (not_found)
+		end
+
 end

@@ -29,6 +29,7 @@ feature -- Router
 			create query_manager.make
 			fhdl.set_directory_index (<<"index.html">>)
 			fhdl.set_not_found_handler (agent not_found_page)
+			router.handle ("/edit", create{ADMIN_EDIT_PAGE_HANDLER}.make, router.methods_get_post)
 			router.handle ("/delete", create{ADMIN_DELETE_HANDLER}.make, router.methods_get_post)
 			router.handle ("/details", create{ADMIN_MORE_INFO_PAGE_HANDLER}.make, router.methods_get_post)
 			router.handle ("/admin", create {ADMIN_PAGE_HANDLER}.make, router.methods_get_post)

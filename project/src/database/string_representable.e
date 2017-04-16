@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {STRING_REPRESENTABLE}."
+	description: "Class representing sqlite-friendly string-type."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
@@ -8,6 +8,7 @@ class
 	STRING_REPRESENTABLE
 
 inherit
+
 	REPRESENTABLE
 		redefine
 			is_equal
@@ -39,6 +40,12 @@ feature -- Access
 			-- SQLite representation of the string.
 		do
 			Result := "'" + string_value + "'"
+		end
+
+	usual_repr: STRING_8
+			-- Usual string representation of the object.
+		do
+			Result := string_value
 		end
 
 feature -- Comparison

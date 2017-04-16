@@ -10,10 +10,6 @@ note
 class
 	LAB_FULL_INFO
 
-inherit
-
-	WITHOUT_QUOTES
-
 create
 	make
 
@@ -56,11 +52,11 @@ feature
 					course.item as field
 				loop
 					if field.item.name.same_string ("course_name") then
-						course_name := without_quotes (field.item.value.repr)
+						course_name := field.item.value.usual_repr
 					elseif field.item.name.same_string ("semester") then
-						semester := without_quotes (field.item.value.repr)
+						semester := field.item.value.usual_repr
 					elseif field.item.name.same_string ("edu_level") then
-						edu_level := without_quotes (field.item.value.repr)
+						edu_level := field.item.value.usual_repr
 					elseif field.item.name.same_string ("num_students") then
 						num_students := field.item.value.repr
 					end
@@ -84,9 +80,9 @@ feature
 					list.item as field
 				loop
 					if field.item.name.same_string ("student_name") then
-						student_name := without_quotes (field.item.value.repr)
+						student_name := field.item.value.usual_repr
 					elseif field.item.name.same_string ("nature_of_work") then
-						nature_of_work := without_quotes (field.item.value.repr)
+						nature_of_work := field.item.value.usual_repr
 					end
 				end
 				if attached student_name as a_student_name and attached nature_of_work as a_nature_of_work then
@@ -109,11 +105,11 @@ feature
 					list.item as field
 				loop
 					if field.item.name.same_string ("student_name") then
-						student_name := without_quotes (field.item.value.repr)
+						student_name := field.item.value.usual_repr
 					elseif field.item.name.same_string ("title") then
-						title := without_quotes (field.item.value.repr)
+						title := field.item.value.usual_repr
 					elseif field.item.name.same_string ("publication_plans") then
-						publication_plans := without_quotes (field.item.value.repr)
+						publication_plans := field.item.value.usual_repr
 					end
 				end
 				if attached student_name as a_student_name and attached title as a_title and attached publication_plans as a_publication_plans then
@@ -139,17 +135,17 @@ feature
 					list.item as field
 				loop
 					if field.item.name.same_string ("student_name") then
-						student_name := without_quotes (field.item.value.repr)
+						student_name := field.item.value.usual_repr
 					elseif field.item.name.same_string ("degree") then
-						degree := without_quotes (field.item.value.repr)
+						degree := field.item.value.usual_repr
 					elseif field.item.name.same_string ("supervisor_name") then
-						supervisor_name := without_quotes (field.item.value.repr)
+						supervisor_name := field.item.value.usual_repr
 					elseif field.item.name.same_string ("other_committee_members") then
-						other_committee_members := without_quotes (field.item.value.repr)
+						other_committee_members := field.item.value.usual_repr
 					elseif field.item.name.same_string ("degree_granting_installation") then
-						degree_granting_installation := without_quotes (field.item.value.repr)
+						degree_granting_installation := field.item.value.usual_repr
 					elseif field.item.name.same_string ("dissertation_title") then
-						dissertation_title := without_quotes (field.item.value.repr)
+						dissertation_title := field.item.value.usual_repr
 					end
 				end
 				if attached student_name as a_student_name and attached degree as a_degree and attached supervisor_name as a_supervisor_name and attached other_committee_members as a_other_committee_members and attached degree_granting_installation as a_degree_granting_installation and attached dissertation_title as a_dissertation_title then
@@ -175,15 +171,15 @@ feature
 					list.item as field
 				loop
 					if field.item.name.same_string ("project_title") then
-						project_title := without_quotes (field.item.value.repr)
+						project_title := field.item.value.usual_repr
 					elseif field.item.name.same_string ("granting_agency") then
-						granting_agency := without_quotes (field.item.value.repr)
+						granting_agency := field.item.value.usual_repr
 					elseif field.item.name.same_string ("start_date") then
-						start_date := without_quotes (field.item.value.repr)
+						start_date := field.item.value.usual_repr
 					elseif field.item.name.same_string ("end_date") then
-						end_date := without_quotes (field.item.value.repr)
+						end_date := field.item.value.usual_repr
 					elseif field.item.name.same_string ("is_continuation") then
-						is_continuation := without_quotes (field.item.value.repr)
+						is_continuation := field.item.value.usual_repr
 					elseif field.item.name.same_string ("amount") then
 						amount := field.item.value.repr
 					end
@@ -211,17 +207,17 @@ feature
 					list.item as field
 				loop
 					if field.item.name.same_string ("project_title") then
-						project_title := without_quotes (field.item.value.repr)
+						project_title := field.item.value.usual_repr
 					elseif field.item.name.same_string ("iu_personnel_involved") then
-						iu_personnel_involved := without_quotes (field.item.value.repr)
+						iu_personnel_involved := field.item.value.usual_repr
 					elseif field.item.name.same_string ("external_personnel_involved") then
-						external_personnel_involved := without_quotes (field.item.value.repr)
+						external_personnel_involved := field.item.value.usual_repr
 					elseif field.item.name.same_string ("start_date") then
-						start_date := without_quotes (field.item.value.repr)
+						start_date := field.item.value.usual_repr
 					elseif field.item.name.same_string ("expected_end_date") then
-						expected_end_date := without_quotes (field.item.value.repr)
+						expected_end_date := field.item.value.usual_repr
 					elseif field.item.name.same_string ("financial_sources") then
-						financial_sources := without_quotes (field.item.value.repr)
+						financial_sources := field.item.value.usual_repr
 					end
 				end
 				if attached project_title as a_project_title and attached iu_personnel_involved as a_iu_personnel_involved and attached external_personnel_involved as a_external_personnel_involved and attached start_date as a_start_date and attached expected_end_date as a_expected_end_date and attached financial_sources as a_financial_sources then
@@ -246,15 +242,15 @@ feature
 					list.item as field
 				loop
 					if field.item.name.same_string ("installation_country") then
-						installation_country := without_quotes (field.item.value.repr)
+						installation_country := field.item.value.usual_repr
 					elseif field.item.name.same_string ("installation_name") then
-						installation_name := without_quotes (field.item.value.repr)
+						installation_name := field.item.value.usual_repr
 					elseif field.item.name.same_string ("installation_department") then
-						installation_department := without_quotes (field.item.value.repr)
+						installation_department := field.item.value.usual_repr
 					elseif field.item.name.same_string ("contacts") then
-						contacts := without_quotes (field.item.value.repr)
+						contacts := field.item.value.usual_repr
 					elseif field.item.name.same_string ("nature_of_collaboration") then
-						nature_of_collaboration := without_quotes (field.item.value.repr)
+						nature_of_collaboration := field.item.value.usual_repr
 					end
 				end
 				if attached installation_country as a_installation_country and attached installation_name as a_installation_name and attached installation_department as a_installation_department and attached contacts as a_contacts and attached nature_of_collaboration as a_nature_of_collaboration then
@@ -275,7 +271,7 @@ feature
 					list.item as field
 				loop
 					if field.item.name.same_string ("publication_name") then
-						publication_name := without_quotes (field.item.value.repr)
+						publication_name := field.item.value.usual_repr
 					end
 				end
 				if attached publication_name as a_publication_name then
@@ -299,11 +295,11 @@ feature
 					list.item as field
 				loop
 					if field.item.name.same_string ("course_name") then
-						course_name := without_quotes (field.item.value.repr)
+						course_name := field.item.value.usual_repr
 					elseif field.item.name.same_string ("semester") then
-						semester := without_quotes (field.item.value.repr)
+						semester := field.item.value.usual_repr
 					elseif field.item.name.same_string ("exam_kind") then
-						exam_kind := without_quotes (field.item.value.repr)
+						exam_kind :=field.item.value.usual_repr
 					elseif field.item.name.same_string ("num_students") then
 						num_students := field.item.value.repr
 					end
@@ -330,17 +326,13 @@ feature
 				query_manager.database_manager.single_select ("reports", id) as field
 			loop
 				if field.item.name.same_string ("unit_name") then
-					u_name := field.item.value.repr
-					u_name := without_quotes (u_name)
+					u_name := field.item.value.usual_repr
 				elseif field.item.name.same_string ("head_name") then
-					h_name := field.item.value.repr
-					h_name := without_quotes (h_name)
+					h_name := field.item.value.usual_repr
 				elseif field.item.name.same_string ("rep_start") then
-					s_date := field.item.value.repr
-					s_date := without_quotes (s_date)
+					s_date := field.item.value.usual_repr
 				elseif field.item.name.same_string ("rep_end") then
-					e_date := field.item.value.repr
-					e_date := without_quotes (e_date)
+					e_date := field.item.value.usual_repr
 				elseif field.item.name.same_string ("report_id") then
 					c_id := field.item.value.repr.to_integer
 				end

@@ -31,14 +31,35 @@ feature
 			-- Execute handler for `req' and respond in `res'.
 			-- returns administator panel
 		local
-			temp: TEMPLATE_ADMIN_PAGE
+			template: TEMPLATE_MORE_INFO
+			query_manager: QUERY_MANAGER
+			s_id: STRING
 		do
 			page.set_status_code ({HTTP_STATUS_CODE}.ok)
-			create temp
-			if attached temp.output as body then
-				page.set_body (body)
+			if req.is_get_request_method then
+				s_id := create {STRING}.make_from_string (req.path_info.split ('/').i_th (3))
+				if attached s_id.to_integer as id then
+					create query_manager.make
+					if query_manager.database_manager.has_report (id) then
+						create template.make (id)
+						if attached template.output as body then
+							res.put_string (body)
+						end
+					else
+						not_found_page (req, res)
+					end
+					query_manager.database_manager.close
+				end
 			end
-			res.send (page)
+		end
+
+	not_found_page (req: WSF_REQUEST; res: WSF_RESPONSE)
+		local
+			not_found: WSF_NOT_FOUND_RESPONSE
+		do
+			create not_found.make (req)
+			not_found.set_body ("There is no such report")
+			res.send (not_found)
 		end
 
 end

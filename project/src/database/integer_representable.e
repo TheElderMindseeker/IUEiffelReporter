@@ -36,4 +36,9 @@ feature -- Access
 			Result := integer_value.out
 		end
 
+	usual_repr:STRING
+		-- Usual string representation of the object.
+		do
+			Result := integer_value.out
+		end
 end
