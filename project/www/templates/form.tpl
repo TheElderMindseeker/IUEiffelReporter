@@ -447,6 +447,7 @@
 							<button type="button" class="btn button-yellow" id="submit" name="submit" style="font-size: 30pt; display:block; margin:10px auto; width:320px; height:80px;">Submit</button>
 						</div>
 					</div>
+					<input type="hidden" value="{$id/}" name="id"/>
 				</form>
 			</div>
 		</div>
