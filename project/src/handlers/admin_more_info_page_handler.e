@@ -38,7 +38,7 @@ feature
 			page.set_status_code ({HTTP_STATUS_CODE}.ok)
 			if req.is_get_request_method then
 				s_id := create {STRING}.make_from_string (req.path_info.split ('/').i_th (3))
-				if attached s_id.to_integer as id then
+				if s_id.is_integer and then attached s_id.to_integer as id then
 					create query_manager.make
 					if query_manager.database_manager.has_report (id) then
 						create template.make (id)
@@ -48,6 +48,8 @@ feature
 					else
 						not_found_page (id.to_hex_string, req, res)
 					end
+				else
+					incorrect_path (req, res)
 				end
 			end
 		end
@@ -58,6 +60,15 @@ feature
 		do
 			create not_found.make (req)
 			not_found.set_body ("There is no such report")
+			res.send (not_found)
+		end
+
+	incorrect_path (req: WSF_REQUEST; res: WSF_RESPONSE)
+		local
+			not_found: WSF_NOT_FOUND_RESPONSE
+		do
+			create not_found.make (req)
+			not_found.set_body ("you path is incorrect")
 			res.send (not_found)
 		end
 

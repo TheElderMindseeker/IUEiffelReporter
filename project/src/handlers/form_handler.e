@@ -33,12 +33,11 @@ feature
 			input_data: STRING
 			query_manager: QUERY_MANAGER
 			database_manager: DATABASE_MANAGER
-			id: STRING
 		do
 			create query_manager.make
 			database_manager := query_manager.database_manager
 			if req.is_get_request_method then
-				create temp_form
+				create temp_form.make (-1)
 				if attached temp_form.output as body then
 					res.put_string (body)
 				end
@@ -52,15 +51,8 @@ feature
 						form_parser.parse
 						if attached form_parser.parse_result as parsed_data then
 							if attached {LINKED_LIST [FIELD]} parsed_data.at ("reports") as report_data then
-								across
-									report_data as field
-								loop
-									if field.item.name.same_string ("id") then
-										create id.make_from_string (field.item.value.usual_repr)
-									end
-								end
-								if attached id and then id.is_integer and then id.to_integer > 0 then
-									delete_report (id.to_integer, query_manager.database_manager, res, req)
+								if form_parser.h_id > 0 then
+									delete_report (form_parser.h_id, query_manager.database_manager, res, req)
 								end
 								database_manager.create_report (report_data)
 							end

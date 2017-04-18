@@ -26,7 +26,8 @@ feature {NONE} -- Initialization
 		end
 
 feature -- Parsing
-
+	h_id:INTEGER
+			-- hidden id that tells as if it's new report or not
 	set_json_string (j_str: STRING)
 			-- Set source json string to the object.
 		require
@@ -63,10 +64,11 @@ feature -- Parsing
 					across
 						j_object.current_keys as j_key
 					loop
-						if attached {JSON_STRING} j_object.item (j_key.item) as j_string then
+						if attached {JSON_STRING} j_object.item ("id") as j_string then
+							h_id:=j_string.item.to_integer
+						elseif attached {JSON_STRING} j_object.item (j_key.item) as j_string then
 							parse_json_string (j_key.item, j_string)
-						end
-						if attached {JSON_ARRAY} j_object.item (j_key.item) as j_array then
+						elseif attached {JSON_ARRAY} j_object.item (j_key.item) as j_array then
 							parse_json_array (j_key.item, j_array)
 						end
 					end
@@ -93,12 +95,6 @@ feature {NONE} -- Implementation
 			if attached parse_result as hash_table then
 				if attached database_manager.which_table (name.item) as db_table_result then
 					if attached {STRING_8} db_table_result.at (1) as table_name and then attached {STRING_8} db_table_result.at (2) as arg_type then
-						if name.item.same_string ("rep_start") and then value.item.is_empty then
-							value.item.set ("01.01.2017", 1, 10)
-						end
-						if name.item.same_string ("rep_end") and value.item.is_empty then
-							value.item.set ("31.12.2017", 1, 10)
-						end
 						add_field_to_hash_table (name.item, value.item, table_name, arg_type, hash_table)
 					end
 				end
