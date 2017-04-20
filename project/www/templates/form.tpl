@@ -510,7 +510,7 @@
 										</thead>
 										<tbody>
 											{foreach from="$patents" item="patent"}
-												<tr class="required-row row-in-table">
+												<tr class="row-in-table">
 													<td><input type="text" class="form-control input-in-table" onblur="removeRow(this);" name="patents[][patent_title]" value="{$patent.patent_title/}"/></td>
 													<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="patents[][patent_office_country]" value="{$patent.patent_office_country/}"/></td>
 												</tr>
@@ -542,7 +542,7 @@
 										</thead>
 										<tbody>
 											{foreach from="$licenses" item="license"}
-												<tr class="required-row row-in-table">
+												<tr class="row-in-table">
 													<td><input type="text" class="form-control input-in-table" onblur="removeRow(this);" name="licenses[][patent_title]" value="{$license.patent_title/}"/></td>
 												</tr>
 												{/foreach}
@@ -592,7 +592,7 @@
 										</thead>
 										<tbody>
 											{foreach from="$best_paper_awards" item="paper"}
-												<tr class="required-row row-in-table">
+												<tr class="row-in-table">
 													<td><input type="text" class="form-control input-in-table" onblur="removeRow(this);" name="best_paper_awards[][authors]" value="{$paper.authors/}"/></td>
 													<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="best_paper_awards[][title]" value="{$paper.title/}"/></td>
 													<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="best_paper_awards[][awarding_installation]" value="{$paper.awarding_installation/}"/></td>
@@ -634,7 +634,7 @@
 										</thead>
 										<tbody>
 											{foreach from="$memberships" item="membership"}
-												<tr class="required-row row-in-table">
+												<tr class="row-in-table">
 													<td><input type="text" class="form-control input-in-table" onblur="removeRow(this);" name="memberships[][member_name]" value="{$membership.member_name/}"/></td>
 													<td><input type="text" class="form-control input-in-table datepicker-here" onBlur="removeRow(this);" name="memberships[][membership_date]" value="{$membership.membership_date/}"/></td>
 												{/foreach}
@@ -668,7 +668,7 @@
 										</thead>
 										<tbody>
 											{foreach from="$prizes" item="prize"}
-												<tr class="required-row row-in-table">
+												<tr class="row-in-table">
 													<td><input type="text" class="form-control input-in-table" onblur="removeRow(this);" name="prizes[][recipient_name]" value="{$prize.recipient_name/}"/></td>
 													<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="prizes[][prize_name]" value="{$prize.prize_name/}"/></td>
 													<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="prizes[][granting_installation]" value="{$prize.granting_installation/}"/></td>
@@ -724,7 +724,7 @@
 										</thead>
 										<tbody>
 											{foreach from="$industry_collaborations" item="industry_collaboration"}
-												<tr class="required-row row-in-table">
+												<tr class="row-in-table">
 													<td><input type="text" class="form-control input-in-table" onblur="removeRow(this);" name="industry_collaborations[][company]" value="{$industry_collaboration.company/}"/></td>
 													<td><input type="text" class="form-control input-in-table" onBlur="removeRow(this);" name="industry_collaborations[][nature_of_collaboration]" value="{$industry_collaboration.nature_of_collaboration/}"/></td>
 												</tr>
