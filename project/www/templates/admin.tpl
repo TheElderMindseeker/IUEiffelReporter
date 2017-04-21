@@ -14,11 +14,6 @@
 		<link type="text/css" rel="stylesheet" href="../resources/bootstrap-theme.css" >
 		<link type="text/css" rel="stylesheet" href="../resources/datepicker.min.css">
 		<link type="text/css" rel="stylesheet" href="../resources/reporterlibrary.css">
-		<style type="text/css">
-			a {
-				outline: none;
- 			}
- 		</style>
 	</head>
 	<body onload="adminPageInitialization();">
 		<div class="wrapper container">
@@ -52,7 +47,6 @@
 										<td><a href="/details/{$report.id/}" class="btn btn-success" role="button">More details...</a></td>
 										<td><a href="/edit/{$report.id/}" class="btn btn-primary" role="button">Edit</a></td>
 										<td><button onclick="requestDeletion('{$report.id/}', '{$report.unit_name/}');"type="button" class="btn btn-danger">Delete</button></td>
-
 									</tr>
 								{/foreach}
 							</tbody>
@@ -73,8 +67,8 @@
 	  									<option value="number_of_supervised_students">Number of supervised students by Laboratories</option>
 											<option value="number_of_research_collaborations">Number of research collaborations, if any, by Laboratories</option>
 											<option value="number_of_projects_awarded_grants">Number of projects awarded grants</option>
-	  									<option disabled value="cumulative_info">Cumulative info of a given unit over several years</option>
-											<option disabled value="patents_filed_or_submitted">Patents filed of submitted</option>
+	  									<option value="cumulative_info">Cumulative info of a given unit over several years</option>
+											<option value="patents_filed_or_submitted">Patents filed of submitted</option>
 										</select>
 									</div>
 								</div>
@@ -164,7 +158,5 @@
 			 </div>
 		 </div>
 		</div>
-		<script>
-		</script>
 	</body>
 </html>

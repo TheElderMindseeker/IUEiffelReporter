@@ -26,6 +26,10 @@ body {
 	height: 86%
 }
 
+a {
+  outline: none;
+}
+
 .wrapper {
     width: 94%;
     margin: 3% 3% 0 3%;
