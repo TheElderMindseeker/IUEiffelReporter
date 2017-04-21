@@ -46,7 +46,7 @@ feature
 							res.put_string (body)
 						end
 					else
-						not_found_page (req, res)
+						not_found_page (req, res, id)
 					end
 					query_manager.database_manager.close
 				else
@@ -55,12 +55,12 @@ feature
 			end
 		end
 
-	not_found_page (req: WSF_REQUEST; res: WSF_RESPONSE)
+	not_found_page (req: WSF_REQUEST; res: WSF_RESPONSE; id:INTEGER)
 		local
 			not_found: WSF_NOT_FOUND_RESPONSE
 		do
 			create not_found.make (req)
-			not_found.set_body ("There is no such report")
+			not_found.set_body ("There is no such report with id: " + id.out)
 			res.send (not_found)
 		end
 

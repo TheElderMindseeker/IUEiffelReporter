@@ -55,6 +55,7 @@ feature
 									delete_report (form_parser.h_id, query_manager.database_manager, res, req)
 								end
 								database_manager.create_report (report_data)
+
 							end
 							parsed_data.remove ("reports")
 							across

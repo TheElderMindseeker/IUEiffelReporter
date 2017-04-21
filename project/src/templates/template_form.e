@@ -28,13 +28,14 @@ feature -- Initialization
 			if id > 0 then
 				add_all_values (id)
 			end
+			template.add_value (id, "id")
 			template.analyze
 			template.get_output
 			if attached template.output as l_output then
 				output := l_output
 			end
 		end
-
+feature --Access
 	output: detachable STRING
 
 feature {NONE} -- Implementation
