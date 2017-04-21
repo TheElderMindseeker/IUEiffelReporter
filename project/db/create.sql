@@ -140,6 +140,16 @@ CREATE TABLE best_paper_awards (
     ON DELETE CASCADE
 );
 
+CREATE TABLE memberships (
+  membership_id INTEGER,
+  report_id INTEGER,
+  member_name TEXT,
+  membership_date REAL,
+  PRIMARY KEY (membership_id),
+  FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
+);
+
 CREATE TABLE prizes (
   prize_id INTEGER,
   report_id INTEGER,
