@@ -66,6 +66,8 @@ feature {NONE} -- Implementation
 			number_text_temp: TEMPLATE_TEXT_NUMBER
 			courses_taught_template: TEMPLATE_COURSES_TAUGHT
 			publications_template: TEMPLATE_PUBLICATIONS
+			cumul_info:TEMPLATE_CUMULATIVE_INFO
+			patents_template:TEMPLATE_PATENTS
 			error: TEMPLATE_ADMIN_QUERY_ERROR
 		do
 			if type.same_string ("number_of_supervised_students") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed then
@@ -121,6 +123,36 @@ feature {NONE} -- Implementation
 						create Result.make_from_string (o)
 					end
 				end
+				elseif type.same_string ("query_publications") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed and attached admin_parser.lab_name as ln then
+				if query_manager.query_publications (sd, ed).new_cursor.after then
+					has_info := False
+				else
+					has_info := True
+					create publications_template.make (query_manager.query_publications (sd, ed))
+					if attached publications_template.output as o then
+						create Result.make_from_string (o)
+					end
+				end
+				elseif type.same_string ("cumulative_info") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed and attached admin_parser.lab_name as ln then
+				if query_manager.cumulative_info (sd, ed, create{STRING_REPRESENTABLE}.make (ln)).new_cursor.after then
+					has_info := False
+				else
+					has_info := True
+					create cumul_info.make (query_manager.cumulative_info (sd, ed,  create{STRING_REPRESENTABLE}.make (ln)))
+					if attached cumul_info.output as o then
+						create Result.make_from_string (o)
+					end
+				end
+				elseif type.same_string ("patents_filed_or_submitted") and attached admin_parser.start_date as sd and attached admin_parser.end_date as ed and attached admin_parser.lab_name as ln then
+				if query_manager.patents_filed_or_submitted (sd, ed).new_cursor.after then
+					has_info := False
+				else
+					has_info := True
+					create patents_template.make (query_manager.patents_filed_or_submitted(sd, ed))
+					if attached patents_template.output as o then
+						create Result.make_from_string (o)
+					end
+				end
 			end
 			if not has_info then
 				create error.make
@@ -142,6 +174,8 @@ feature {NONE} -- Implementation
 			Result := Result or type.same_string ("number_of_projects_awarded_grants")
 			Result := Result or type.same_string ("courses_taught")
 			Result := Result or type.same_string ("query_publications")
+			Result := Result or type.same_string ("cumulative_info")
+			Result := Result or type.same_string ("patents_filed_or_submitted")
 		end
 
 end

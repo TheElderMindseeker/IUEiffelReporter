@@ -58,7 +58,7 @@ feature {NONE} -- Implementation
 				across
 					publication.item as field
 				loop
-					if field.item.name.same_string ("publication_name") and not field.item.value.repr.same_string ("''") then
+					if field.item.name.same_string ("publication_name") then
 						publication_name := field.item.value.usual_repr
 					end
 				end
