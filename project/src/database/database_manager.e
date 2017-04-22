@@ -143,8 +143,6 @@ feature {NONE} -- Implementation
 				q_row := cursor.item
 				current_report_id := q_row.integer_value (1)
 			end
-		ensure
-			valid_current_report_id: not has_error implies current_report_id >= 0
 		end
 
 	gather_table_info
