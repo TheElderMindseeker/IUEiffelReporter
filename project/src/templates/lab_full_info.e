@@ -299,13 +299,25 @@ feature
 					elseif field.item.name.same_string ("semester") then
 						semester := field.item.value.usual_repr
 					elseif field.item.name.same_string ("exam_kind") then
-						exam_kind :=field.item.value.usual_repr
+						exam_kind := field.item.value.usual_repr
 					elseif field.item.name.same_string ("num_students") then
 						num_students := field.item.value.repr
 					end
 				end
 				if attached course_name as a_course_name and attached semester as a_semester and attached exam_kind as a_exam_kind and attached num_students as a_num_students then
 					Result.force (create {EXAM}.make (a_course_name, a_semester, a_exam_kind, a_num_students))
+				end
+			end
+		end
+
+	get_relevant_info: STRING
+		do
+			create Result.make_from_string ("")
+			across
+				query_manager.database_manager.single_select ("relevant_info", id) as field
+			loop
+				if field.item.name.same_string ("info") then
+					Result := field.item.value.usual_repr
 				end
 			end
 		end
@@ -338,6 +350,159 @@ feature
 				end
 			end
 			create Result.make (u_name, h_name, s_date, e_date, id)
+		end
+
+	get_patents: LIST [PATENT]
+		local
+			patent_title: STRING
+			patent_office_country: STRING
+		do
+			create {ARRAYED_LIST [PATENT]} Result.make (0)
+			across
+				query_manager.database_manager.multiple_select ("patents", id) as course
+			loop
+				across
+					course.item as field
+				loop
+					if field.item.name.same_string ("patent_title") then
+						patent_title := field.item.value.usual_repr
+					elseif field.item.name.same_string ("patent_office_country") then
+						patent_office_country := field.item.value.usual_repr
+					end
+				end
+				if attached patent_title as pt and attached patent_office_country as poc then
+					Result.force (create {PATENT}.make (pt, poc))
+				end
+			end
+		end
+
+	get_licenses: LIST [LICENSE]
+		local
+			patent_title: STRING
+		do
+			create {ARRAYED_LIST [LICENSE]} Result.make (0)
+			across
+				query_manager.database_manager.multiple_select ("licenses", id) as course
+			loop
+				across
+					course.item as field
+				loop
+					if field.item.name.same_string ("patent_title") then
+						patent_title := field.item.value.usual_repr
+					end
+				end
+				if attached patent_title as pt then
+					Result.force (create {LICENSE}.make (pt))
+				end
+			end
+		end
+
+	get_best_paper_awards: LIST [BEST_PAPER_AWARD]
+		local
+			authors: STRING
+			title: STRING
+			awarding_installation: STRING
+			award_exact_wording: STRING
+			awarding_date: STRING
+		do
+			create {ARRAYED_LIST [BEST_PAPER_AWARD]} Result.make (0)
+			across
+				query_manager.database_manager.multiple_select ("best_paper_awards", id) as course
+			loop
+				across
+					course.item as field
+				loop
+					if field.item.name.same_string ("authors") then
+						authors := field.item.value.usual_repr
+					elseif field.item.name.same_string ("title") then
+						title := field.item.value.usual_repr
+					elseif field.item.name.same_string ("awarding_installation") then
+						awarding_installation := field.item.value.usual_repr
+					elseif field.item.name.same_string ("award_exact_wording") then
+						award_exact_wording := field.item.value.usual_repr
+					elseif field.item.name.same_string ("awarding_date") then
+						awarding_date := field.item.value.usual_repr
+					end
+				end
+				if attached authors as a and attached title as t and attached awarding_installation as aw and attached award_exact_wording as aew and attached awarding_date as ad then
+					Result.force (create {BEST_PAPER_AWARD}.make (a, t, aw, aew, ad))
+				end
+			end
+		end
+
+	get_memberships: LIST [MEMBERSHIP]
+		local
+			member_name: STRING
+			membership_date: STRING
+		do
+			create {ARRAYED_LIST [MEMBERSHIP]} Result.make (0)
+			across
+				query_manager.database_manager.multiple_select ("memberships", id) as course
+			loop
+				across
+					course.item as field
+				loop
+					if field.item.name.same_string ("member_name") then
+						member_name := field.item.value.usual_repr
+					elseif field.item.name.same_string ("membership_date") then
+						membership_date := field.item.value.usual_repr
+					end
+				end
+				if attached member_name as mn and attached membership_date as md then
+					Result.force (create {MEMBERSHIP}.make (mn, md))
+				end
+			end
+		end
+
+	get_prizes: LIST [PRIZE]
+		local
+			recipient_name: STRING
+			prize_name: STRING
+			prizing_date: STRING
+		do
+			create {ARRAYED_LIST [PRIZE]} Result.make (0)
+			across
+				query_manager.database_manager.multiple_select ("memberships", id) as course
+			loop
+				across
+					course.item as field
+				loop
+					if field.item.name.same_string ("recipient_name") then
+						recipient_name := field.item.value.usual_repr
+					elseif field.item.name.same_string ("prize_name") then
+						prize_name := field.item.value.usual_repr
+					elseif field.item.name.same_string ("prizing_date") then
+						prizing_date := field.item.value.usual_repr
+					end
+				end
+				if attached recipient_name as rn and attached prize_name as pn and attached prizing_date as pd then
+					Result.force (create {PRIZE}.make (rn, pn, pd))
+				end
+			end
+		end
+
+	get_industry_collaborations: LIST [INDUSTRY_COLLABORATION]
+		local
+			company: STRING
+			nature_of_collaboration: STRING
+		do
+			create {ARRAYED_LIST [INDUSTRY_COLLABORATION]} Result.make (0)
+			across
+				query_manager.database_manager.multiple_select ("memberships", id) as course
+			loop
+				across
+					course.item as field
+				loop
+					if field.item.name.same_string ("company") then
+						company := field.item.value.usual_repr
+					elseif field.item.name.same_string ("nature_of_collaboration") then
+						nature_of_collaboration := field.item.value.usual_repr
+					end
+				end
+				if attached company as c and attached nature_of_collaboration as noc then
+					Result.force (create {INDUSTRY_COLLABORATION}.make (c, noc))
+				end
+			end
 		end
 
 end

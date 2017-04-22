@@ -59,6 +59,10 @@ feature {NONE} -- Implementation
 			template.add_value (research_projects, "research_projects")
 			template.add_value (research_collaborations, "research_collaborations")
 			template.add_value (publications, "publications")
+			template.add_value (memberships, "memberships")
+			template.add_value (prizes, "prizes")
+			template.add_value (industry_collaborations, "industry_collaborations")
+			template.add_value (relevant_info, "relevant_info")
 		end
 
 	set_all_attributes (a_id: INTEGER)
@@ -77,11 +81,27 @@ feature {NONE} -- Implementation
 			research_projects := info.get_research_projects
 			research_collaborations := info.get_research_collaborations
 			publications := info.get_publications
+			memberships := info.get_memberships
+			prizes := info.get_prizes
+			industry_collaborations := info.get_industry_collaborations
+			relevant_info := info.get_relevant_info
 			info.close_database
 		end
 
 	report: REPORT
 			-- Report main info
+
+	relevant_info: STRING
+			-- relevant info
+
+	memberships: LIST [MEMBERSHIP]
+			--List of memberships
+
+	prizes: LIST [PRIZE]
+			--List of prizes
+
+	industry_collaborations: LIST [INDUSTRY_COLLABORATION]
+			--List of industry collaborations
 
 	courses: LIST [COURSE]
 			-- List of courses
