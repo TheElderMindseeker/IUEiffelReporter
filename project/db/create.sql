@@ -116,13 +116,21 @@ CREATE TABLE publications (
     ON DELETE CASCADE
 );
 
-CREATE TABLE patents_and_ip (
+CREATE TABLE patents (
   patent_id INTEGER,
   report_id INTEGER,
-  type TEXT,
   patent_title TEXT,
   patent_office_country TEXT,
   PRIMARY KEY (patent_id),
+  FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    ON DELETE CASCADE
+);
+
+CREATE TABLE licenses (
+  license_id INTEGER,
+  report_id INTEGER,
+  patent_title TEXT,
+  PRIMARY KEY (license_id),
   FOREIGN KEY (report_id) REFERENCES reports(report_id)
     ON DELETE CASCADE
 );
