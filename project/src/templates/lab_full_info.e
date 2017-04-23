@@ -462,7 +462,7 @@ feature
 		do
 			create {ARRAYED_LIST [PRIZE]} Result.make (0)
 			across
-				query_manager.database_manager.multiple_select ("memberships", id) as course
+				query_manager.database_manager.multiple_select ("prizes", id) as course
 			loop
 				across
 					course.item as field
@@ -488,7 +488,7 @@ feature
 		do
 			create {ARRAYED_LIST [INDUSTRY_COLLABORATION]} Result.make (0)
 			across
-				query_manager.database_manager.multiple_select ("memberships", id) as course
+				query_manager.database_manager.multiple_select ("industry_collaborations", id) as course
 			loop
 				across
 					course.item as field

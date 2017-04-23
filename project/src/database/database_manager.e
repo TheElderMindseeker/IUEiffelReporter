@@ -749,8 +749,8 @@ feature {QUERY_MANAGER} -- Specific queries
 					" FROM reports rep LEFT OUTER JOIN relevant_info rel ON rep.report_id = rel.report_id" +
 					" WHERE rep.unit_name = " + laboratory.repr
 			if attached start_date as rep_start and attached end_date as rep_end then
-				s_query := s_query + " AND rep.rep_start <= julianday(" + rep_start.repr + ") AND " +
-						"julianday(" + rep_end.repr + ") <= rep.rep_end"
+				s_query := s_query + " AND rep.rep_start >= julianday(" + rep_start.repr + ") AND " +
+						"julianday(" + rep_end.repr + ") >= rep.rep_end"
 			end
 			s_query := s_query + ";"
 			create query_statement.make (s_query, database)
@@ -870,10 +870,9 @@ feature {QUERY_MANAGER} -- Specific queries
 			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
 			s_query: STRING_8
 		do
-			s_query := "SELECT pats.patent_id, pats.report_id, pats.patent_title, pats.patent_office_country FROM patents pats INNER JOIN reports rep" +
-					" WHERE pats.type = 'P'"
+			s_query := "SELECT pats.patent_id, pats.report_id, pats.patent_title, pats.patent_office_country FROM patents pats INNER JOIN reports rep"
 			if attached start_date as rep_start and attached end_date as rep_end then
-				s_query := s_query + " AND rep.rep_start >= julianday(" + rep_start.repr + ") AND " +
+				s_query := s_query + " WHERE rep.rep_start >= julianday(" + rep_start.repr + ") AND " +
 						"julianday(" + rep_end.repr + ") >= rep.rep_end"
 			end
 			s_query := s_query + ";"

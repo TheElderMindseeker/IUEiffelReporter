@@ -28,7 +28,6 @@ feature -- Initialization
 			set_reports_and_labs
 			template.add_value (reports, "reports")
 			template.add_value (labs, "labs")
-				--template_context.enable_verbose
 			template.analyze
 			template.get_output
 			if attached template.output as l_output then

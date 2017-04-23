@@ -16,14 +16,6 @@
         </div>
       </div>
       <div class="form-group row" style="margin-bottom: 25px;">
-        <div class="col-sm-6 col-md-6" >
-          <label class="control-label">Report ID</label>
-        </div>
-        <div class="col-sm-6 col-md-6">
-          <label class="view-label">{$labinfo.id/}</label>
-        </div>
-      </div>
-      <div class="form-group row" style="margin-bottom: 25px;">
         <div class="col-sm-6 col-md-6">
           <label class="control-label">Name of head of unit</label>
         </div>

@@ -35,7 +35,9 @@ feature -- Initialization
 				output := l_output
 			end
 		end
+
 feature --Access
+
 	output: detachable STRING
 
 feature {NONE} -- Implementation
@@ -43,25 +45,56 @@ feature {NONE} -- Implementation
 	add_all_values (a_id: INTEGER)
 			-- Fills template.
 		local
-			report: REPORT -- Report main info
+			report: REPORT
+				-- Report main info
 
-			courses: LIST [COURSE] -- List of courses
+			relevant_info: STRING
+				-- relevant info
 
-			examinations: LIST [EXAM] -- List of examinations
+			best_paper_awards: LIST [BEST_PAPER_AWARD]
+				-- List of paper awards
 
-			supervised_students: LIST [STUDENT] -- List of supervised students
+			licenses: LIST [LICENSE]
+				-- List of licenses
 
-			student_reports: LIST [S_REPORT] -- List of studen reports
+			patents: LIST [PATENT]
+				--List of patents
 
-			completed_phd: LIST [PHD] -- List of completed phds
+			memberships: LIST [MEMBERSHIP]
+				--List of memberships
 
-			grants: LIST [GRANT] -- List of grants
+			prizes: LIST [PRIZE]
+				--List of prizes
 
-			research_projects: LIST [PROJECT] -- List of research projects
+			industry_collaborations: LIST [INDUSTRY_COLLABORATION]
+				--List of industry collaborations
 
-			research_collaborations: LIST [COLLABORATION] -- List of research collaborations
+			courses: LIST [COURSE]
+				-- List of courses
 
-			publications: LIST [PUBLICATION] -- List of publications
+			examinations: LIST [EXAM]
+				-- List of examinations
+
+			supervised_students: LIST [STUDENT]
+				-- List of supervised students
+
+			student_reports: LIST [S_REPORT]
+				-- List of studen reports
+
+			completed_phd: LIST [PHD]
+				-- List of completed phds
+
+			grants: LIST [GRANT]
+				-- List of grants
+
+			research_projects: LIST [PROJECT]
+				-- List of research projects
+
+			research_collaborations: LIST [COLLABORATION]
+				-- List of research collaborations
+
+			publications: LIST [PUBLICATION]
+				-- List of publications
 			info: LAB_FULL_INFO
 		do
 			create info.make (a_id)
@@ -75,6 +108,13 @@ feature {NONE} -- Implementation
 			research_projects := info.get_research_projects
 			research_collaborations := info.get_research_collaborations
 			publications := info.get_publications
+			memberships := info.get_memberships
+			prizes := info.get_prizes
+			industry_collaborations := info.get_industry_collaborations
+			best_paper_awards := info.get_best_paper_awards
+			relevant_info := info.get_relevant_info
+			patents:= info.get_patents
+			licenses:= info.get_licenses
 			info.close_database
 			template.add_value (report.unit_name, "unit_name")
 			template.add_value (report.head_name, "head_name")
@@ -89,6 +129,13 @@ feature {NONE} -- Implementation
 			template.add_value (research_projects, "research_projects")
 			template.add_value (research_collaborations, "research_collaborations")
 			template.add_value (publications, "publications")
+			template.add_value (memberships, "memberships")
+			template.add_value (prizes, "prizes")
+			template.add_value (industry_collaborations, "industry_collaborations")
+			template.add_value (relevant_info, "info")
+			template.add_value (best_paper_awards, "best_paper_awards")
+			template.add_value (licenses, "licenses")
+			template.add_value (patents, "patents")
 		end
 
 feature {NONE} -- Implementation

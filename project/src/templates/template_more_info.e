@@ -63,6 +63,10 @@ feature {NONE} -- Implementation
 			template.add_value (prizes, "prizes")
 			template.add_value (industry_collaborations, "industry_collaborations")
 			template.add_value (relevant_info, "relevant_info")
+			template.add_value (best_paper_awards, "best_paper_awards")
+			template.add_value (licenses, "licenses")
+			template.add_value (patents, "patents")
+			template.add_value (a_id, "id")
 		end
 
 	set_all_attributes (a_id: INTEGER)
@@ -84,7 +88,10 @@ feature {NONE} -- Implementation
 			memberships := info.get_memberships
 			prizes := info.get_prizes
 			industry_collaborations := info.get_industry_collaborations
+			best_paper_awards := info.get_best_paper_awards
 			relevant_info := info.get_relevant_info
+			patents:= info.get_patents
+			licenses:= info.get_licenses
 			info.close_database
 		end
 
@@ -93,6 +100,15 @@ feature {NONE} -- Implementation
 
 	relevant_info: STRING
 			-- relevant info
+
+	best_paper_awards: LIST [BEST_PAPER_AWARD]
+			-- List of paper awards
+
+	licenses: LIST [LICENSE]
+			-- List of licenses
+
+	patents: LIST[PATENT]
+			--List of patents
 
 	memberships: LIST [MEMBERSHIP]
 			--List of memberships

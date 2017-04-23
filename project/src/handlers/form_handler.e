@@ -55,13 +55,15 @@ feature
 									delete_report (form_parser.h_id, query_manager.database_manager, res, req)
 								end
 								database_manager.create_report (report_data)
-
 							end
 							parsed_data.remove ("reports")
 							across
 								parsed_data.current_keys as table_name
 							loop
 								if attached {LINKED_LIST [FIELD]} parsed_data.at (table_name.item) as record then
+									if attached database_manager.create_field ("report_id", database_manager.current_report_id) as field then
+										record.extend (field)
+									end
 									database_manager.single_insert (table_name.item, record)
 								elseif attached {LINKED_LIST [LINKED_LIST [FIELD]]} parsed_data.at (table_name.item) as record_list then
 									add_id_field_to_linked_lists (database_manager.current_report_id, record_list, database_manager)

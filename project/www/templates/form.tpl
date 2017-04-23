@@ -766,7 +766,7 @@
 								</div>
 								<div class="form-group row">
 									<div class="col-sm-12 col-md-12">
-										<textarea class="form-control input-text" id="relevant_info" name="relevant_info" rows="4" style="width: 100%; margin-top: 20px;">{$relevant_info/}</textarea>
+										<textarea class="form-control input-text" id="info" name="info" rows="4" style="width: 100%; margin-top: 20px;">{$info/}</textarea>
 									</div>
 								</div>
 								<div class="form-group row">

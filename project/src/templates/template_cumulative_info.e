@@ -51,7 +51,6 @@ feature {NONE} -- Implementation
 			a_infos /= Void
 		local
 			unit_name: STRING
-			id: STRING
 			head_name: STRING
 			rep_start: STRING
 			rep_end: STRING
@@ -65,20 +64,18 @@ feature {NONE} -- Implementation
 				loop
 					if field.item.name.same_string ("unit_name") then
 						unit_name := field.item.value.usual_repr
-					elseif field.item.name.same_string ("id") then
-						id := field.item.value.usual_repr
 					elseif field.item.name.same_string ("head_name") then
 						head_name := field.item.value.usual_repr
 					elseif field.item.name.same_string ("rep_start") then
 						rep_start := field.item.value.usual_repr
 					elseif field.item.name.same_string ("rep_end") then
 						rep_end := field.item.value.usual_repr
-					elseif field.item.name.same_string ("relevant_info") then
+					elseif field.item.name.same_string ("info") then
 						relevant_info := field.item.value.usual_repr
 					end
 				end
-				if attached unit_name as un and attached id as i and attached head_name as hd and attached rep_start as rs and attached rep_end as re and attached relevant_info as ri then
-					infos.force (create {CUMUL_INFO}.make (un, i, hd, rs, re, ri))
+				if attached unit_name as un and attached head_name as hd and attached rep_start as rs and attached rep_end as re and attached relevant_info as ri then
+					infos.force (create {CUMUL_INFO}.make (un, hd, rs, re, ri))
 				end
 			end
 		end

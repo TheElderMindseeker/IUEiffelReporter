@@ -24,9 +24,9 @@ feature -- Initialization
 			create p.make_from_string ("www")
 			p := p.appended ("/templates/query_responses")
 			set_template_folder (p)
-			set_template_file_name ("cumulative_info.tpl")
-			set_infos (a_patents)
-			template.add_value (patents, "labinfos")
+			set_template_file_name ("patents.tpl")
+			set_patents (a_patents)
+			template.add_value (patents, "patents")
 			template.analyze
 			template.get_output
 			if attached template.output as l_output then
@@ -44,7 +44,7 @@ feature {NONE} -- Implementation
 	patents: LINKED_LIST [PATENT]
 			-- List of cumulative info.
 
-	set_infos (a_patents: ITERABLE [ITERABLE [FIELD]])
+	set_patents (a_patents: ITERABLE [ITERABLE [FIELD]])
 			-- Fills list of cumulative info.
 		require
 			a_patents /= Void
