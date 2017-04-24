@@ -26,7 +26,7 @@ feature -- Access
 				string.append ("<?xml version=%"1.0%" encoding=%"UTF-8%"?>%N")
 				string.append ("<ReportInfo ")
 				if attached lab_info.get_report as report then
-					string.append ("report_id=%"" + report.id.out + "%"")
+					string.append (" report_id=%"" + report.id.out + "%"")
 					string.append (" unit_name=%"" + report.unit_name + "%"")
 					string.append (" head_name=%"" + report.head_name + "%"")
 					string.append (" report_start=%"" + report.rep_start + "%"")
@@ -88,10 +88,10 @@ feature -- Access
 						string.append ("%T%T<PhD")
 						string.append (" student_name=%"" + phd.item.student_name + "%"")
 						string.append (" degree=%"" + phd.item.degree + "%"")
-						string.append (" supervisor name=%"" + phd.item.supervisor_name + "%"")
-						string.append (" other committee members=%"" + phd.item.other_committee_members + "%"")
-						string.append (" degree granting installation=%"" + phd.item.degree_granting_installation + "%"")
-						string.append (" dissertation title=%"" + phd.item.dissertation_title + "%"></PhD>%N")
+						string.append (" supervisor_name=%"" + phd.item.supervisor_name + "%"")
+						string.append (" other_committee_members=%"" + phd.item.other_committee_members + "%"")
+						string.append (" degree_granting_installation=%"" + phd.item.degree_granting_installation + "%"")
+						string.append (" dissertation_title=%"" + phd.item.dissertation_title + "%"></PhD>%N")
 						phd.forth
 					end
 				end
