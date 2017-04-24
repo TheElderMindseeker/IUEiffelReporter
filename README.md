@@ -6,11 +6,13 @@ The alias for Innopolis University Eiffel Reporter is __IUEiffelReporter__.
 
 This system is intended to collect, store, analyze and manage the reports of the faculty of Innopolis University. The system has two interfaces: user interface for faculty and administrative interface for administration of the university. The main features of the system are simple one-page report submission via web interface with resubmission support, intuitive report management including data analysis, editing and deletion.
 
-## Compile Guide
+## System Requirements and Compilation Guide
 
 This guide is independent of the system you are using (it must work properly on Windows, Linux and Mac OS but it was only tested on Linux and Windows).
 
 The system is written in Eiffel programming language so for compilation it needs EiffelStudio IDE or equivalently Eiffel Compiler used from console interface (recommended only for experienced users). To get EiffelStudio IDE, please, visit official Eiffel page www.eiffel.com; the minimal supported version of EiffelStudio is 16.04;
+
+The system uses SQLite data base management system. You should install it before the start of working with the system.
 
 ### General Project Structure
 
@@ -22,9 +24,13 @@ The __IUEiffelReporter__ directory has the following structure:
       |
       \-- README.txt # the document you are currently reading`
 
+### How to Run
+
+Follow the instructions given in next three sections.
+
 ### Compilation
 
-Start EiffelStudio and open .ecf project file at `./project/` directory. You can either open it with compile action or compile it manually by pressing "Compile" button after the project loaded. For maximal performance you can _finalize_ the project (recommended only for experienced users).
+Start EiffelStudio and open .ecf project file at `./project/` directory. Then choose `iu_eiffel_reporter_standalone` option, if it requests. You can either open it with compile action or compile it manually by pressing "Compile" button after the project loaded. For maximal performance you can _finalize_ the project (recommended only for experienced users).
 
 ### Run preparation
 
@@ -33,10 +39,6 @@ Before the run of the application make sure the port 80 on your machine is free 
 ### Run
 
 Press "Run" button to start the application. The application web interface is now available on `localhost/`; the user interface, report form is availabale on `localhost/form` and administative interface is available on `localhost/admin`
-
-### Some other information
-
-Feature of editing of reports does not work. This feature has Conditional \(C\) importance parameter, and will be implemented in next version.
 
 ### Contacts
 
