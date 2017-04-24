@@ -1,11 +1,12 @@
 note
-	description: "Summary description for {TEMPLATE_PATENTS}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "template for patents query"
+	author: "Ginatullin Niyaz"
+	date: "24.04.2017"
+	revision: "1.0"
 
 class
 	TEMPLATE_PATENTS
+
 inherit
 
 	SHARED_TEMPLATE_CONTEXT
@@ -65,7 +66,7 @@ feature {NONE} -- Implementation
 					end
 				end
 				if attached patent_title as pt and attached patent_office_country as poc then
-					patents.force (create {PATENT}.make (pt,poc))
+					patents.force (create {PATENT}.make (pt, poc))
 				end
 			end
 		end
@@ -86,4 +87,5 @@ feature {NONE} -- Implementation
 		end
 
 	template: TEMPLATE_FILE
+
 end

@@ -1,8 +1,8 @@
 note
-	description: "Summary description for {TEMPLATE_CUMULATIVE_INFO}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "returns template for cumulutave info query"
+	author: "Ginatullin Niyaz"
+	date: "24.04.2017"
+	revision: "1.0"
 
 class
 	TEMPLATE_CUMULATIVE_INFO

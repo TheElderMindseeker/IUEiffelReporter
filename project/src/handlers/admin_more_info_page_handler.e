@@ -55,6 +55,7 @@ feature
 		end
 
 	not_found_page (id: READABLE_STRING_8; req: WSF_REQUEST; res: WSF_RESPONSE)
+			--send if there is no report with such id
 		local
 			not_found: WSF_NOT_FOUND_RESPONSE
 		do
@@ -64,6 +65,7 @@ feature
 		end
 
 	incorrect_path (req: WSF_REQUEST; res: WSF_RESPONSE)
+			--send if path is wrong
 		local
 			not_found: WSF_NOT_FOUND_RESPONSE
 		do

@@ -1,5 +1,5 @@
 note
-	description: "class for giving to admin data to export"
+	description: "handler for giving to admin data to export in json form"
 	author: "Ginatullin Niyaz"
 	date: "24.04.2017"
 	revision: "1.0"
@@ -65,6 +65,7 @@ feature
 feature {NONE}
 
 	not_found_page (id: READABLE_STRING_8; res: WSF_RESPONSE; req: WSF_REQUEST)
+			--send if there is no report with such id
 		local
 			not_found: WSF_NOT_FOUND_RESPONSE
 		do
@@ -74,6 +75,7 @@ feature {NONE}
 		end
 
 	incorrect_path (req: WSF_REQUEST; res: WSF_RESPONSE)
+			-- send if path is wrong
 		local
 			not_found: WSF_NOT_FOUND_RESPONSE
 		do
