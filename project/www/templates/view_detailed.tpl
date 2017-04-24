@@ -41,56 +41,60 @@
 								<div class="col-sm-6 col-md-6" >
 									<table style="right: 10px; position: absolute;">
 										<tr>
-											<td><a href="/export_json/{$id/}" class="btn btn-success" role="button" style="margin-right: 4px;">Export to JSON</a></td>
-											<td ><a href="/export_xml/{$id/}" class="btn btn-success" role="button">Export to XML</a></td>
+											<td><a href="/edit/{$id/}" class="btn btn-primary" role="button" style="margin-right: 4px;">Edit</a></td>
+											<td ><button onclick="requestDeletion('{$id/}', '{$unit_name/}');"type="button" class="btn btn-danger">Delete</button></td>
 										</tr>
 									</table>
 								</div>
 								<div class="col-sm-6 col-md-6">
-									<a href="/edit/{$id/}" class="btn btn-primary" role="button">Edit</a>
-									<button onclick="requestDeletion('{$id/}', '{$unit_name/}');"type="button" class="btn btn-danger">Delete</button>
+									<a href="/export_json/{$id/}" class="btn btn-success" role="button">Export to JSON</a>
+									<a href="/export_xml/{$id/}" class="btn btn-success" role="button">Export to XML</a>
+
 								</div>
 							</div>
-							<div class="form-group row" style="margin-bottom: 25px;">
-								<div class="col-sm-6 col-md-6" >
-									<label class="control-label">Name of unit</label>
+							<div align="center">
+								<div class="form-group row" style="margin-top: 10px;">
+									<div class="col-sm-6 col-md-6" >
+										<label class="control-label" style="padding-top: 10px;">Name of unit</label>
+									</div>
+									<div class="col-sm-6 col-md-6" align="left">
+										<label class="bordered-lable">{$unit_name/}</label>
+									</div>
 								</div>
-								<div class="col-sm-6 col-md-6">
-									<label class="view-label">{$unit_name/}</label>
+									<div class="form-group row" style="margin-top: 10px;">
+										<div class="col-sm-6 col-md-6" >
+											<label class="control-label" style="padding-top: 10px;">Report ID</label>
+										</div>
+										<div class="col-sm-6 col-md-6" align="left">
+											<label class="bordered-lable">{$id/}</label>
+										</div>
+									</div>
+								<div class="form-group row" style="margin-bottom: 10px;">
+									<div class="col-sm-6 col-md-6">
+										<label class="control-label" style="padding-top: 10px;">Name of head of unit</label>
+									</div>
+									<div class="col-sm-6 col-md-6" align="left">
+										<label class="bordered-lable">{$head_name/}</label>
+									</div>
+								</div>
+								<div class="form-group row" style="margin-bottom: 10px;">
+									<div class="col-sm-6 col-md-6">
+										<label class="control-label" style="padding-top: 10px;">Start of Reporting Period</label>
+									</div>
+									<div class="col-sm-6 col-md-6" align="left">
+										<label class="bordered-lable">{$rep_start/}</label>
+									</div>
+								</div>
+								<div class="form-group row" style="margin-bottom: 10px;">
+									<div class="col-sm-6 col-md-6">
+										<label class="control-label" style="padding-top: 10px;">End of Reporting Period</label>
+									</div>
+									<div class="col-sm-6 col-md-6" align="left">
+										<label class="bordered-lable">{$rep_end/}</label>
+									</div>
 								</div>
 							</div>
-							<div class="form-group row" style="margin-bottom: 25px;">
-								<div class="col-sm-6 col-md-6" >
-									<label class="control-label">Report ID</label>
-								</div>
-								<div class="col-sm-6 col-md-6">
-									<label class="view-label">{$id/}</label>
-								</div>
-							</div>
-							<div class="form-group row" style="margin-bottom: 25px;">
-								<div class="col-sm-6 col-md-6">
-									<label class="control-label">Name of head of unit</label>
-								</div>
-								<div class="col-sm-6 col-md-6">
-									<label class="view-label">{$head_name/}</label>
-								</div>
-							</div>
-							<div class="form-group row" style="margin-bottom: 25px;">
-								<div class="col-sm-6 col-md-6">
-									<label class="control-label">Start of Reporting Period</label>
-								</div>
-								<div class="col-sm-6 col-md-6">
-									<label class="view-label">{$rep_start/}</label>
-								</div>
-							</div>
-							<div class="form-group row" style="margin-bottom: 25px;">
-								<div class="col-sm-6 col-md-6">
-									<label class="control-label">End of Reporting Period</label>
-								</div>
-								<div class="col-sm-6 col-md-6">
-									<label class="view-label">{$rep_end/}</label>
-								</div>
-							</div>
+
 								<div class="form-group row">
 									<div class="col-sm-4 col-md-4">
 									</div>
@@ -592,15 +596,15 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<div class="col-sm-6 col-md-6">
-										<label for="relevant_info" class="control-label">Other relevant information</label>
+									<div class="col-sm-6 col-md-6" align="right">
+										<label style="font-weight: normal; font-size: 14pt; padding-top: 10px; padding-bottom: 10px;">Other relevant information</label>
 									</div>
 									<div class="col-sm-6 col-md-6">
 									</div>
 								</div>
 								<div class="form-group row">
-									<div class="col-sm-12 col-md-12">
-										{$relevant_info/}
+									<div class="col-sm-12 col-md-12" align="center">
+										<label class="bordered-lable" style="text-align: left;">{$relevant_info/}</label>
 									</div>
 								</div>
 								<div class="form-group row">
