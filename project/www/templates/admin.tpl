@@ -10,6 +10,8 @@
 		<script type="text/javascript" src="../resources/jquery.serializejson.js"></script>
 		<script type="text/javascript" src="../resources/jquery.tablesorter.js"></script>
 		<script type="text/javascript" src="../resources/reporterlibrary.js"></script>
+		<script type="text/javascript" src="../resources/chosen.jquery.min.js"></script>
+		<link type="text/css" rel="stylesheet" href="../resources/chosen.css">
 		<link type="text/css" rel="stylesheet" href="../resources/bootstrap.css">
 		<link type="text/css" rel="stylesheet" href="../resources/bootstrap-theme.css" >
 		<link type="text/css" rel="stylesheet" href="../resources/datepicker.min.css">
@@ -86,7 +88,7 @@
 										<label for="unit_name" class="control-label">Name of unit</label>
 									</div>
 									<div class="col-sm-6 col-md-6">
-										<select name="lab_name" style="font-size: 14pt; width: 75%;" required="">
+										<select name="lab_name" data-placeholder="Choose a unit..." class="chosen-select" required>
 											<option></option>
 											{foreach from="$labs" item="item"}
   											<option value="{$item/}">{$item/}</option>

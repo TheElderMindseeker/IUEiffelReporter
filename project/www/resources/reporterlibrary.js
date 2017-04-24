@@ -103,6 +103,7 @@ function onlyDigitsInitialization(elem) {
 function adminPageInitialization() {
 		var submitButton = document.request.submit;
 		submitButton.addEventListener("click", sendQuery);
+		$(".chosen-select").chosen({width: "75%"});
 		setTimeout(function() {  $("#list-of-reports").tablesorter(); reinitializeDatepickers(dateParams, document); }, 500);
 }
 
