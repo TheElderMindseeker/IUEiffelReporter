@@ -113,6 +113,10 @@ function isDataSubmitted() {
 function sendForm(e) {
 	var form = document.getElementById('mainForm');
 	if (checkRequiredLists(document) && checkRequiredFields(form)) {
+			var modal = document.getElementById("submissionMobdal");
+			$(modal.getElementsByClassName("modal-title")[0]).text("Submission in progress");
+			$(modal.getElementsByClassName("message")[0]).text("Submission in progress. Please, wait!");
+			$('#submissionMobdal').modal({backdrop: "static", keyboard: false, show: true});
 			cleanForm();
 			var formData = JSON.stringify($('#mainForm').serializeJSON());
 	  	$.ajax({
@@ -120,10 +124,23 @@ function sendForm(e) {
 	    	type:'POST',
 		    data: formData,
 	    	success: function(res) {
+					$(modal.getElementsByClassName("modal-title")[0]).empty();
+					$(modal.getElementsByClassName("modal-title")[0]).text("Submission succeed!");
+					$(modal.getElementsByClassName("message")[0]).empty();
+					$(modal.getElementsByClassName("message")[0]).text("Your report was submitted successfully.");
+					modal.getElementsByClassName("active")[0].setAttribute("class", "progress progress-striped");
+					modal.getElementsByClassName("disabled")[0].setAttribute("class", "btn btn-success");
 					Cookies.set('idOfLastAddedReport', res, { expires: ((new Date).getTime() + (24 * 60 * 60 * 1000)) });
 					document.getElementById("is-data-submitted").setAttribute("value", "true");
-					$('#submissionSuccessModal').modal({backdrop: "static", keyboard: false, show: true});
-	    	}
+	    	},
+				error: function() {
+					$(modal.getElementsByClassName("modal-title")[0]).empty();
+					$(modal.getElementsByClassName("modal-title")[0]).text("Submission failed!");
+					$(modal.getElementsByClassName("message")[0]).empty();
+					$(modal.getElementsByClassName("message")[0]).text("Something has gone wrong. Please, try again later.");
+					modal.getElementsByClassName("active")[0].setAttribute("class", "progress progress-striped");
+					modal.getElementsByClassName("disabled")[0].setAttribute("class", "btn btn-danger");
+				}
 	  	});
 	}
 }
@@ -139,6 +156,7 @@ function sendQuery(e) {
 	    	success: function(res) {
 					$('#query-result').empty();
 					$('#query-result').append(res);
+					$(".tablesorter").tablesorter();
 					$('#admin-tabs a:last').tab('show');
 	    	}
 	  	});

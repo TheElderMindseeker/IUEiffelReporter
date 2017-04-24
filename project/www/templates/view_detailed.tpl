@@ -39,9 +39,15 @@
 							</div>
 							<div class="form-group row" style="margin-bottom: 25px;">
 								<div class="col-sm-6 col-md-6" >
-									<a href="/edit/{$id/}" class="btn btn-primary" role="button" style="right: 10px; position: absolute;">Edit</a>
+									<table style="right: 10px; position: absolute;">
+										<tr>
+											<td><a href="/export_json/{$id/}" class="btn btn-success" role="button" style="margin-right: 4px;">Export to JSON</a></td>
+											<td ><a href="/export_xml/{$id/}" class="btn btn-success" role="button">Export to XML</a></td>
+										</tr>
+									</table>
 								</div>
 								<div class="col-sm-6 col-md-6">
+									<a href="/edit/{$id/}" class="btn btn-primary" role="button">Edit</a>
 									<button onclick="requestDeletion('{$id/}', '{$unit_name/}');"type="button" class="btn btn-danger">Delete</button>
 								</div>
 							</div>

@@ -45,8 +45,17 @@
 										<td>{$report.rep_start/}</td>
 										<td>{$report.rep_end/}</td>
 										<td><a href="/details/{$report.id/}" class="btn btn-success" role="button">More details...</a></td>
+										<td>
+											<div class="dropdown">
+											 	<button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Export</button>
+												<ul class="dropdown-menu">
+											 		<li><a href="/export_json/{$report.id/}">to JSON</a></li>
+											 		<li><a href="/export_xml/{$report.id/}">to XML</a></li>
+												</ul>
+											</div>
+										</td>
 										<td><a href="/edit/{$report.id/}" class="btn btn-primary" role="button">Edit</a></td>
-										<td><button onclick="requestDeletion('{$report.id/}', '{$report.unit_name/}');"type="button" class="btn btn-danger">Delete</button></td>
+										<td><button onclick="requestDeletion('{$report.id/}', '{$report.unit_name/}');" type="button" class="btn btn-danger">Delete</button></td>
 									</tr>
 								{/foreach}
 							</tbody>

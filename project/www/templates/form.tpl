@@ -780,7 +780,7 @@
 									</div>
 								</div>
 							</div>
-							<input type="hidden" value="{$id/}" name="id"/>
+							<input type="hidden" value="{$id/}" name="id" id="id"/>
 					</div>
 				</form>
 			</div>
@@ -800,16 +800,25 @@
 				</div>
 			</div>
 		 </div>
-		 <div id="submissionSuccessModal" class="modal fade">
- 			<div class="modal-dialog">
- 				<div class="modal-content">
- 					<div class="modal-header">
- 						<h4 class="modal-title">Submission succeed!</h4>
- 					</div>
- 					<div class="modal-body">Your report was submitted successfully.</div>
- 					<div class="modal-footer"><a href="/" class="btn btn-success">Ok</a></div>
- 				</div>
- 			</div>
+		 <div id="submissionMobdal" class="modal fade">
+ 		 <div class="modal-dialog">
+ 			 <div class="modal-content">
+ 				 <div class="modal-header">
+ 					 <h4 class="modal-title"></h4>
+ 				 </div>
+ 				 <div class="modal-body">
+ 					 <div class="row message" style="margin: auto auto 30px auto;"></div>
+ 					 <div class="row active-bar" style="margin: auto;">
+ 						 <div class="progress progress-striped active">
+ 							<div class="progress-bar" style="width: 100%;">
+ 								<span class="sr-only">Submission in progress</span>
+ 							</div>
+ 						</div>
+ 					 </div>
+ 				 </div>
+ 				 <div class="modal-footer"><a href="/" class="btn btn-primary disabled" role="button">Ok!</a></div>
+ 			 </div>
  		 </div>
+ 		</div>
 	</body>
 </html>
