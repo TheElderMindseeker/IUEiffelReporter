@@ -5,7 +5,7 @@ note
 	revision: "1.0"
 
 class
-	EXPORT_HANDLER
+	EXPORT_XML_HANDLER
 
 inherit
 
@@ -18,7 +18,6 @@ feature
 
 	make
 		do
-			create page.make
 		end
 
 feature
@@ -34,9 +33,8 @@ feature
 			path_components: LIST [READABLE_STRING_32]
 			file: WSF_DOWNLOAD_RESPONSE
 			file_to_send: PLAIN_TEXT_FILE
-			exporter: JSON_EXPORTER
+			exporter: XML_EXPORTER
 		do
-			page.set_status_code ({HTTP_STATUS_CODE}.ok)
 			create query_manager.make
 			if req.is_get_request_method then
 				path_components := req.path_info.split ('/')
@@ -44,7 +42,7 @@ feature
 				if s_id.is_integer and then attached s_id.to_integer as id then
 					if query_manager.database_manager.has_report (id) then
 						create exporter
-						create file_to_send.make_create_read_write ("exports/report"+id.out+".json")
+						create file_to_send.make_create_read_write ("exports/report-"+id.out+".xml")
 						query_manager.database_manager.close
 						exporter.set_report_id (id)
 						exporter.create_data_file
@@ -52,7 +50,7 @@ feature
 							file_to_send.put_string (string)
 						end
 						file_to_send.close
-						create file.make ("exports/report"+id.out+".json")
+						create file.make ("exports/report-"+id.out+".xml")
 						res.send (file)
 						file_to_send.delete
 					else
@@ -63,10 +61,6 @@ feature
 				end
 			end
 		end
-
-feature {NONE} -- Implementation
-
-	page: WSF_HTML_PAGE_RESPONSE
 
 feature {NONE}
 
