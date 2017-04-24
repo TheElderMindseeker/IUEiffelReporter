@@ -9,8 +9,6 @@ class
 
 inherit
 
-	WITHOUT_QUOTES
-
 	SHARED_TEMPLATE_CONTEXT
 
 create
@@ -62,7 +60,7 @@ feature {NONE} -- Implementation
 					element.item as field
 				loop
 					if field.item.name.same_string ("unit_name") then
-						text := without_quotes (field.item.value.repr)
+						text := field.item.value.usual_repr
 					elseif field.item.name.same_string ("supervised") or field.item.name.same_string ("collaborations") or field.item.name.same_string ("projects") then
 						number := field.item.value.repr.to_integer
 					end

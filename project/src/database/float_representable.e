@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {FLOAT_REPRESENTABLE}."
+	description: "Class representing sqlite-friendly float-type."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
@@ -8,6 +8,7 @@ class
 	FLOAT_REPRESENTABLE
 
 inherit
+
 	REPRESENTABLE
 
 create
@@ -30,6 +31,12 @@ feature -- Access
 
 	repr: STRING_8
 			-- SQLite representation of the float.
+		do
+			Result := float_value.to_double.out
+		end
+
+	usual_repr: STRING
+			-- Usual string representation of the object
 		do
 			Result := float_value.to_double.out
 		end

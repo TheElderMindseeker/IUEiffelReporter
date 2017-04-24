@@ -9,11 +9,6 @@ class
 
 inherit
 
-	WITHOUT_QUOTES
-		undefine
-			default_create
-		end
-
 	SHARED_TEMPLATE_CONTEXT
 		redefine
 			default_create
@@ -33,7 +28,6 @@ feature -- Initialization
 			set_reports_and_labs
 			template.add_value (reports, "reports")
 			template.add_value (labs, "labs")
-				--template_context.enable_verbose
 			template.analyze
 			template.get_output
 			if attached template.output as l_output then
@@ -70,17 +64,13 @@ feature {NONE} -- Database access
 					lab_report.item as field
 				loop
 					if field.item.name.same_string ("unit_name") then
-						u_name := field.item.value.repr
-						u_name := without_quotes (u_name)
+						u_name := field.item.value.usual_repr
 					elseif field.item.name.same_string ("head_name") then
-						h_name := field.item.value.repr
-						h_name := without_quotes (h_name)
+						h_name := field.item.value.usual_repr
 					elseif field.item.name.same_string ("rep_start") then
-						s_date := field.item.value.repr
-						s_date := without_quotes (s_date)
+						s_date := field.item.value.usual_repr
 					elseif field.item.name.same_string ("rep_end") then
-						e_date := field.item.value.repr
-						e_date := without_quotes (e_date)
+						e_date := field.item.value.usual_repr
 					elseif field.item.name.same_string ("report_id") then
 						c_id := field.item.value.repr.to_integer
 					end

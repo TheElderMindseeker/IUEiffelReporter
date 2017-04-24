@@ -10,13 +10,13 @@ class
 inherit
 
 	SHARED_TEMPLATE_CONTEXT
-		redefine
-			default_create
-		end
+
+create
+	make
 
 feature -- Initialization
 
-	default_create
+	make (id: INTEGER)
 			-- Initialize `Current'.
 		local
 			p: PATH
@@ -25,15 +25,10 @@ feature -- Initialization
 			p := p.appended ("/templates")
 			set_template_folder (p)
 			set_template_file_name ("form.tpl")
-				--			template.add_value (courses, "courses")
-				--			template.add_value (examinations, "examinations")
-				--			template.add_value (supervised_students, "supervised_students")
-				--			template.add_value (student_reports, "student_reports")
-				--			template.add_value (completed_phd, "completed_phd")
-				--			template.add_value (grants, "grants")
-				--			template.add_value (research_projects, "research_projects")
-				--			template.add_value (research_collaborations, "research_collaborations")
-				--			template.add_value (publications, "publications")
+			if id > 0 then
+				add_all_values (id)
+			end
+			template.add_value (id, "id")
 			template.analyze
 			template.get_output
 			if attached template.output as l_output then
@@ -41,7 +36,107 @@ feature -- Initialization
 			end
 		end
 
+feature --Access
+
 	output: detachable STRING
+
+feature {NONE} -- Implementation
+
+	add_all_values (a_id: INTEGER)
+			-- Fills template.
+		local
+			report: REPORT
+				-- Report main info
+
+			relevant_info: STRING
+				-- relevant info
+
+			best_paper_awards: LIST [BEST_PAPER_AWARD]
+				-- List of paper awards
+
+			licenses: LIST [LICENSE]
+				-- List of licenses
+
+			patents: LIST [PATENT]
+				--List of patents
+
+			memberships: LIST [MEMBERSHIP]
+				--List of memberships
+
+			prizes: LIST [PRIZE]
+				--List of prizes
+
+			industry_collaborations: LIST [INDUSTRY_COLLABORATION]
+				--List of industry collaborations
+
+			courses: LIST [COURSE]
+				-- List of courses
+
+			examinations: LIST [EXAM]
+				-- List of examinations
+
+			supervised_students: LIST [STUDENT]
+				-- List of supervised students
+
+			student_reports: LIST [S_REPORT]
+				-- List of studen reports
+
+			completed_phd: LIST [PHD]
+				-- List of completed phds
+
+			grants: LIST [GRANT]
+				-- List of grants
+
+			research_projects: LIST [PROJECT]
+				-- List of research projects
+
+			research_collaborations: LIST [COLLABORATION]
+				-- List of research collaborations
+
+			publications: LIST [PUBLICATION]
+				-- List of publications
+			info: LAB_FULL_INFO
+		do
+			create info.make (a_id)
+			report := info.get_report
+			courses := info.get_courses
+			examinations := info.get_examinations
+			supervised_students := info.get_supervised_students
+			student_reports := info.get_student_reports
+			completed_phd := info.get_completed_phd
+			grants := info.get_grants
+			research_projects := info.get_research_projects
+			research_collaborations := info.get_research_collaborations
+			publications := info.get_publications
+			memberships := info.get_memberships
+			prizes := info.get_prizes
+			industry_collaborations := info.get_industry_collaborations
+			best_paper_awards := info.get_best_paper_awards
+			relevant_info := info.get_relevant_info
+			patents:= info.get_patents
+			licenses:= info.get_licenses
+			info.close_database
+			template.add_value (report.unit_name, "unit_name")
+			template.add_value (report.head_name, "head_name")
+			template.add_value (report.rep_start, "rep_start")
+			template.add_value (report.rep_end, "rep_end")
+			template.add_value (courses, "courses")
+			template.add_value (examinations, "examinations")
+			template.add_value (supervised_students, "supervised_students")
+			template.add_value (student_reports, "student_reports")
+			template.add_value (completed_phd, "completed_phd")
+			template.add_value (grants, "grants")
+			template.add_value (research_projects, "research_projects")
+			template.add_value (research_collaborations, "research_collaborations")
+			template.add_value (publications, "publications")
+			template.add_value (memberships, "memberships")
+			template.add_value (prizes, "prizes")
+			template.add_value (industry_collaborations, "industry_collaborations")
+			template.add_value (relevant_info, "info")
+			template.add_value (best_paper_awards, "best_paper_awards")
+			template.add_value (licenses, "licenses")
+			template.add_value (patents, "patents")
+		end
 
 feature {NONE} -- Implementation
 

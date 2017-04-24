@@ -9,7 +9,7 @@
  */
 
 function addInput(elem) {
-	setTimeout(function() { _addInput(elem); }, 250);
+	setTimeout(function() { _addInput(elem); }, 100);
 }
 
 function _addInput(elem) {
@@ -90,9 +90,6 @@ function adminPageInitialization() {
 		var submitButton = document.request.submit;
 		submitButton.addEventListener("click", sendQuery);
 		setTimeout(function() {  $("#list-of-reports").tablesorter(); reinitializeDatepickers(dateParams, document); }, 500);
-		$(function () {
-			$("[data-toggle='tooltip']").tooltip();
-		});
 }
 
 function isDataSubmitted() {
@@ -101,7 +98,7 @@ function isDataSubmitted() {
 
 function sendForm(e) {
 	var form = document.getElementById('mainForm');
-	if (checkRequiredLists(form) && checkRequiredFields(form)) {
+	if (checkRequiredLists(document) && checkRequiredFields(form)) {
 			cleanForm();
 			var formData = JSON.stringify($('#mainForm').serializeJSON());
 	  	$.ajax({
@@ -166,7 +163,7 @@ function checkCookie() {
 	var button = document.getElementById("edit-button");
 	if (id != undefined && id != null && id != "null") {
 		button.setAttribute("href", "/edit/" + id);
-		button.setAttribute("class", "btn button-yellow disabled")
+		button.setAttribute("class", "btn button-yellow")
 	}
 }
 
@@ -198,7 +195,10 @@ function checkRequiredLists(f) {
 		if (temp.length == 0) {
 			$(document.getElementById("warningModal").getElementsByClassName("modal-body")).text("You should create at least one row in each of required tables!");
 			$('#warningModal').modal({backdrop: "true", show: true});
-			requiredTables[i].getElementsByTagName('input')[0].focus();
+			var tab = $(requiredTables[i]).parents(".tab-pane")[0];
+			var id = tab.getAttribute("id");
+			$('#form-tabs a[href="#' + id + '"]').tab('show');
+			setTimeout(function() { requiredTables[i].getElementsByTagName('input')[0].focus(); }, 250);
 			return false;
 		}
 	}
@@ -223,7 +223,6 @@ function isNumber(elem) {
   var re = /^[-]?\d*\.?\d*$/;
   str = str.toString();
   if (!str.match(re)) {
-		//alert("Только номера.");
 		elem.setAttribute("value", "");
 	  elem.focus();
 	  elem.select();

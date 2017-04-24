@@ -22,9 +22,7 @@ inherit
 		end
 
 create
-	make,
-	make_from_string,
-	make_from_iso_string
+	make, make_from_string, make_from_iso_string
 
 feature {NONE} -- Initialization
 
@@ -131,12 +129,24 @@ feature -- String representation
 			Result := "'" + out + "'"
 		end
 
+	usual_repr: STRING
+		local
+			null_filler: STRING_8
+		do
+			create null_filler.make_filled ('0', 2 - day.out.count)
+			Result := null_filler + day.out + "."
+			create null_filler.make_filled ('0', 2 - month.out.count)
+			Result := Result + null_filler + month.out + "."
+			create null_filler.make_filled ('0', 4 - year.out.count)
+			Result := Result + null_filler + year.out
+		end
+
 feature -- Constraints
 
 	valid_date (yy, mm, dd: INTEGER): BOOLEAN
 			-- Is provided date valid?
 		local
-			month_30: ARRAY[INTEGER]
+			month_30: ARRAY [INTEGER]
 		do
 			month_30 := <<4, 6, 9, 11>>
 			Result := True
