@@ -43,13 +43,7 @@ feature
 					if query_manager.database_manager.has_report (id) then
 						create template.make (id)
 						if attached template.output as body then
-							if attached (create {XML_EXPORTER}.default_create) as exp then
-								exp.report_id := id
-								exp.create_data_file
-								if attached exp.data_file as data then
-									res.put_string (data)
-								end
-							end
+							res.put_string (body)
 						end
 					else
 						not_found_page (id.to_hex_string, req, res)
