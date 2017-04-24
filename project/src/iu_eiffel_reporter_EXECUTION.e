@@ -28,6 +28,8 @@ feature -- Router
 			create fhdl.make_with_path (create {PATH}.make_from_string ("www"))
 			create query_manager.make
 			fhdl.set_directory_index (<<"index.html">>)
+			router.handle ("/export_xml", create{EXPORT_XML_HANDLER}.make, router.methods_get)
+			router.handle ("/export_json", create{EXPORT_JSON_HANDLER}.make, router.methods_get)
 			router.handle ("/delete", create{ADMIN_DELETE_HANDLER}.make, router.methods_get_post)
 			router.handle ("/edit", create{ADMIN_EDIT_PAGE_HANDLER}.make, router.methods_get_post)
 			router.handle ("/details", create{ADMIN_MORE_INFO_PAGE_HANDLER}.make, router.methods_get_post)
