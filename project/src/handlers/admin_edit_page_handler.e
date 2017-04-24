@@ -1,8 +1,8 @@
 note
-	description: "Summary description for {ADMIN_EDIT_PAGE_HANDLER}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "handler for editig reports"
+	author: "Ginatullin Niyaz"
+	date: "24.04.2017"
+	revision: "1.0"
 
 class
 	ADMIN_EDIT_PAGE_HANDLER
@@ -56,6 +56,7 @@ feature
 		end
 
 	not_found_page (req: WSF_REQUEST; res: WSF_RESPONSE; id:INTEGER)
+			-- send if there is no report with such id
 		local
 			not_found: WSF_NOT_FOUND_RESPONSE
 		do
@@ -65,6 +66,7 @@ feature
 		end
 
 	incorrect_path (req: WSF_REQUEST; res: WSF_RESPONSE)
+			--send if path is wrong
 		local
 			not_found: WSF_NOT_FOUND_RESPONSE
 		do

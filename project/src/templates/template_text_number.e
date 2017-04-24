@@ -1,8 +1,8 @@
 note
-	description: "Summary description for {TEXT_NUMBER}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "template for queries with tetx number type"
+	author: "Ginatullin Niyaz"
+	date: "24.04.2017"
+	revision: "1.0"
 
 class
 	TEMPLATE_TEXT_NUMBER

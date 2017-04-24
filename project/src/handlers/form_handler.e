@@ -1,8 +1,8 @@
 note
-	description: " handels form page"
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "handels form page"
+	author: "Ginatullin Niyaz"
+	date: "24.04.2017"
+	revision: "1.0"
 
 class
 	FORM_HANDLER
@@ -100,6 +100,7 @@ feature {NONE}
 		end
 
 	delete_report (id: INTEGER; database_manager: DATABASE_MANAGER; res:WSF_RESPONSE;req:WSF_REQUEST)
+			--deletes report with some id from database
 		do
 			if database_manager.has_report (id) then
 				across
@@ -116,6 +117,7 @@ feature {NONE}
 		end
 
 	not_found_page (id: READABLE_STRING_8; res: WSF_RESPONSE; req:WSF_REQUEST)
+			--send if there is no report with such id
 		local
 			not_found: WSF_NOT_FOUND_RESPONSE
 		do

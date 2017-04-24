@@ -165,6 +165,7 @@ feature {NONE} -- Implementation
 		end
 
 	is_availible_type (type: STRING): BOOLEAN
+			--checks if type of query is availible
 		require
 			type_is_not_empty: type /= Void
 		do
