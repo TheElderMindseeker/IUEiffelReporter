@@ -42,6 +42,7 @@ function _addInput(elem) {
 	$(newNode).show('slow');
 	reinitializeDatepickers(dateParams, newNode);
 	onlyDigitsInitialization(newNode);
+	deleteTechnicalSymbols(newNode)
 	array[0].focus();
 }
 
@@ -72,6 +73,19 @@ function formInitialization() {
 	setTimeout(function() { reinitializeDatepickers(dateParams, document); }, 500);
 	document.getElementById("is-data-submitted").setAttribute("value", "false");
 	onlyDigitsInitialization(document);
+	deleteTechnicalSymbols(document);
+}
+
+function deleteTechnicalSymbols(elem) {
+	var digitInputs = elem.getElementsByClassName("form-control");
+	var counter = digitInputs.length;
+	for (var i = 0; i < counter; i++) {
+		$(digitInputs[i]).bind("change keyup input click", function() {
+			if (this.value.match(/[`'"\\]/g)) {
+				this.value = this.value.replace(/[`'"\\]/g, '');
+			}
+		});
+	}
 }
 
 function onlyDigitsInitialization(elem) {
