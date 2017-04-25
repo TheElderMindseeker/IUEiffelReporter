@@ -1,7 +1,7 @@
 <div style="margin-top: 50px;">
   <div class="form-group row">
     <div class="col-sm-12 col-md-12" style="text-align: center;">
-      <label style="font-size: 18pt; font-weight: normal;">Patents submitted by {$labname/}</label>
+      <label style="font-size: 18pt; font-weight: normal;">Submitted patents</label>
     </div>
   </div>
   <div align="center">

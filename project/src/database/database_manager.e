@@ -870,7 +870,7 @@ feature {QUERY_MANAGER} -- Specific queries
 			cursor: SQLITE_STATEMENT_ITERATION_CURSOR
 			s_query: STRING_8
 		do
-			s_query := "SELECT pats.patent_id, pats.report_id, pats.patent_title, pats.patent_office_country FROM patents pats INNER JOIN reports rep"
+			s_query := "SELECT pats.patent_id, pats.report_id, pats.patent_title, pats.patent_office_country FROM patents pats INNER JOIN reports rep ON pats.report_id = rep.report_id"
 			if attached start_date as rep_start and attached end_date as rep_end then
 				s_query := s_query + " WHERE rep.rep_start >= julianday(" + rep_start.repr + ") AND " +
 						"julianday(" + rep_end.repr + ") >= rep.rep_end"
