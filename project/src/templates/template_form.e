@@ -20,11 +20,16 @@ feature -- Initialization
 			-- Initialize `Current'.
 		local
 			p: PATH
+			info:LAB_FULL_INFO
 		do
+			create info.make (id)
 			create p.make_from_string ("www")
 			p := p.appended ("/templates")
 			set_template_folder (p)
 			set_template_file_name ("form.tpl")
+			template.add_value (info.get_start_of_year, "rep_start")
+			template.add_value (info.get_date_today, "rep_end")
+			info.close_database
 			if id > 0 then
 				add_all_values (id)
 			end

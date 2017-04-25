@@ -173,7 +173,7 @@ feature -- Access
 						string.append ("%T%T%T%"installation name%": %"" + collaboration.item.installation_name + "%",%N")
 						string.append ("%T%T%T%"installation department%": %"" + collaboration.item.installation_department + "%",%N")
 						string.append ("%T%T%T%"contacts%": %"" + collaboration.item.contacts + "%",%N")
-						string.append ("%T%T%T%"nature of collaboration%": " + collaboration.item.nature_of_collaboration + "%N")
+						string.append ("%T%T%T%"nature of collaboration%": %"" + collaboration.item.nature_of_collaboration + "%"%N")
 						collaboration.forth
 						if not collaboration.exhausted then
 							string.append ("%T%T},%N")

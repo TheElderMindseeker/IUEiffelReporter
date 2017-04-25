@@ -330,10 +330,10 @@ feature
 			e_date: STRING
 			c_id: INTEGER
 		do
-			create u_name.make_from_string ("our default unit name")
-			create h_name.make_from_string ("our default head name")
-			create s_date.make_from_string ("01.09.2016")
-			create e_date.make_from_string ("15.05.2017")
+			create u_name.make_from_string ("default unit name")
+			create h_name.make_from_string ("default head name")
+			create s_date.make_from_string (get_date_today)
+			create e_date.make_from_string (get_start_of_year)
 			across
 				query_manager.database_manager.single_select ("reports", id) as field
 			loop
@@ -459,6 +459,7 @@ feature
 			recipient_name: STRING
 			prize_name: STRING
 			prizing_date: STRING
+			granting_installation:STRING
 		do
 			create {ARRAYED_LIST [PRIZE]} Result.make (0)
 			across
@@ -473,10 +474,12 @@ feature
 						prize_name := field.item.value.usual_repr
 					elseif field.item.name.same_string ("prizing_date") then
 						prizing_date := field.item.value.usual_repr
+					elseif field.item.name.same_string ("granting_installation") then
+						granting_installation := field.item.value.usual_repr
 					end
 				end
-				if attached recipient_name as rn and attached prize_name as pn and attached prizing_date as pd then
-					Result.force (create {PRIZE}.make (rn, pn, pd))
+				if attached recipient_name as rn and attached prize_name as pn and attached prizing_date as pd and attached granting_installation as gr then
+					Result.force (create {PRIZE}.make (rn, pn, gr, pd))
 				end
 			end
 		end
@@ -503,6 +506,33 @@ feature
 					Result.force (create {INDUSTRY_COLLABORATION}.make (c, noc))
 				end
 			end
+		end
+
+	get_date_today: STRING
+			-- returns todays date
+		local
+			c_date: C_DATE
+			null_filler: STRING_8
+		do
+			create c_date.default_create
+			create null_filler.make_filled ('0', 2 - c_date.day_now.out.count)
+			Result := null_filler + c_date.day_now.out + "."
+			create null_filler.make_filled ('0', 2 - c_date.month_now.out.count)
+			Result := Result + null_filler + c_date.month_now.out + "."
+			create null_filler.make_filled ('0', 4 - c_date.year_now.out.count)
+			Result := Result + null_filler + c_date.year_now.out
+		end
+
+	get_start_of_year: STRING
+			-- returns start of current year
+		local
+			c_date: C_DATE
+			null_filler: STRING_8
+		do
+			create c_date.default_create
+			Result := "01.01."
+			create null_filler.make_filled ('0', 4 - c_date.year_now.out.count)
+			Result := Result + null_filler + c_date.year_now.out
 		end
 
 end
